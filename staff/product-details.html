@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Product Specifications | BRI APPARELL Staff</title>
+  <link rel="stylesheet" href="../css/staff.css">
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+
+  <!-- Topbar -->
+  <header class="staff-topbar">
+    <div class="topbar-left">
+      <button class="topbar-icon-btn mobile-menu-toggle" id="mobile-menu-toggle" style="display: none;" aria-label="Toggle menu">
+        <i data-lucide="menu"></i>
+      </button>
+      <a href="dashboard.html" class="staff-brand-badge">
+        BRI APPARELL
+        <span class="staff-role-pill">STAFF</span>
+      </a>
+    </div>
+
+    <div class="topbar-search-wrap">
+      <i data-lucide="search" class="topbar-search-icon" style="width:16px;height:16px;"></i>
+      <input type="text" id="topbar-global-search" class="topbar-search-input" placeholder="Search orders, SKU, customer name, phone... (Press Enter)">
+    </div>
+
+    <div class="topbar-right">
+      <a href="notifications.html" class="topbar-icon-btn" aria-label="Notifications">
+        <i data-lucide="bell" style="width:18px;height:18px;"></i>
+        <span class="notif-badge-dot" id="topbar-notif-dot"></span>
+      </a>
+
+      <div class="staff-user-chip" id="staff-user-chip">
+        <div class="user-avatar-circle">AV</div>
+        <div class="user-text-info">
+          <span class="user-name">Alexander Vance</span>
+          <span class="user-role-label">EMP-0012 &bull; Retail Staff</span>
+        </div>
+        <i data-lucide="chevron-down" style="width:14px;height:14px;color:var(--staff-gray-500);"></i>
+
+        <div class="user-menu-dropdown" id="staff-user-dropdown">
+          <a href="profile.html" class="dropdown-item"><i data-lucide="user" style="width:16px;height:16px;"></i> My Profile</a>
+          <a href="profile.html#security" class="dropdown-item"><i data-lucide="lock" style="width:16px;height:16px;"></i> Change Password</a>
+          <div class="dropdown-divider"></div>
+          <a href="../index.html" class="dropdown-item" style="color:#b91c1c;"><i data-lucide="log-out" style="width:16px;height:16px;"></i> Exit to Storefront</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="staff-app-container">
+    <!-- Sidebar Navigation -->
+    <aside class="staff-sidebar">
+      <div>
+        <div class="sidebar-nav-group">
+          <span class="sidebar-group-title">OPERATIONS</span>
+          <ul class="sidebar-nav-list">
+            <li class="sidebar-nav-item"><a href="dashboard.html" class="sidebar-link"><i data-lucide="layout-grid"></i><span>Dashboard</span></a></li>
+            <li class="sidebar-nav-item"><a href="orders.html" class="sidebar-link"><i data-lucide="shopping-bag"></i><span>Orders</span><span class="sidebar-link-badge" id="badge-pending-orders">0</span></a></li>
+          </ul>
+        </div>
+
+        <div class="sidebar-nav-group">
+          <span class="sidebar-group-title">CATALOG & STOCK</span>
+          <ul class="sidebar-nav-list">
+            <li class="sidebar-nav-item"><a href="products.html" class="sidebar-link active"><i data-lucide="package"></i><span>All Products</span></a></li>
+            <li class="sidebar-nav-item"><a href="inventory.html" class="sidebar-link"><i data-lucide="boxes"></i><span>Inventory Stock</span></a></li>
+            <li class="sidebar-nav-item"><a href="low-stock.html" class="sidebar-link"><i data-lucide="alert-triangle"></i><span>Low Stock Alert</span><span class="sidebar-link-badge" id="badge-low-stock" style="background-color:#dc2626;">0</span></a></li>
+            <li class="sidebar-nav-item"><a href="stock-history.html" class="sidebar-link"><i data-lucide="history"></i><span>Stock Movement Log</span></a></li>
+          </ul>
+        </div>
+
+        <div class="sidebar-nav-group">
+          <span class="sidebar-group-title">RELATIONS</span>
+          <ul class="sidebar-nav-list">
+            <li class="sidebar-nav-item"><a href="customers.html" class="sidebar-link"><i data-lucide="users"></i><span>Customers</span></a></li>
+            <li class="sidebar-nav-item"><a href="reviews.html" class="sidebar-link"><i data-lucide="message-square"></i><span>Product Reviews</span></a></li>
+          </ul>
+        </div>
+
+        <div class="sidebar-nav-group">
+          <span class="sidebar-group-title">SYSTEM & USER</span>
+          <ul class="sidebar-nav-list">
+            <li class="sidebar-nav-item"><a href="notifications.html" class="sidebar-link"><i data-lucide="bell"></i><span>Notifications</span></a></li>
+            <li class="sidebar-nav-item"><a href="profile.html" class="sidebar-link"><i data-lucide="user-check"></i><span>My Profile</span></a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="sidebar-footer">
+        <a href="../index.html" class="sidebar-client-portal-link">
+          <i data-lucide="external-link" style="width:14px;height:14px;"></i>
+          <span>View Customer Website</span>
+        </a>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="staff-main-wrapper">
+      
+      <div id="product-details-container">
+        <!-- Injected via JavaScript based on ?id= -->
+      </div>
+
+    </main>
+  </div>
+
+  <!-- Scripts -->
+  <script src="../products.js"></script>
+  <script src="../js/staff-data.js"></script>
+  <script src="../js/staff.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      STAFF.ui.init('products');
+
+      const urlParams = new URLSearchParams(window.location.search);
+      const productId = urlParams.get('id') || 'bri-001';
+      const product = PRODUCTS.find(p => p.id === productId) || PRODUCTS[0];
+      const container = document.getElementById('product-details-container');
+
+      container.innerHTML = `
+        <div class="staff-page-header">
+          <div>
+            <div class="staff-breadcrumbs">
+              <a href="products.html">PRODUCTS</a> &bull; <span>${product.name}</span>
+            </div>
+            <h1 class="staff-page-title">${product.name.toUpperCase()}</h1>
+            <p class="staff-page-desc">SKU: <strong class="mono-cell">${product.id.toUpperCase()}</strong> &bull; Category: ${product.category} &bull; Gender: ${product.gender}</p>
+          </div>
+
+          <div class="header-actions">
+            <a href="inventory.html?search=${encodeURIComponent(product.name)}" class="btn-staff btn-staff-primary">
+              <i data-lucide="boxes" style="width:15px;height:15px;"></i>
+              VIEW INVENTORY STOCK
+            </a>
+            <a href="../product-detail.html?id=${product.id}" target="_blank" class="btn-staff btn-staff-outline">
+              <i data-lucide="external-link" style="width:14px;height:14px;"></i>
+              CUSTOMER PAGE
+            </a>
+          </div>
+        </div>
+
+        <div style="display:grid; grid-template-columns: 1fr 1.6fr; gap: 2rem; align-items: flex-start;">
+          
+          <!-- Image Gallery Card -->
+          <div class="staff-card">
+            <div class="staff-card-header">
+              <span class="staff-card-title">GARMENT VISUALS</span>
+            </div>
+            <div class="staff-card-body">
+              <div style="aspect-ratio: 3/4; overflow:hidden; background:var(--staff-gray-100); margin-bottom:1rem; border-radius:2px;">
+                <img src="${product.images[0]}" alt="${product.name}" style="width:100%; height:100%; object-fit:cover;">
+              </div>
+              <div style="display:grid; grid-template-columns: repeat(3, 1fr); gap:0.5rem;">
+                ${product.images.slice(1, 4).map(img => `
+                  <div style="aspect-ratio: 3/4; overflow:hidden; background:#eee; border-radius:2px;">
+                    <img src="${img}" alt="Preview" style="width:100%; height:100%; object-fit:cover;">
+                  </div>
+                `).join('')}
+              </div>
+            </div>
+          </div>
+
+          <!-- Specs & Variant Breakdown -->
+          <div style="display:flex; flex-direction:column; gap:2rem;">
+            
+            <!-- Core Specs Card -->
+            <div class="staff-card" style="margin-bottom:0;">
+              <div class="staff-card-header">
+                <span class="staff-card-title">TEXTILE SPECIFICATIONS & PRICING</span>
+                <span class="mono-cell" style="font-size:1.15rem; font-weight:800;">${STAFF.formatMoney(product.price)}</span>
+              </div>
+              <div class="staff-card-body" style="font-size:0.8125rem; display:flex; flex-direction:column; gap:1rem;">
+                <div>
+                  <span style="font-size:0.6875rem; color:var(--staff-gray-500); font-weight:700; text-transform:uppercase;">MATERIAL COMPOSITION</span>
+                  <p style="font-weight:600; color:var(--staff-black); margin-top:0.25rem;">${product.materials}</p>
+                </div>
+
+                <div>
+                  <span style="font-size:0.6875rem; color:var(--staff-gray-500); font-weight:700; text-transform:uppercase;">DESCRIPTION & INTENT</span>
+                  <p style="color:var(--staff-gray-700); line-height:1.6; margin-top:0.25rem;">${product.description}</p>
+                </div>
+
+                <div>
+                  <span style="font-size:0.6875rem; color:var(--staff-gray-500); font-weight:700; text-transform:uppercase;">COLOR PALETTES</span>
+                  <div style="display:flex; gap:0.6rem; margin-top:0.35rem;">
+                    ${product.colors.map(c => `
+                      <span style="display:inline-flex; align-items:center; gap:0.4rem; padding:0.25rem 0.6rem; background:var(--staff-gray-50); border:1px solid var(--border-subtle); font-size:0.75rem; font-weight:600;">
+                        <span style="width:10px; height:10px; border-radius:50%; background:${c.hex}; display:inline-block; border:1px solid #ccc;"></span>
+                        ${c.name}
+                      </span>
+                    `).join('')}
+                  </div>
+                </div>
+
+                <div>
+                  <span style="font-size:0.6875rem; color:var(--staff-gray-500); font-weight:700; text-transform:uppercase;">CARE PROTOCOL</span>
+                  <ul style="list-style:disc; padding-left:1.25rem; color:var(--staff-gray-700); margin-top:0.25rem; line-height:1.5;">
+                    ${product.care.map(c => `<li>${c}</li>`).join('')}
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <!-- Size Stock Breakdown Card -->
+            <div class="staff-card" style="margin-bottom:0;">
+              <div class="staff-card-header">
+                <span class="staff-card-title">SIZE AVAILABILITY MATRIX</span>
+              </div>
+              <div class="staff-table-wrap">
+                <table class="staff-table">
+                  <thead>
+                    <tr>
+                      <th>SIZE</th>
+                      <th>STATUS</th>
+                      <th>ACTIVE STOCK</th>
+                      <th>SAFETY THRESHOLD</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    ${product.sizes.map(s => `
+                      <tr>
+                        <td><strong>${s.size}</strong></td>
+                        <td>${STAFF.badge(s.inStock ? 'In Stock' : 'Out of Stock')}</td>
+                        <td class="mono-cell" style="font-weight:700;">${s.inStock ? 'Available' : 'Depleted (0)'}</td>
+                        <td>5 units</td>
+                      </tr>
+                    `).join('')}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+      `;
+
+      if (window.lucide) window.lucide.createIcons();
+    });
+  </script>
+</body>
+</html>

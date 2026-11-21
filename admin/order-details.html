@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Order Details | BRI APPARELL Admin</title>
+  <link rel="stylesheet" href="css/admin.css">
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+
+  <!-- Topbar -->
+  <header class="staff-topbar">
+    <div class="topbar-left">
+      <a href="orders.html" class="topbar-icon-btn" title="Back to Orders"><i data-lucide="arrow-left"></i></a>
+      <a href="index.html" class="staff-brand-badge">
+        BRI APPARELL
+        <span class="admin-role-pill">ADMIN</span>
+      </a>
+    </div>
+
+    <div class="topbar-right">
+      <div class="staff-user-chip" id="admin-user-chip">
+        <div class="user-avatar-circle admin-user-avatar">AV</div>
+        <div class="user-text-info">
+          <span class="user-name admin-user-name">Administrator Vance</span>
+          <span class="user-role-label admin-user-role">Super Admin</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="staff-app-container">
+    <main class="staff-main-content" style="margin-left:0 !important; width:100% !important; max-width:1100px; margin:0 auto; padding:2rem 1.5rem;">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1.5rem;">
+        <div>
+          <div style="display:flex; align-items:center; gap:0.75rem;">
+            <h1 class="page-title" style="font-size:1.75rem; font-weight:800; font-family:var(--font-brand);" id="order-title">ORDER #...</h1>
+            <span class="badge" id="order-status-badge">Loading</span>
+          </div>
+          <p style="color:var(--staff-gray-500); font-size:0.875rem;" id="order-date-subtitle">Placed on —</p>
+        </div>
+        <div style="display:flex; gap:0.75rem;">
+          <button class="btn btn-outline" onclick="window.print()" style="font-size:0.8125rem;">
+            <i data-lucide="printer" style="width:14px;height:14px;"></i> Print Packing Slip
+          </button>
+          <a href="orders.html" class="btn btn-primary" style="font-size:0.8125rem;">
+            &larr; Back to Orders
+          </a>
+        </div>
+      </div>
+
+      <div style="display:grid; grid-template-columns: 2fr 1fr; gap:1.5rem;">
+        <!-- Left: Items & History -->
+        <div>
+          <!-- Items Card -->
+          <div class="card" style="background:#fff; border:1px solid var(--border-subtle); border-radius:var(--radius-sm); padding:1.5rem; margin-bottom:1.5rem;">
+            <h3 style="font-size:0.9375rem; font-weight:700; text-transform:uppercase; letter-spacing:0.05em; margin-bottom:1rem;">ORDERED GARMENTS</h3>
+            <div class="table-responsive">
+              <table style="width:100%; border-collapse:collapse; font-size:0.8125rem;">
+                <thead>
+                  <tr style="text-align:left; border-bottom:1px solid var(--border-subtle); color:var(--staff-gray-500);">
+                    <th style="padding:0.5rem;">ITEM</th>
+                    <th style="padding:0.5rem;">SIZE</th>
+                    <th style="padding:0.5rem;">QTY</th>
+                    <th style="padding:0.5rem;">UNIT PRICE</th>
+                    <th style="padding:0.5rem; text-align:right;">TOTAL</th>
+                  </tr>
+                </thead>
+                <tbody id="order-items-tbody"></tbody>
+              </table>
+            </div>
+
+            <!-- Financial Summary -->
+            <div style="border-top:1px solid var(--border-subtle); margin-top:1.5rem; padding-top:1rem; display:flex; flex-direction:column; gap:0.5rem; font-size:0.875rem;">
+              <div style="display:flex; justify-content:space-between; color:var(--staff-gray-600);">
+                <span>Subtotal:</span>
+                <span id="order-subtotal" style="font-family:var(--font-mono); font-weight:600;">₱0</span>
+              </div>
+              <div style="display:flex; justify-content:space-between; color:var(--staff-gray-600);">
+                <span>Discount / Voucher:</span>
+                <span id="order-discount" style="font-family:var(--font-mono); font-weight:600;">-₱0</span>
+              </div>
+              <div style="display:flex; justify-content:space-between; color:var(--staff-gray-600);">
+                <span>Shipping Fee:</span>
+                <span id="order-shipping" style="font-family:var(--font-mono); font-weight:600;">₱0</span>
+              </div>
+              <div style="display:flex; justify-content:space-between; font-weight:800; font-size:1.125rem; border-top:1px solid var(--border-subtle); padding-top:0.75rem;">
+                <span>Total Amount:</span>
+                <span id="order-total" style="font-family:var(--font-mono); color:var(--staff-black);">₱0</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Audit History Card -->
+          <div class="card" style="background:#fff; border:1px solid var(--border-subtle); border-radius:var(--radius-sm); padding:1.5rem;">
+            <h3 style="font-size:0.9375rem; font-weight:700; text-transform:uppercase; letter-spacing:0.05em; margin-bottom:1rem;">STATUS AUDIT TRAIL</h3>
+            <div id="order-history-list" style="display:flex; flex-direction:column; gap:0.75rem; font-size:0.8125rem;">
+              <div>Loading history...</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Actions & Details -->
+        <div>
+          <!-- Update Status Card -->
+          <div class="card" style="background:#fff; border:1px solid var(--border-subtle); border-radius:var(--radius-sm); padding:1.5rem; margin-bottom:1.5rem;">
+            <h3 style="font-size:0.875rem; font-weight:700; text-transform:uppercase; letter-spacing:0.05em; margin-bottom:1rem;">FULFILLMENT CONTROLS</h3>
+            
+            <form id="form-update-status">
+              <div class="form-group" style="margin-bottom:1rem;">
+                <label class="form-label">UPDATE ORDER STATUS</label>
+                <select id="update-status-select" class="form-input" required>
+                  <option value="Placed">Placed</option>
+                  <option value="Confirmed">Confirmed</option>
+                  <option value="Processing">Processing</option>
+                  <option value="Packed">Packed</option>
+                  <option value="Ready to Ship">Ready to Ship</option>
+                  <option value="In Transit">In Transit</option>
+                  <option value="Delivered">Delivered</option>
+                  <option value="Cancelled">Cancelled</option>
+                </select>
+              </div>
+
+              <div class="form-group" style="margin-bottom:1rem;">
+                <label class="form-label">ASSIGNED COURIER</label>
+                <select id="update-courier-select" class="form-input">
+                  <option value="LBC Express">LBC Express</option>
+                  <option value="J&T Express">J&T Express</option>
+                  <option value="Grab Express / Lalamove">Grab Express / Lalamove</option>
+                  <option value="DHL Express">DHL Express</option>
+                </select>
+              </div>
+
+              <div class="form-group" style="margin-bottom:1rem;">
+                <label class="form-label">TRACKING / WAYBILL NUMBER</label>
+                <input type="text" id="update-tracking-input" class="form-input" placeholder="e.g. LBC-89241590">
+              </div>
+
+              <div class="form-group" style="margin-bottom:1.25rem;">
+                <label class="form-label">INTERNAL AUDIT NOTE</label>
+                <input type="text" id="update-notes-input" class="form-input" placeholder="e.g. Handed over to courier driver">
+              </div>
+
+              <button type="submit" class="btn btn-primary btn-block" style="font-size:0.8125rem;">
+                Save & Broadcast Status
+              </button>
+            </form>
+          </div>
+
+          <!-- Customer Info Card -->
+          <div class="card" style="background:#fff; border:1px solid var(--border-subtle); border-radius:var(--radius-sm); padding:1.5rem; margin-bottom:1.5rem;">
+            <h3 style="font-size:0.875rem; font-weight:700; text-transform:uppercase; letter-spacing:0.05em; margin-bottom:1rem;">CUSTOMER & DELIVERY</h3>
+            <div style="font-size:0.8125rem; display:flex; flex-direction:column; gap:0.6rem;">
+              <div>
+                <span style="color:var(--staff-gray-500); display:block; font-size:0.75rem;">NAME</span>
+                <strong id="cust-name">—</strong>
+              </div>
+              <div>
+                <span style="color:var(--staff-gray-500); display:block; font-size:0.75rem;">EMAIL</span>
+                <span id="cust-email">—</span>
+              </div>
+              <div>
+                <span style="color:var(--staff-gray-500); display:block; font-size:0.75rem;">PHONE</span>
+                <span id="cust-phone" style="font-family:var(--font-mono);">—</span>
+              </div>
+              <div>
+                <span style="color:var(--staff-gray-500); display:block; font-size:0.75rem;">SHIPPING ADDRESS</span>
+                <span id="cust-address">—</span>
+              </div>
+              <div>
+                <span style="color:var(--staff-gray-500); display:block; font-size:0.75rem;">SPECIAL INSTRUCTIONS</span>
+                <span id="cust-notes" style="font-style:italic;">None provided</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Payment Details Card -->
+          <div class="card" style="background:#fff; border:1px solid var(--border-subtle); border-radius:var(--radius-sm); padding:1.5rem;">
+            <h3 style="font-size:0.875rem; font-weight:700; text-transform:uppercase; letter-spacing:0.05em; margin-bottom:1rem;">PAYMENT VERIFICATION</h3>
+            <div style="font-size:0.8125rem; display:flex; flex-direction:column; gap:0.6rem;">
+              <div>
+                <span style="color:var(--staff-gray-500); display:block; font-size:0.75rem;">METHOD</span>
+                <strong id="pay-method">—</strong>
+              </div>
+              <div>
+                <span style="color:var(--staff-gray-500); display:block; font-size:0.75rem;">PAYMENT STATUS</span>
+                <span class="badge" id="pay-status-badge">—</span>
+              </div>
+              <div style="margin-top:0.5rem; display:flex; gap:0.5rem;">
+                <button class="btn-sm btn-outline" id="btn-mark-paid" style="flex:1;">Mark as Paid</button>
+                <button class="btn-sm btn-outline" id="btn-mark-refund" style="flex:1; color:#b91c1c;">Refund</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="js/admin.js"></script>
+  <script>
+    const urlParams = new URLSearchParams(window.location.search);
+    const orderId = urlParams.get('id') || 'BRI-00125';
+    let currentOrder = null;
+
+    async function loadOrder() {
+      try {
+        const o = await Admin.api(`/orders/${orderId}`);
+        currentOrder = o;
+        renderOrder();
+      } catch (err) {
+        Admin.toast(err.message, 'error');
+      }
+    }
+
+    function renderOrder() {
+      const o = currentOrder;
+      document.getElementById('order-title').textContent = `ORDER #${o.id}`;
+      document.getElementById('order-date-subtitle').textContent = `Placed on ${Admin.formatDate(o.created_at)}`;
+      
+      const badge = document.getElementById('order-status-badge');
+      badge.textContent = o.status;
+      badge.className = `badge ${o.status === 'Delivered' ? 'badge-success' : (o.status === 'Processing' ? 'badge-warning' : 'badge-neutral')}`;
+
+      // Populate Items
+      const tbody = document.getElementById('order-items-tbody');
+      tbody.innerHTML = (o.items || []).map(i => `
+        <tr style="border-bottom:1px solid var(--border-subtle);">
+          <td style="padding:0.5rem;">
+            <strong>${i.product_name}</strong>
+            <div style="font-size:0.75rem; color:var(--staff-gray-500);">${i.variant_name || ''} (${i.sku || ''})</div>
+          </td>
+          <td style="padding:0.5rem; font-family:var(--font-mono);">${i.size || 'M'}</td>
+          <td style="padding:0.5rem; font-family:var(--font-mono);">${i.quantity}</td>
+          <td style="padding:0.5rem; font-family:var(--font-mono);">${Admin.formatMoney(i.unit_price)}</td>
+          <td style="padding:0.5rem; font-family:var(--font-mono); font-weight:700; text-align:right;">${Admin.formatMoney(i.total_price)}</td>
+        </tr>
+      `).join('');
+
+      document.getElementById('order-subtotal').textContent = Admin.formatMoney(o.subtotal);
+      document.getElementById('order-discount').textContent = `-${Admin.formatMoney(o.discount)}`;
+      document.getElementById('order-shipping').textContent = Admin.formatMoney(o.shipping_fee);
+      document.getElementById('order-total').textContent = Admin.formatMoney(o.total);
+
+      // Customer Info
+      document.getElementById('cust-name').textContent = o.customer_name;
+      document.getElementById('cust-email').textContent = o.customer_email;
+      document.getElementById('cust-phone').textContent = o.customer_phone || '—';
+      document.getElementById('cust-address').textContent = `${o.shipping_address}, ${o.city || ''} ${o.province || ''} ${o.postal_code || ''}`;
+      document.getElementById('cust-notes').textContent = o.notes || 'None provided';
+
+      // Controls
+      document.getElementById('update-status-select').value = o.status;
+      document.getElementById('update-courier-select').value = o.courier || 'LBC Express';
+      document.getElementById('update-tracking-input').value = o.tracking_number || '';
+
+      // Payment
+      document.getElementById('pay-method').textContent = o.payment_method;
+      const payBadge = document.getElementById('pay-status-badge');
+      payBadge.textContent = o.payment_status;
+      payBadge.className = `badge ${o.payment_status === 'Paid' ? 'badge-success' : 'badge-warning'}`;
+
+      // History
+      const histList = document.getElementById('order-history-list');
+      if (o.history && o.history.length > 0) {
+        histList.innerHTML = o.history.map(h => `
+          <div style="border-left:2px solid var(--border-subtle); padding-left:0.75rem; margin-left:0.25rem;">
+            <div style="font-weight:700;">${h.status}</div>
+            <div style="color:var(--staff-gray-600);">${h.notes || ''}</div>
+            <div style="font-size:0.6875rem; color:var(--staff-gray-400);">${Admin.formatDate(h.created_at)} • by ${h.staff_name}</div>
+          </div>
+        `).join('');
+      } else {
+        histList.innerHTML = '<div style="color:var(--staff-gray-500);">No history records yet.</div>';
+      }
+    }
+
+    document.getElementById('form-update-status').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const status = document.getElementById('update-status-select').value;
+      const courier = document.getElementById('update-courier-select').value;
+      const tracking_number = document.getElementById('update-tracking-input').value.trim();
+      const notes = document.getElementById('update-notes-input').value.trim() || `Status updated to ${status}`;
+
+      try {
+        await Admin.api(`/orders/${orderId}/status`, {
+          method: 'PUT',
+          body: JSON.stringify({ status, courier, tracking_number, notes })
+        });
+        Admin.toast(`Order #${orderId} updated to ${status}!`, 'success');
+        loadOrder();
+      } catch (err) {
+        Admin.toast(err.message, 'error');
+      }
+    });
+
+    document.getElementById('btn-mark-paid').addEventListener('click', async () => {
+      try {
+        await Admin.api(`/orders/${orderId}/payment`, {
+          method: 'PUT',
+          body: JSON.stringify({ payment_status: 'Paid', notes: 'Payment manually verified by Administrator' })
+        });
+        Admin.toast('Payment marked as Paid.', 'success');
+        loadOrder();
+      } catch (err) {
+        Admin.toast(err.message, 'error');
+      }
+    });
+
+    document.getElementById('btn-mark-refund').addEventListener('click', async () => {
+      if (!confirm('Are you sure you want to refund this order?')) return;
+      try {
+        await Admin.api(`/orders/${orderId}/payment`, {
+          method: 'PUT',
+          body: JSON.stringify({ payment_status: 'Refunded', notes: 'Payment refunded by Administrator' })
+        });
+        Admin.toast('Payment marked as Refunded.', 'success');
+        loadOrder();
+      } catch (err) {
+        Admin.toast(err.message, 'error');
+      }
+    });
+
+    document.addEventListener('DOMContentLoaded', loadOrder);
+  </script>
+</body>
+</html>

@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Profile | BRI APPARELL Admin</title>
+  <link rel="stylesheet" href="css/admin.css">
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+
+  <!-- Topbar -->
+  <header class="staff-topbar">
+    <div class="topbar-left">
+      <button class="topbar-icon-btn mobile-menu-toggle" id="mobile-menu-toggle" style="display: none;" aria-label="Toggle menu">
+        <i data-lucide="menu"></i>
+      </button>
+      <a href="index.html" class="staff-brand-badge">
+        BRI APPARELL
+        <span class="admin-role-pill">ADMIN</span>
+      </a>
+    </div>
+
+    <div class="topbar-right">
+      <div class="staff-user-chip" id="admin-user-chip">
+        <div class="user-avatar-circle admin-user-avatar">AV</div>
+        <div class="user-text-info">
+          <span class="user-name admin-user-name">Administrator Vance</span>
+          <span class="user-role-label admin-user-role">Super Admin</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="staff-app-container">
+    <!-- Sidebar -->
+    <aside class="staff-sidebar">
+      <div>
+        <div class="sidebar-nav-group">
+          <span class="sidebar-group-title">OVERVIEW</span>
+          <ul class="sidebar-nav-list">
+            <li class="sidebar-nav-item"><a href="index.html" class="sidebar-nav-link"><i data-lucide="layout-dashboard"></i> Dashboard</a></li>
+            <li class="sidebar-nav-item"><a href="reports.html" class="sidebar-nav-link"><i data-lucide="bar-chart-3"></i> Reports & Analytics</a></li>
+          </ul>
+        </div>
+        <div class="sidebar-nav-group">
+          <span class="sidebar-group-title">MANAGEMENT</span>
+          <ul class="sidebar-nav-list">
+            <li class="sidebar-nav-item"><a href="users.html" class="sidebar-nav-link"><i data-lucide="shield-check"></i> User Management</a></li>
+            <li class="sidebar-nav-item"><a href="customers.html" class="sidebar-nav-link"><i data-lucide="users"></i> Customers</a></li>
+            <li class="sidebar-nav-item"><a href="products.html" class="sidebar-nav-link"><i data-lucide="shirt"></i> Products & Catalog</a></li>
+            <li class="sidebar-nav-item"><a href="categories.html" class="sidebar-nav-link"><i data-lucide="folder-tree"></i> Categories</a></li>
+            <li class="sidebar-nav-item"><a href="orders.html" class="sidebar-nav-link"><i data-lucide="shopping-bag"></i> Orders & Transactions</a></li>
+            <li class="sidebar-nav-item"><a href="inventory.html" class="sidebar-nav-link"><i data-lucide="boxes"></i> Inventory & Stock</a></li>
+            <li class="sidebar-nav-item"><a href="payments.html" class="sidebar-nav-link"><i data-lucide="credit-card"></i> Payments</a></li>
+          </ul>
+        </div>
+        <div class="sidebar-nav-group">
+          <span class="sidebar-group-title">SYSTEM</span>
+          <ul class="sidebar-nav-list">
+            <li class="sidebar-nav-item"><a href="notifications.html" class="sidebar-nav-link"><i data-lucide="bell"></i> Notifications</a></li>
+            <li class="sidebar-nav-item"><a href="settings.html" class="sidebar-nav-link"><i data-lucide="settings"></i> System Settings</a></li>
+            <li class="sidebar-nav-item active"><a href="profile.html" class="sidebar-nav-link"><i data-lucide="user"></i> Admin Profile</a></li>
+          </ul>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="staff-main-content">
+      <div class="page-header" style="margin-bottom:1.5rem;">
+        <h1 class="page-title" style="font-size:1.75rem; font-weight:800; font-family:var(--font-brand);">EXECUTIVE PROFILE & SECURITY</h1>
+        <p class="page-subtitle" style="color:var(--staff-gray-500); font-size:0.875rem;">Manage personal contact information, administrative credentials, and password security.</p>
+      </div>
+
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:1.5rem; max-width:960px;">
+        <!-- Profile Form -->
+        <div class="card" style="background:#fff; border:1px solid var(--border-subtle); border-radius:var(--radius-sm); padding:2rem;">
+          <h3 style="font-size:0.9375rem; font-weight:700; text-transform:uppercase; letter-spacing:0.05em; margin-bottom:1.25rem;">PERSONAL INFORMATION</h3>
+          <form id="form-profile">
+            <div class="form-group" style="margin-bottom:1rem;">
+              <label class="form-label">FULL NAME</label>
+              <input type="text" id="prof-name" class="form-input" required>
+            </div>
+            <div class="form-group" style="margin-bottom:1rem;">
+              <label class="form-label">EMAIL ADDRESS (READ-ONLY)</label>
+              <input type="email" id="prof-email" class="form-input" disabled style="background:var(--staff-gray-100);">
+            </div>
+            <div class="form-group" style="margin-bottom:1rem;">
+              <label class="form-label">PHONE NUMBER</label>
+              <input type="text" id="prof-phone" class="form-input">
+            </div>
+            <div class="form-group" style="margin-bottom:1.5rem;">
+              <label class="form-label">CITY / JURISDICTION</label>
+              <input type="text" id="prof-city" class="form-input">
+            </div>
+            <button type="submit" class="btn btn-primary" id="btn-save-profile">
+              Save Profile Updates
+            </button>
+          </form>
+        </div>
+
+        <!-- Password Change Form -->
+        <div class="card" style="background:#fff; border:1px solid var(--border-subtle); border-radius:var(--radius-sm); padding:2rem;">
+          <h3 style="font-size:0.9375rem; font-weight:700; text-transform:uppercase; letter-spacing:0.05em; margin-bottom:1.25rem;">CHANGE ACCESS PASSWORD</h3>
+          <form id="form-password">
+            <div class="form-group" style="margin-bottom:1rem;">
+              <label class="form-label">CURRENT PASSWORD</label>
+              <input type="password" id="pass-current" class="form-input" required placeholder="••••••••">
+            </div>
+            <div class="form-group" style="margin-bottom:1rem;">
+              <label class="form-label">NEW PASSWORD</label>
+              <input type="password" id="pass-new" class="form-input" required minlength="6" placeholder="Minimum 6 characters">
+            </div>
+            <div class="form-group" style="margin-bottom:1.5rem;">
+              <label class="form-label">CONFIRM NEW PASSWORD</label>
+              <input type="password" id="pass-confirm" class="form-input" required minlength="6" placeholder="Repeat new password">
+            </div>
+            <button type="submit" class="btn btn-outline" id="btn-change-pass">
+              Update Password
+            </button>
+          </form>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="js/admin.js"></script>
+  <script>
+    async function loadProfile() {
+      try {
+        const res = await Admin.api('/auth/me');
+        if (res.user) {
+          document.getElementById('prof-name').value = res.user.full_name || '';
+          document.getElementById('prof-email').value = res.user.email || '';
+          document.getElementById('prof-phone').value = res.user.phone || '';
+          document.getElementById('prof-city').value = res.user.city || '';
+        }
+      } catch (err) {
+        Admin.toast(err.message, 'error');
+      }
+    }
+
+    document.getElementById('form-profile').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const payload = {
+        full_name: document.getElementById('prof-name').value.trim(),
+        phone: document.getElementById('prof-phone').value.trim(),
+        city: document.getElementById('prof-city').value.trim()
+      };
+
+      try {
+        const res = await Admin.api('/auth/profile', { method: 'PUT', body: JSON.stringify(payload) });
+        Admin.toast('Profile details updated successfully.', 'success');
+        Admin.setAuth(Admin.getToken(), res.user);
+        Admin.initShell();
+      } catch (err) {
+        Admin.toast(err.message, 'error');
+      }
+    });
+
+    document.getElementById('form-password').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const current_password = document.getElementById('pass-current').value;
+      const new_password = document.getElementById('pass-new').value;
+      const confirm_pass = document.getElementById('pass-confirm').value;
+
+      if (new_password !== confirm_pass) {
+        Admin.toast('New passwords do not match.', 'error');
+        return;
+      }
+
+      try {
+        await Admin.api('/auth/password', {
+          method: 'PUT',
+          body: JSON.stringify({ current_password, new_password })
+        });
+        Admin.toast('Password updated successfully!', 'success');
+        document.getElementById('form-password').reset();
+      } catch (err) {
+        Admin.toast(err.message, 'error');
+      }
+    });
+
+    document.addEventListener('DOMContentLoaded', loadProfile);
+  </script>
+</body>
+</html>

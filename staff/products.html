@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Products Catalog | BRI APPARELL Staff</title>
+  <link rel="stylesheet" href="../css/staff.css">
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+
+  <!-- Topbar -->
+  <header class="staff-topbar">
+    <div class="topbar-left">
+      <button class="topbar-icon-btn mobile-menu-toggle" id="mobile-menu-toggle" style="display: none;" aria-label="Toggle menu">
+        <i data-lucide="menu"></i>
+      </button>
+      <a href="dashboard.html" class="staff-brand-badge">
+        BRI APPARELL
+        <span class="staff-role-pill">STAFF</span>
+      </a>
+    </div>
+
+    <div class="topbar-search-wrap">
+      <i data-lucide="search" class="topbar-search-icon" style="width:16px;height:16px;"></i>
+      <input type="text" id="topbar-global-search" class="topbar-search-input" placeholder="Search orders, SKU, customer name, phone... (Press Enter)">
+    </div>
+
+    <div class="topbar-right">
+      <a href="notifications.html" class="topbar-icon-btn" aria-label="Notifications">
+        <i data-lucide="bell" style="width:18px;height:18px;"></i>
+        <span class="notif-badge-dot" id="topbar-notif-dot"></span>
+      </a>
+
+      <div class="staff-user-chip" id="staff-user-chip">
+        <div class="user-avatar-circle">AV</div>
+        <div class="user-text-info">
+          <span class="user-name">Alexander Vance</span>
+          <span class="user-role-label">EMP-0012 &bull; Retail Staff</span>
+        </div>
+        <i data-lucide="chevron-down" style="width:14px;height:14px;color:var(--staff-gray-500);"></i>
+
+        <div class="user-menu-dropdown" id="staff-user-dropdown">
+          <a href="profile.html" class="dropdown-item"><i data-lucide="user" style="width:16px;height:16px;"></i> My Profile</a>
+          <a href="profile.html#security" class="dropdown-item"><i data-lucide="lock" style="width:16px;height:16px;"></i> Change Password</a>
+          <div class="dropdown-divider"></div>
+          <a href="../index.html" class="dropdown-item" style="color:#b91c1c;"><i data-lucide="log-out" style="width:16px;height:16px;"></i> Exit to Storefront</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="staff-app-container">
+    <!-- Sidebar Navigation -->
+    <aside class="staff-sidebar">
+      <div>
+        <div class="sidebar-nav-group">
+          <span class="sidebar-group-title">OPERATIONS</span>
+          <ul class="sidebar-nav-list">
+            <li class="sidebar-nav-item"><a href="dashboard.html" class="sidebar-link"><i data-lucide="layout-grid"></i><span>Dashboard</span></a></li>
+            <li class="sidebar-nav-item"><a href="orders.html" class="sidebar-link"><i data-lucide="shopping-bag"></i><span>Orders</span><span class="sidebar-link-badge" id="badge-pending-orders">0</span></a></li>
+          </ul>
+        </div>
+
+        <div class="sidebar-nav-group">
+          <span class="sidebar-group-title">CATALOG & STOCK</span>
+          <ul class="sidebar-nav-list">
+            <li class="sidebar-nav-item"><a href="products.html" class="sidebar-link active"><i data-lucide="package"></i><span>All Products</span></a></li>
+            <li class="sidebar-nav-item"><a href="inventory.html" class="sidebar-link"><i data-lucide="boxes"></i><span>Inventory Stock</span></a></li>
+            <li class="sidebar-nav-item"><a href="low-stock.html" class="sidebar-link"><i data-lucide="alert-triangle"></i><span>Low Stock Alert</span><span class="sidebar-link-badge" id="badge-low-stock" style="background-color:#dc2626;">0</span></a></li>
+            <li class="sidebar-nav-item"><a href="stock-history.html" class="sidebar-link"><i data-lucide="history"></i><span>Stock Movement Log</span></a></li>
+          </ul>
+        </div>
+
+        <div class="sidebar-nav-group">
+          <span class="sidebar-group-title">RELATIONS</span>
+          <ul class="sidebar-nav-list">
+            <li class="sidebar-nav-item"><a href="customers.html" class="sidebar-link"><i data-lucide="users"></i><span>Customers</span></a></li>
+            <li class="sidebar-nav-item"><a href="reviews.html" class="sidebar-link"><i data-lucide="message-square"></i><span>Product Reviews</span></a></li>
+          </ul>
+        </div>
+
+        <div class="sidebar-nav-group">
+          <span class="sidebar-group-title">SYSTEM & USER</span>
+          <ul class="sidebar-nav-list">
+            <li class="sidebar-nav-item"><a href="notifications.html" class="sidebar-link"><i data-lucide="bell"></i><span>Notifications</span></a></li>
+            <li class="sidebar-nav-item"><a href="profile.html" class="sidebar-link"><i data-lucide="user-check"></i><span>My Profile</span></a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="sidebar-footer">
+        <a href="../index.html" class="sidebar-client-portal-link">
+          <i data-lucide="external-link" style="width:14px;height:14px;"></i>
+          <span>View Customer Website</span>
+        </a>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="staff-main-wrapper">
+      
+      <div class="staff-page-header">
+        <div>
+          <div class="staff-breadcrumbs">
+            <span>CATALOG</span> &bull; <span>LOOKUP</span>
+          </div>
+          <h1 class="staff-page-title">PRODUCT SPECIFICATIONS DIRECTORY</h1>
+          <p class="staff-page-desc">Lookup garment compositions, SKUs, sizing specifications, and variant availability.</p>
+        </div>
+      </div>
+
+      <!-- Staff Permission Alert Note -->
+      <div style="background-color:var(--staff-white); border:1px solid var(--border-subtle); padding:0.85rem 1.25rem; border-left:3px solid var(--staff-black); margin-bottom:1.5rem; font-size:0.75rem; color:var(--staff-gray-700); display:flex; align-items:center; gap:0.75rem;">
+        <i data-lucide="shield" style="width:16px;height:16px; color:var(--staff-black); flex-shrink:0;"></i>
+        <span><strong>Staff Access Mode:</strong> You have read and lookup privileges. Adding new master styles, price editing, or permanent archiving requires Manager / Owner authorization.</span>
+      </div>
+
+      <!-- Toolbar -->
+      <div class="staff-toolbar">
+        <div class="toolbar-left">
+          <div style="position:relative; flex:1;">
+            <i data-lucide="search" style="position:absolute; left:0.75rem; top:50%; transform:translateY(-50%); width:15px; height:15px; color:var(--staff-gray-500);"></i>
+            <input type="text" id="product-search-input" class="staff-input" placeholder="Search by garment title, SKU code..." style="width:100%; padding-left:2.25rem;">
+          </div>
+
+          <select class="staff-select" id="product-category-filter">
+            <option value="all">Category: All</option>
+            <option value="Tops">Tops</option>
+            <option value="Bottoms">Bottoms</option>
+            <option value="Outerwear">Outerwear</option>
+            <option value="Accessories">Accessories</option>
+            <option value="Women">Women</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Products Table Card -->
+      <div class="staff-card">
+        <div class="staff-table-wrap">
+          <table class="staff-table">
+            <thead>
+              <tr>
+                <th>PRODUCT</th>
+                <th>SKU BASE</th>
+                <th>CATEGORY</th>
+                <th>RETAIL PRICE</th>
+                <th>TOTAL VARIANTS</th>
+                <th>STATUS</th>
+                <th style="text-align: right;">ACTION</th>
+              </tr>
+            </thead>
+            <tbody id="products-table-tbody">
+              <!-- Injected via JavaScript -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <!-- Scripts -->
+  <script src="../products.js"></script>
+  <script src="../js/staff-data.js"></script>
+  <script src="../js/staff.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      STAFF.ui.init('products');
+
+      const tbody = document.getElementById('products-table-tbody');
+      const searchInput = document.getElementById('product-search-input');
+      const categoryFilter = document.getElementById('product-category-filter');
+
+      function renderProducts() {
+        let list = [...PRODUCTS];
+        const query = searchInput.value.trim().toLowerCase();
+        const category = categoryFilter.value;
+
+        if (category !== 'all') {
+          list = list.filter(p => p.category.toLowerCase() === category.toLowerCase());
+        }
+
+        if (query) {
+          list = list.filter(p => p.name.toLowerCase().includes(query) || p.id.toLowerCase().includes(query));
+        }
+
+        tbody.innerHTML = list.map(p => {
+          const inStockSizes = p.sizes.filter(s => s.inStock).length;
+          const status = inStockSizes === 0 ? 'Out of Stock' : (inStockSizes < p.sizes.length ? 'Low Stock' : 'In Stock');
+
+          return `
+            <tr>
+              <td>
+                <div style="display:flex; align-items:center; gap:0.85rem;">
+                  <img src="${p.images[0]}" alt="${p.name}" style="width:36px; height:48px; object-fit:cover; background:#eee; border-radius:2px;">
+                  <div>
+                    <a href="product-details.html?id=${p.id}" style="font-weight:700; color:var(--staff-black); display:block;">
+                      ${p.name}
+                    </a>
+                    <span style="font-size:0.6875rem; color:var(--staff-gray-500);">${p.gender} &bull; ${p.colors.length} colors</span>
+                  </div>
+                </div>
+              </td>
+              <td class="mono-cell" style="font-size:0.75rem;">${p.id.toUpperCase()}</td>
+              <td>${p.category}</td>
+              <td class="mono-cell">${STAFF.formatMoney(p.price)}</td>
+              <td>${p.sizes.length * p.colors.length} SKUs</td>
+              <td>${STAFF.badge(status)}</td>
+              <td style="text-align: right;">
+                <a href="product-details.html?id=${p.id}" class="btn-staff btn-staff-outline btn-staff-sm">
+                  <i data-lucide="eye" style="width:13px;height:13px;"></i>
+                  SPECIFICATIONS
+                </a>
+              </td>
+            </tr>
+          `;
+        }).join('');
+
+        if (window.lucide) window.lucide.createIcons();
+      }
+
+      searchInput.addEventListener('input', renderProducts);
+      categoryFilter.addEventListener('change', renderProducts);
+
+      renderProducts();
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Order Details | BRI APPARELL Staff</title>
+  <link rel="stylesheet" href="../css/staff.css">
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+
+  <!-- Topbar -->
+  <header class="staff-topbar">
+    <div class="topbar-left">
+      <button class="topbar-icon-btn mobile-menu-toggle" id="mobile-menu-toggle" style="display: none;" aria-label="Toggle menu">
+        <i data-lucide="menu"></i>
+      </button>
+      <a href="dashboard.html" class="staff-brand-badge">
+        BRI APPARELL
+        <span class="staff-role-pill">STAFF</span>
+      </a>
+    </div>
+
+    <div class="topbar-search-wrap">
+      <i data-lucide="search" class="topbar-search-icon" style="width:16px;height:16px;"></i>
+      <input type="text" id="topbar-global-search" class="topbar-search-input" placeholder="Search orders, SKU, customer name, phone... (Press Enter)">
+    </div>
+
+    <div class="topbar-right">
+      <a href="notifications.html" class="topbar-icon-btn" aria-label="Notifications">
+        <i data-lucide="bell" style="width:18px;height:18px;"></i>
+        <span class="notif-badge-dot" id="topbar-notif-dot"></span>
+      </a>
+
+      <div class="staff-user-chip" id="staff-user-chip">
+        <div class="user-avatar-circle">AV</div>
+        <div class="user-text-info">
+          <span class="user-name">Alexander Vance</span>
+          <span class="user-role-label">EMP-0012 &bull; Retail Staff</span>
+        </div>
+        <i data-lucide="chevron-down" style="width:14px;height:14px;color:var(--staff-gray-500);"></i>
+
+        <div class="user-menu-dropdown" id="staff-user-dropdown">
+          <a href="profile.html" class="dropdown-item"><i data-lucide="user" style="width:16px;height:16px;"></i> My Profile</a>
+          <a href="profile.html#security" class="dropdown-item"><i data-lucide="lock" style="width:16px;height:16px;"></i> Change Password</a>
+          <div class="dropdown-divider"></div>
+          <a href="../index.html" class="dropdown-item" style="color:#b91c1c;"><i data-lucide="log-out" style="width:16px;height:16px;"></i> Exit to Storefront</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="staff-app-container">
+    <!-- Sidebar Navigation -->
+    <aside class="staff-sidebar">
+      <div>
+        <div class="sidebar-nav-group">
+          <span class="sidebar-group-title">OPERATIONS</span>
+          <ul class="sidebar-nav-list">
+            <li class="sidebar-nav-item">
+              <a href="dashboard.html" class="sidebar-link">
+                <i data-lucide="layout-grid"></i>
+                <span>Dashboard</span>
+              </a>
+            </li>
+            <li class="sidebar-nav-item">
+              <a href="orders.html" class="sidebar-link active">
+                <i data-lucide="shopping-bag"></i>
+                <span>Orders</span>
+                <span class="sidebar-link-badge" id="badge-pending-orders">0</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <div class="sidebar-nav-group">
+          <span class="sidebar-group-title">CATALOG & STOCK</span>
+          <ul class="sidebar-nav-list">
+            <li class="sidebar-nav-item"><a href="products.html" class="sidebar-link"><i data-lucide="package"></i><span>All Products</span></a></li>
+            <li class="sidebar-nav-item"><a href="inventory.html" class="sidebar-link"><i data-lucide="boxes"></i><span>Inventory Stock</span></a></li>
+            <li class="sidebar-nav-item"><a href="low-stock.html" class="sidebar-link"><i data-lucide="alert-triangle"></i><span>Low Stock Alert</span><span class="sidebar-link-badge" id="badge-low-stock" style="background-color:#dc2626;">0</span></a></li>
+            <li class="sidebar-nav-item"><a href="stock-history.html" class="sidebar-link"><i data-lucide="history"></i><span>Stock Movement Log</span></a></li>
+          </ul>
+        </div>
+
+        <div class="sidebar-nav-group">
+          <span class="sidebar-group-title">RELATIONS</span>
+          <ul class="sidebar-nav-list">
+            <li class="sidebar-nav-item"><a href="customers.html" class="sidebar-link"><i data-lucide="users"></i><span>Customers</span></a></li>
+            <li class="sidebar-nav-item"><a href="reviews.html" class="sidebar-link"><i data-lucide="message-square"></i><span>Product Reviews</span></a></li>
+          </ul>
+        </div>
+
+        <div class="sidebar-nav-group">
+          <span class="sidebar-group-title">SYSTEM & USER</span>
+          <ul class="sidebar-nav-list">
+            <li class="sidebar-nav-item"><a href="notifications.html" class="sidebar-link"><i data-lucide="bell"></i><span>Notifications</span></a></li>
+            <li class="sidebar-nav-item"><a href="profile.html" class="sidebar-link"><i data-lucide="user-check"></i><span>My Profile</span></a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="sidebar-footer">
+        <a href="../index.html" class="sidebar-client-portal-link">
+          <i data-lucide="external-link" style="width:14px;height:14px;"></i>
+          <span>View Customer Website</span>
+        </a>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="staff-main-wrapper">
+      
+      <div id="order-details-container">
+        <!-- Injected via JavaScript based on ?id= -->
+      </div>
+
+    </main>
+  </div>
+
+  <!-- Scripts -->
+  <script src="../products.js"></script>
+  <script src="../js/staff-data.js"></script>
+  <script src="../js/staff.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      STAFF.ui.init('orders');
+
+      const urlParams = new URLSearchParams(window.location.search);
+      const orderId = urlParams.get('id') || 'BRI-00125';
+      const container = document.getElementById('order-details-container');
+
+      function renderOrderDetails() {
+        const order = STAFF.store.getOrderById(orderId);
+        if (!order) {
+          container.innerHTML = `
+            <div style="text-align:center; padding: 4rem 1rem;">
+              <h2 style="font-size:1.5rem; font-weight:700; margin-bottom:0.5rem;">ORDER NOT FOUND</h2>
+              <p style="color:var(--staff-gray-600); font-size:0.875rem; margin-bottom:1.5rem;">No customer fulfillment record matches identifier "${orderId}".</p>
+              <a href="orders.html" class="btn-staff btn-staff-primary">RETURN TO ORDER BOOK</a>
+            </div>
+          `;
+          return;
+        }
+
+        const step = order.statusStep || 1;
+
+        // Contextual action button generator
+        let actionButtonsHtml = '';
+        if (order.status === 'Pending') {
+          actionButtonsHtml = `
+            <button class="btn-staff btn-staff-danger btn-staff-sm" id="btn-cancel-order">CANCEL ORDER</button>
+            <button class="btn-staff btn-staff-primary" id="btn-confirm-order">
+              <i data-lucide="check" style="width:15px;height:15px;"></i>
+              CONFIRM ORDER
+            </button>
+          `;
+        } else if (order.status === 'Confirmed') {
+          actionButtonsHtml = `
+            <button class="btn-staff btn-staff-primary" id="btn-start-process">
+              <i data-lucide="package" style="width:15px;height:15px;"></i>
+              START PROCESSING / PICK ITEMS
+            </button>
+          `;
+        } else if (order.status === 'Processing') {
+          actionButtonsHtml = `
+            <button class="btn-staff btn-staff-primary" id="btn-mark-packed">
+              <i data-lucide="boxes" style="width:15px;height:15px;"></i>
+              MARK AS PACKED
+            </button>
+          `;
+        } else if (order.status === 'Packed') {
+          actionButtonsHtml = `
+            <button class="btn-staff btn-staff-primary" id="btn-mark-ready">
+              <i data-lucide="truck" style="width:15px;height:15px;"></i>
+              READY FOR COURIER PICKUP
+            </button>
+          `;
+        } else if (order.status === 'Ready to Ship') {
+          actionButtonsHtml = `
+            <button class="btn-staff btn-staff-primary" id="btn-mark-shipped">
+              <i data-lucide="send" style="width:15px;height:15px;"></i>
+              DISPATCH & MARK AS SHIPPED
+            </button>
+          `;
+        } else if (order.status === 'Shipped') {
+          actionButtonsHtml = `
+            <button class="btn-staff btn-staff-primary" id="btn-mark-delivered">
+              <i data-lucide="check-circle" style="width:15px;height:15px;"></i>
+              CONFIRM DELIVERY RECEIPT
+            </button>
+          `;
+        } else if (order.status === 'Delivered') {
+          actionButtonsHtml = `
+            <span class="status-pill badge-delivered" style="padding:0.4rem 0.8rem; font-size:0.75rem;">
+              <i data-lucide="check-check" style="width:14px;height:14px; margin-right:4px;"></i>
+              FULFILLMENT COMPLETED
+            </span>
+          `;
+        }
+
+        container.innerHTML = `
+          <!-- Header Banner -->
+          <div class="staff-page-header">
+            <div>
+              <div class="staff-breadcrumbs">
+                <a href="orders.html">ORDERS</a> &bull; <span>${order.orderId}</span>
+              </div>
+              <div style="display:flex; align-items:center; gap:0.75rem; margin-top:0.25rem;">
+                <h1 class="staff-page-title">ORDER ${order.orderId}</h1>
+                ${STAFF.badge(order.status)}
+                ${STAFF.badge(order.paymentStatus)}
+              </div>
+              <p class="staff-page-desc">Placed on ${STAFF.formatDateTime(order.date)} &bull; Assigned to: LBC Express</p>
+            </div>
+
+            <div class="header-actions">
+              <button class="btn-staff btn-staff-outline btn-staff-sm" id="btn-print-slip">
+                <i data-lucide="printer" style="width:14px;height:14px;"></i>
+                PRINT PACKING SLIP
+              </button>
+              ${actionButtonsHtml}
+            </div>
+          </div>
+
+          <!-- 7-Step Visual Fulfillment Timeline -->
+          <div class="staff-card">
+            <div class="staff-card-header">
+              <span class="staff-card-title">FULFILLMENT WORKFLOW PIPELINE</span>
+              <span style="font-size:0.75rem; color:var(--staff-gray-500);">Current State: <strong>${order.status.toUpperCase()}</strong></span>
+            </div>
+            <div class="staff-card-body" style="padding: 1.5rem 1rem;">
+              <div class="staff-timeline-wrap">
+                <div class="staff-timeline">
+                  <div class="timeline-step ${step >= 1 ? 'completed' : ''}">
+                    <div class="timeline-step-dot">1</div>
+                    <span class="timeline-step-title">Order Placed</span>
+                  </div>
+                  <div class="timeline-step ${step >= 2 ? 'completed' : (step === 1 ? 'active' : '')}">
+                    <div class="timeline-step-dot">2</div>
+                    <span class="timeline-step-title">Confirmed</span>
+                  </div>
+                  <div class="timeline-step ${step >= 3 ? 'completed' : (step === 2 ? 'active' : '')}">
+                    <div class="timeline-step-dot">3</div>
+                    <span class="timeline-step-title">Processing</span>
+                  </div>
+                  <div class="timeline-step ${step >= 4 ? 'completed' : (step === 3 ? 'active' : '')}">
+                    <div class="timeline-step-dot">4</div>
+                    <span class="timeline-step-title">Packed</span>
+                  </div>
+                  <div class="timeline-step ${step >= 5 ? 'completed' : (step === 4 ? 'active' : '')}">
+                    <div class="timeline-step-dot">5</div>
+                    <span class="timeline-step-title">Ready to Ship</span>
+                  </div>
+                  <div class="timeline-step ${step >= 6 ? 'completed' : (step === 5 ? 'active' : '')}">
+                    <div class="timeline-step-dot">6</div>
+                    <span class="timeline-step-title">Shipped</span>
+                  </div>
+                  <div class="timeline-step ${step >= 7 ? 'completed' : (step === 6 ? 'active' : '')}">
+                    <div class="timeline-step-dot">7</div>
+                    <span class="timeline-step-title">Delivered</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div style="display:grid; grid-template-columns: 1.8fr 1fr; gap: 2rem; align-items: flex-start;" class="order-details-grid">
+            
+            <!-- Left Side: Order Items Table & Special Notes -->
+            <div>
+              <div class="staff-card">
+                <div class="staff-card-header">
+                  <span class="staff-card-title">GARMENT ITEMS TO PICK & PACK (${order.items.length})</span>
+                </div>
+                <div class="staff-table-wrap">
+                  <table class="staff-table">
+                    <thead>
+                      <tr>
+                        <th>PRODUCT</th>
+                        <th>SKU</th>
+                        <th>VARIANT</th>
+                        <th>SIZE</th>
+                        <th>QTY</th>
+                        <th>PRICE</th>
+                        <th style="text-align: right;">TOTAL</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      ${order.items.map(item => `
+                        <tr>
+                          <td><strong>${item.name}</strong></td>
+                          <td class="mono-cell" style="font-size:0.75rem;">${item.sku}</td>
+                          <td>${item.variant}</td>
+                          <td><strong>${item.size}</strong></td>
+                          <td class="mono-cell">${item.quantity}</td>
+                          <td class="mono-cell">${STAFF.formatMoney(item.price)}</td>
+                          <td class="mono-cell" style="text-align: right; font-weight:700;">${STAFF.formatMoney(item.total)}</td>
+                        </tr>
+                      `).join('')}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+              <!-- Special Handling Instructions -->
+              <div class="staff-card">
+                <div class="staff-card-header">
+                  <span class="staff-card-title">PACKING NOTES & COURIER DISPATCH</span>
+                </div>
+                <div class="staff-card-body">
+                  <p style="font-size:0.875rem; color:var(--staff-gray-700); margin-bottom:1rem;">
+                    <strong>Customer Instructions:</strong> ${order.notes || 'No special handling instructions provided.'}
+                  </p>
+                  <div style="display:flex; justify-content:space-between; padding:0.75rem 1rem; background:var(--staff-gray-50); border:1px solid var(--border-subtle); font-size:0.8125rem;">
+                    <span>COURIER: <strong>${order.courier || 'LBC Express'}</strong></span>
+                    <span>WAYBILL / TRACKING: <strong class="mono-cell">${order.trackingNumber || 'Pending Generation'}</strong></span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Audit Event Log -->
+              <div class="staff-card">
+                <div class="staff-card-header">
+                  <span class="staff-card-title">AUDIT LOG & EVENT TIMELINE</span>
+                </div>
+                <div class="staff-card-body" style="padding-top: 1rem;">
+                  <div style="display:flex; flex-direction:column; gap:0.85rem;">
+                    ${order.history.map(h => `
+                      <div style="display:flex; justify-content:space-between; font-size:0.8125rem; border-bottom:1px solid var(--border-subtle); padding-bottom:0.6rem;">
+                        <div>
+                          <strong style="display:block;">${h.event}</strong>
+                          <span style="font-size:0.6875rem; color:var(--staff-gray-500);">By: ${h.staff}</span>
+                        </div>
+                        <span style="font-size:0.75rem; color:var(--staff-gray-500);">${STAFF.formatDateTime(h.time)}</span>
+                      </div>
+                    `).join('')}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Right Side: Customer Info & Financial Breakdown -->
+            <div style="display:flex; flex-direction:column; gap:2rem;">
+              
+              <!-- Customer Profile Card -->
+              <div class="staff-card" style="margin-bottom:0;">
+                <div class="staff-card-header">
+                  <span class="staff-card-title">CUSTOMER INFORMATION</span>
+                  <a href="customer-details.html?id=${order.customer.id || 'CUST-001'}" class="btn-staff btn-staff-outline btn-staff-sm">
+                    PROFILE &rarr;
+                  </a>
+                </div>
+                <div class="staff-card-body" style="display:flex; flex-direction:column; gap:1rem; font-size:0.8125rem;">
+                  <div>
+                    <span style="font-size:0.6875rem; color:var(--staff-gray-500); font-weight:700; text-transform:uppercase;">FULL NAME</span>
+                    <strong style="display:block; font-size:0.9375rem; color:var(--staff-black);">${order.customer.name}</strong>
+                  </div>
+                  <div>
+                    <span style="font-size:0.6875rem; color:var(--staff-gray-500); font-weight:700; text-transform:uppercase;">CONTACT CHANNELS</span>
+                    <span style="display:block;">${order.customer.email}</span>
+                    <span style="display:block; font-family:var(--font-mono); font-weight:600;">${order.customer.phone}</span>
+                  </div>
+                  <div>
+                    <span style="font-size:0.6875rem; color:var(--staff-gray-500); font-weight:700; text-transform:uppercase;">SHIPPING DESTINATION</span>
+                    <p style="color:var(--staff-gray-700); line-height:1.5; margin-top:0.25rem;">
+                      ${order.customer.address}
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Financial Breakdown Card -->
+              <div class="staff-card" style="margin-bottom:0;">
+                <div class="staff-card-header">
+                  <span class="staff-card-title">FINANCIAL SUMMARY</span>
+                  ${STAFF.badge(order.paymentStatus)}
+                </div>
+                <div class="staff-card-body" style="display:flex; flex-direction:column; gap:0.75rem; font-size:0.8125rem;">
+                  <div style="display:flex; justify-content:space-between;">
+                    <span style="color:var(--staff-gray-600);">Garments Subtotal</span>
+                    <span class="mono-cell">${STAFF.formatMoney(order.subtotal)}</span>
+                  </div>
+                  <div style="display:flex; justify-content:space-between; color:#b91c1c;">
+                    <span>Voucher Discount</span>
+                    <span class="mono-cell">-${STAFF.formatMoney(order.discount)}</span>
+                  </div>
+                  <div style="display:flex; justify-content:space-between;">
+                    <span style="color:var(--staff-gray-600);">Shipping Fee</span>
+                    <span class="mono-cell">${order.shippingFee === 0 ? 'FREE' : STAFF.formatMoney(order.shippingFee)}</span>
+                  </div>
+                  <div style="display:flex; justify-content:space-between; border-top:1px solid var(--border-subtle); padding-top:0.75rem; font-weight:800; font-size:1rem;">
+                    <span>TOTAL SETTLED</span>
+                    <span class="mono-cell">${STAFF.formatMoney(order.total)}</span>
+                  </div>
+                  <div style="font-size:0.75rem; color:var(--staff-gray-500); margin-top:0.5rem;">
+                    SETTLEMENT METHOD: <strong>${order.paymentMethod}</strong>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+        `;
+
+        if (window.lucide) window.lucide.createIcons();
+        bindWorkflowActions(order);
+      }
+
+      function bindWorkflowActions(order) {
+        // Confirm Order
+        const confirmBtn = document.getElementById('btn-confirm-order');
+        if (confirmBtn) {
+          confirmBtn.addEventListener('click', () => {
+            STAFF.modal.confirm({
+              title: `CONFIRM ORDER ${order.orderId}?`,
+              message: 'Stock will be reserved in the warehouse and customer notified that fulfillment has started.',
+              confirmText: 'CONFIRM & RESERVE STOCK',
+              onConfirm: () => {
+                STAFF.workflow.advanceStatus(order.orderId, 'Confirmed', 'Order confirmed by staff and inventory reserved.');
+                STAFF.toast.show(`Order ${order.orderId} confirmed.`);
+                renderOrderDetails();
+              }
+            });
+          });
+        }
+
+        // Cancel Order
+        const cancelBtn = document.getElementById('btn-cancel-order');
+        if (cancelBtn) {
+          cancelBtn.addEventListener('click', () => {
+            STAFF.modal.confirm({
+              title: `CANCEL ORDER ${order.orderId}?`,
+              message: 'Are you sure you want to cancel this order? This will release reserved stock back into inventory.',
+              confirmText: 'CANCEL ORDER',
+              isDanger: true,
+              onConfirm: () => {
+                STAFF.workflow.advanceStatus(order.orderId, 'Cancelled', 'Order cancelled by staff.');
+                STAFF.toast.show(`Order ${order.orderId} cancelled.`, 'warn');
+                renderOrderDetails();
+              }
+            });
+          });
+        }
+
+        // Start Processing
+        const processBtn = document.getElementById('btn-start-process');
+        if (processBtn) {
+          processBtn.addEventListener('click', () => {
+            STAFF.workflow.advanceStatus(order.orderId, 'Processing', 'Items sent to picking station.');
+            STAFF.toast.show(`Order ${order.orderId} moved to Processing.`);
+            renderOrderDetails();
+          });
+        }
+
+        // Mark Packed
+        const packBtn = document.getElementById('btn-mark-packed');
+        if (packBtn) {
+          packBtn.addEventListener('click', () => {
+            STAFF.modal.confirm({
+              title: `CONFIRM PACKING FOR ${order.orderId}?`,
+              message: 'Verify that all garments have been inspected for quality and wrapped in signature packaging.',
+              confirmText: 'MARK AS PACKED',
+              onConfirm: () => {
+                STAFF.workflow.advanceStatus(order.orderId, 'Packed', 'Items verified and packed in garment bag.');
+                STAFF.toast.show(`Order ${order.orderId} marked as Packed.`);
+                renderOrderDetails();
+              }
+            });
+          });
+        }
+
+        // Mark Ready
+        const readyBtn = document.getElementById('btn-mark-ready');
+        if (readyBtn) {
+          readyBtn.addEventListener('click', () => {
+            STAFF.workflow.advanceStatus(order.orderId, 'Ready to Ship', 'Package sealed with shipping manifest.');
+            STAFF.toast.show(`Order ${order.orderId} is Ready to Ship.`);
+            renderOrderDetails();
+          });
+        }
+
+        // Mark Shipped
+        const shipBtn = document.getElementById('btn-mark-shipped');
+        if (shipBtn) {
+          shipBtn.addEventListener('click', () => {
+            STAFF.modal.confirm({
+              title: `DISPATCH PARCEL FOR ${order.orderId}?`,
+              message: 'Confirm handover of parcel to courier driver with manifest barcode scan.',
+              confirmText: 'DISPATCH PARCEL',
+              onConfirm: () => {
+                STAFF.workflow.advanceStatus(order.orderId, 'Shipped', 'Handed over to courier driver.');
+                STAFF.toast.show(`Order ${order.orderId} dispatched to courier.`);
+                renderOrderDetails();
+              }
+            });
+          });
+        }
+
+        // Mark Delivered
+        const deliverBtn = document.getElementById('btn-mark-delivered');
+        if (deliverBtn) {
+          deliverBtn.addEventListener('click', () => {
+            STAFF.workflow.advanceStatus(order.orderId, 'Delivered', 'Proof of delivery signed by customer.');
+            STAFF.toast.show(`Order ${order.orderId} marked as Delivered.`);
+            renderOrderDetails();
+          });
+        }
+
+        // Print Slip
+        const printBtn = document.getElementById('btn-print-slip');
+        if (printBtn) {
+          printBtn.addEventListener('click', () => {
+            window.print();
+          });
+        }
+      }
+
+      renderOrderDetails();
+    });
+  </script>
+</body>
+</html>

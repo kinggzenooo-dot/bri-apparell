@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Payment Management | BRI APPARELL Admin</title>
+  <link rel="stylesheet" href="css/admin.css">
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+
+  <!-- Topbar -->
+  <header class="staff-topbar">
+    <div class="topbar-left">
+      <button class="topbar-icon-btn mobile-menu-toggle" id="mobile-menu-toggle" style="display: none;" aria-label="Toggle menu">
+        <i data-lucide="menu"></i>
+      </button>
+      <a href="index.html" class="staff-brand-badge">
+        BRI APPARELL
+        <span class="admin-role-pill">ADMIN</span>
+      </a>
+    </div>
+
+    <div class="topbar-search-wrap">
+      <i data-lucide="search" class="topbar-search-icon" style="width:16px;height:16px;"></i>
+      <input type="text" id="topbar-global-search" class="topbar-search-input" placeholder="Search payments...">
+    </div>
+
+    <div class="topbar-right">
+      <a href="notifications.html" class="topbar-icon-btn" aria-label="Notifications">
+        <i data-lucide="bell" style="width:18px;height:18px;"></i>
+        <span class="notif-badge-dot" id="topbar-notif-dot" style="display:none;"></span>
+      </a>
+
+      <!-- Admin User Chip -->
+      <div class="staff-user-chip" id="admin-user-chip">
+        <div class="user-avatar-circle admin-user-avatar">AV</div>
+        <div class="user-text-info">
+          <span class="user-name admin-user-name">Administrator Vance</span>
+          <span class="user-role-label admin-user-role">Super Admin</span>
+        </div>
+        <i data-lucide="chevron-down" style="width:14px;height:14px;color:var(--staff-gray-500);"></i>
+
+        <div class="user-menu-dropdown" id="admin-user-dropdown">
+          <a href="profile.html" class="dropdown-item">My Profile</a>
+          <a href="settings.html" class="dropdown-item">System Settings</a>
+          <div class="dropdown-divider"></div>
+          <a href="#" class="dropdown-item admin-logout-btn" style="color:#b91c1c;">Sign Out</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="staff-app-container">
+    <!-- Sidebar -->
+    <aside class="staff-sidebar">
+      <div>
+        <div class="sidebar-nav-group">
+          <span class="sidebar-group-title">OVERVIEW</span>
+          <ul class="sidebar-nav-list">
+            <li class="sidebar-nav-item"><a href="index.html" class="sidebar-nav-link"><i data-lucide="layout-dashboard"></i> Dashboard</a></li>
+            <li class="sidebar-nav-item"><a href="reports.html" class="sidebar-nav-link"><i data-lucide="bar-chart-3"></i> Reports & Analytics</a></li>
+          </ul>
+        </div>
+        <div class="sidebar-nav-group">
+          <span class="sidebar-group-title">MANAGEMENT</span>
+          <ul class="sidebar-nav-list">
+            <li class="sidebar-nav-item"><a href="users.html" class="sidebar-nav-link"><i data-lucide="shield-check"></i> User Management</a></li>
+            <li class="sidebar-nav-item"><a href="customers.html" class="sidebar-nav-link"><i data-lucide="users"></i> Customers</a></li>
+            <li class="sidebar-nav-item"><a href="products.html" class="sidebar-nav-link"><i data-lucide="shirt"></i> Products & Catalog</a></li>
+            <li class="sidebar-nav-item"><a href="categories.html" class="sidebar-nav-link"><i data-lucide="folder-tree"></i> Categories</a></li>
+            <li class="sidebar-nav-item"><a href="orders.html" class="sidebar-nav-link"><i data-lucide="shopping-bag"></i> Orders & Transactions</a></li>
+            <li class="sidebar-nav-item"><a href="inventory.html" class="sidebar-nav-link"><i data-lucide="boxes"></i> Inventory & Stock</a></li>
+            <li class="sidebar-nav-item active"><a href="payments.html" class="sidebar-nav-link"><i data-lucide="credit-card"></i> Payments</a></li>
+          </ul>
+        </div>
+        <div class="sidebar-nav-group">
+          <span class="sidebar-group-title">SYSTEM</span>
+          <ul class="sidebar-nav-list">
+            <li class="sidebar-nav-item"><a href="notifications.html" class="sidebar-nav-link"><i data-lucide="bell"></i> Notifications</a></li>
+            <li class="sidebar-nav-item"><a href="settings.html" class="sidebar-nav-link"><i data-lucide="settings"></i> System Settings</a></li>
+            <li class="sidebar-nav-item"><a href="profile.html" class="sidebar-nav-link"><i data-lucide="user"></i> Admin Profile</a></li>
+          </ul>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="staff-main-content">
+      <div class="page-header" style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1.5rem;">
+        <div>
+          <h1 class="page-title" style="font-size:1.75rem; font-weight:800; font-family:var(--font-brand);">PAYMENTS & TRANSACTIONS</h1>
+          <p class="page-subtitle" style="color:var(--staff-gray-500); font-size:0.875rem;">Settlement logs, payment gateways (GCash, Maya, Cards, COD), and transaction audit verification.</p>
+        </div>
+      </div>
+
+      <!-- Toolbar -->
+      <div class="admin-toolbar">
+        <div class="toolbar-search">
+          <i data-lucide="search" style="width:16px;height:16px;color:var(--staff-gray-500);"></i>
+          <input type="text" id="pay-search-input" placeholder="Search Transaction ID, Order ID, Customer...">
+        </div>
+        <div class="toolbar-filters">
+          <select id="pay-status-filter" class="toolbar-select">
+            <option value="all">All Statuses</option>
+            <option value="Paid">Paid / Completed</option>
+            <option value="Pending">Pending Verification</option>
+            <option value="Refunded">Refunded</option>
+            <option value="Failed">Failed</option>
+          </select>
+          <select id="pay-method-filter" class="toolbar-select">
+            <option value="all">All Payment Methods</option>
+            <option value="gcash">GCash</option>
+            <option value="maya">Maya</option>
+            <option value="card">Credit / Debit Card</option>
+            <option value="cod">Cash on Delivery (COD)</option>
+          </select>
+          <button class="btn btn-outline" id="refresh-pay-btn" style="padding:0.5rem 0.75rem;">
+            <i data-lucide="rotate-cw" style="width:14px;height:14px;"></i> Refresh
+          </button>
+        </div>
+      </div>
+
+      <!-- Payments Table -->
+      <div class="card" style="background:#fff; border:1px solid var(--border-subtle); border-radius:var(--radius-sm); padding:1rem 1.5rem;">
+        <div class="table-responsive">
+          <table class="data-table" style="width:100%; border-collapse:collapse; font-size:0.8125rem;">
+            <thead>
+              <tr style="text-align:left; border-bottom:1px solid var(--border-subtle); color:var(--staff-gray-500);">
+                <th style="padding:0.75rem 0.5rem;">TRANSACTION REF</th>
+                <th style="padding:0.75rem 0.5rem;">ORDER ID</th>
+                <th style="padding:0.75rem 0.5rem;">CUSTOMER</th>
+                <th style="padding:0.75rem 0.5rem;">AMOUNT</th>
+                <th style="padding:0.75rem 0.5rem;">METHOD</th>
+                <th style="padding:0.75rem 0.5rem;">STATUS</th>
+                <th style="padding:0.75rem 0.5rem;">DATE</th>
+                <th style="padding:0.75rem 0.5rem; text-align:right;">ACTION</th>
+              </tr>
+            </thead>
+            <tbody id="payments-tbody">
+              <tr><td colspan="8" style="padding:2rem; text-align:center; color:var(--staff-gray-500);">Loading payment transactions...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="js/admin.js"></script>
+  <script>
+    let paymentsList = [];
+
+    async function loadPayments() {
+      const search = document.getElementById('pay-search-input').value.trim();
+      const status = document.getElementById('pay-status-filter').value;
+      const method = document.getElementById('pay-method-filter').value;
+
+      const params = new URLSearchParams();
+      if (search) params.append('search', search);
+      if (status !== 'all') params.append('status', status);
+      if (method !== 'all') params.append('method', method);
+
+      try {
+        const res = await Admin.api(`/payments?${params.toString()}`);
+        paymentsList = res.payments || [];
+        renderPayments();
+      } catch (err) {
+        Admin.toast(err.message, 'error');
+      }
+    }
+
+    function renderPayments() {
+      const tbody = document.getElementById('payments-tbody');
+      if (paymentsList.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="8" style="padding:2rem; text-align:center; color:var(--staff-gray-500);">No payment records found.</td></tr>';
+        return;
+      }
+
+      tbody.innerHTML = paymentsList.map(p => {
+        let badge = '<span class="badge badge-success">Paid</span>';
+        if (p.status === 'Pending') badge = '<span class="badge badge-warning">Pending</span>';
+        if (p.status === 'Refunded') badge = '<span class="badge" style="background:#fee2e2; color:#991b1b;">Refunded</span>';
+
+        return `
+          <tr style="border-bottom:1px solid var(--border-subtle);">
+            <td style="padding:0.75rem 0.5rem; font-family:var(--font-mono); font-weight:700;">${p.reference_number || p.id}</td>
+            <td style="padding:0.75rem 0.5rem; font-family:var(--font-mono);">
+              <a href="order-details.html?id=${p.order_id}" style="color:var(--staff-black); text-decoration:none;">${p.order_id}</a>
+            </td>
+            <td style="padding:0.75rem 0.5rem;">
+              <div style="font-weight:700;">${p.customer_name}</div>
+              <div style="font-size:0.75rem; color:var(--staff-gray-500);">${p.customer_email}</div>
+            </td>
+            <td style="padding:0.75rem 0.5rem; font-family:var(--font-mono); font-weight:800; font-size:0.9375rem;">
+              ${Admin.formatMoney(p.amount)}
+            </td>
+            <td style="padding:0.75rem 0.5rem; text-transform:uppercase; font-size:0.75rem; font-weight:600;">
+              ${p.payment_method}
+            </td>
+            <td style="padding:0.75rem 0.5rem;">${badge}</td>
+            <td style="padding:0.75rem 0.5rem; color:var(--staff-gray-500);">${Admin.formatDate(p.paid_at)}</td>
+            <td style="padding:0.75rem 0.5rem; text-align:right;">
+              <div style="display:inline-flex; gap:0.25rem;">
+                ${p.status !== 'Paid' ? `
+                  <button class="btn-sm btn-outline mark-paid-btn" data-id="${p.id}" title="Mark Paid">
+                    <i data-lucide="check" style="width:12px;height:12px;color:#15803d;"></i>
+                  </button>
+                ` : ''}
+                ${p.status !== 'Refunded' ? `
+                  <button class="btn-sm btn-outline mark-refund-btn" data-id="${p.id}" title="Refund">
+                    <i data-lucide="rotate-ccw" style="width:12px;height:12px;color:#b91c1c;"></i>
+                  </button>
+                ` : ''}
+              </div>
+            </td>
+          </tr>
+        `;
+      }).join('');
+
+      if (window.lucide) window.lucide.createIcons();
+
+      document.querySelectorAll('.mark-paid-btn').forEach(btn => {
+        btn.addEventListener('click', async () => {
+          try {
+            await Admin.api(`/payments/${btn.dataset.id}/status`, {
+              method: 'PUT',
+              body: JSON.stringify({ status: 'Paid', notes: 'Manually verified in admin console' })
+            });
+            Admin.toast('Payment verified as Paid.', 'success');
+            loadPayments();
+          } catch (err) {
+            Admin.toast(err.message, 'error');
+          }
+        });
+      });
+
+      document.querySelectorAll('.mark-refund-btn').forEach(btn => {
+        btn.addEventListener('click', async () => {
+          if (!confirm('Refund this payment?')) return;
+          try {
+            await Admin.api(`/payments/${btn.dataset.id}/status`, {
+              method: 'PUT',
+              body: JSON.stringify({ status: 'Refunded', notes: 'Refund processed in admin console' })
+            });
+            Admin.toast('Payment marked as Refunded.', 'success');
+            loadPayments();
+          } catch (err) {
+            Admin.toast(err.message, 'error');
+          }
+        });
+      });
+    }
+
+    document.getElementById('pay-search-input').addEventListener('input', () => loadPayments());
+    document.getElementById('pay-status-filter').addEventListener('change', () => loadPayments());
+    document.getElementById('pay-method-filter').addEventListener('change', () => loadPayments());
+    document.getElementById('refresh-pay-btn').addEventListener('click', () => loadPayments());
+
+    document.addEventListener('DOMContentLoaded', loadPayments);
+  </script>
+</body>
+</html>

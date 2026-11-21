@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Staff Operations Dashboard | BRI APPARELL</title>
+  <link rel="stylesheet" href="../css/staff.css">
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+
+  <!-- Topbar -->
+  <header class="staff-topbar">
+    <div class="topbar-left">
+      <button class="topbar-icon-btn mobile-menu-toggle" id="mobile-menu-toggle" style="display: none;" aria-label="Toggle menu">
+        <i data-lucide="menu"></i>
+      </button>
+      <a href="dashboard.html" class="staff-brand-badge">
+        BRI APPARELL
+        <span class="staff-role-pill">STAFF</span>
+      </a>
+    </div>
+
+    <div class="topbar-search-wrap">
+      <i data-lucide="search" class="topbar-search-icon" style="width:16px;height:16px;"></i>
+      <input type="text" id="topbar-global-search" class="topbar-search-input" placeholder="Search orders, SKU, customer name, phone... (Press Enter)">
+    </div>
+
+    <div class="topbar-right">
+      <a href="notifications.html" class="topbar-icon-btn" aria-label="Notifications">
+        <i data-lucide="bell" style="width:18px;height:18px;"></i>
+        <span class="notif-badge-dot" id="topbar-notif-dot"></span>
+      </a>
+
+      <!-- Staff Profile Chip & Menu -->
+      <div class="staff-user-chip" id="staff-user-chip">
+        <div class="user-avatar-circle">AV</div>
+        <div class="user-text-info">
+          <span class="user-name">Alexander Vance</span>
+          <span class="user-role-label">EMP-0012 &bull; Retail Staff</span>
+        </div>
+        <i data-lucide="chevron-down" style="width:14px;height:14px;color:var(--staff-gray-500);"></i>
+
+        <div class="user-menu-dropdown" id="staff-user-dropdown">
+          <a href="profile.html" class="dropdown-item">
+            <i data-lucide="user" style="width:16px;height:16px;"></i>
+            My Profile
+          </a>
+          <a href="profile.html#security" class="dropdown-item">
+            <i data-lucide="lock" style="width:16px;height:16px;"></i>
+            Change Password
+          </a>
+          <div class="dropdown-divider"></div>
+          <a href="../index.html" class="dropdown-item" style="color:#b91c1c;">
+            <i data-lucide="log-out" style="width:16px;height:16px;"></i>
+            Exit to Storefront
+          </a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="staff-app-container">
+    <!-- Sidebar Navigation -->
+    <aside class="staff-sidebar">
+      <div>
+        <div class="sidebar-nav-group">
+          <span class="sidebar-group-title">OPERATIONS</span>
+          <ul class="sidebar-nav-list">
+            <li class="sidebar-nav-item">
+              <a href="dashboard.html" class="sidebar-link active">
+                <i data-lucide="layout-grid"></i>
+                <span>Dashboard</span>
+              </a>
+            </li>
+            <li class="sidebar-nav-item">
+              <a href="orders.html" class="sidebar-link">
+                <i data-lucide="shopping-bag"></i>
+                <span>Orders</span>
+                <span class="sidebar-link-badge" id="badge-pending-orders">0</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <div class="sidebar-nav-group">
+          <span class="sidebar-group-title">CATALOG & STOCK</span>
+          <ul class="sidebar-nav-list">
+            <li class="sidebar-nav-item">
+              <a href="products.html" class="sidebar-link">
+                <i data-lucide="package"></i>
+                <span>All Products</span>
+              </a>
+            </li>
+            <li class="sidebar-nav-item">
+              <a href="inventory.html" class="sidebar-link">
+                <i data-lucide="boxes"></i>
+                <span>Inventory Stock</span>
+              </a>
+            </li>
+            <li class="sidebar-nav-item">
+              <a href="low-stock.html" class="sidebar-link">
+                <i data-lucide="alert-triangle"></i>
+                <span>Low Stock Alert</span>
+                <span class="sidebar-link-badge" id="badge-low-stock" style="background-color:#dc2626;">0</span>
+              </a>
+            </li>
+            <li class="sidebar-nav-item">
+              <a href="stock-history.html" class="sidebar-link">
+                <i data-lucide="history"></i>
+                <span>Stock Movement Log</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <div class="sidebar-nav-group">
+          <span class="sidebar-group-title">RELATIONS</span>
+          <ul class="sidebar-nav-list">
+            <li class="sidebar-nav-item">
+              <a href="customers.html" class="sidebar-link">
+                <i data-lucide="users"></i>
+                <span>Customers</span>
+              </a>
+            </li>
+            <li class="sidebar-nav-item">
+              <a href="reviews.html" class="sidebar-link">
+                <i data-lucide="message-square"></i>
+                <span>Product Reviews</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <div class="sidebar-nav-group">
+          <span class="sidebar-group-title">SYSTEM & USER</span>
+          <ul class="sidebar-nav-list">
+            <li class="sidebar-nav-item">
+              <a href="notifications.html" class="sidebar-link">
+                <i data-lucide="bell"></i>
+                <span>Notifications</span>
+              </a>
+            </li>
+            <li class="sidebar-nav-item">
+              <a href="profile.html" class="sidebar-link">
+                <i data-lucide="user-check"></i>
+                <span>My Profile</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="sidebar-footer">
+        <a href="../index.html" class="sidebar-client-portal-link">
+          <i data-lucide="external-link" style="width:14px;height:14px;"></i>
+          <span>View Customer Website</span>
+        </a>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="staff-main-wrapper">
+      
+      <!-- Page Header -->
+      <div class="staff-page-header">
+        <div>
+          <div class="staff-breadcrumbs">
+            <span>OPERATIONS</span> &bull; <span>OVERVIEW</span>
+          </div>
+          <h1 class="staff-page-title">OPERATIONS DASHBOARD</h1>
+          <p class="staff-page-desc">Real-time daily fulfillment, processing metrics, and stock monitoring.</p>
+        </div>
+
+        <div class="header-actions">
+          <a href="orders.html" class="btn-staff btn-staff-primary">
+            <i data-lucide="plus" style="width:16px;height:16px;"></i>
+            PROCESS ORDERS
+          </a>
+        </div>
+      </div>
+
+      <!-- Top Operational KPI Cards (5 Cards) -->
+      <div class="kpi-grid-5">
+        <!-- KPI 1 -->
+        <div class="kpi-card">
+          <div class="kpi-header">
+            <span class="kpi-label">TODAY'S ORDERS</span>
+            <div class="kpi-icon-wrap"><i data-lucide="shopping-bag" style="width:16px;height:16px;"></i></div>
+          </div>
+          <div class="kpi-number" id="kpi-today-orders">24</div>
+          <div class="kpi-footer">
+            <i data-lucide="check" style="width:12px;height:12px;color:#16a34a;"></i>
+            <span>All channels synced</span>
+          </div>
+        </div>
+
+        <!-- KPI 2 -->
+        <div class="kpi-card">
+          <div class="kpi-header">
+            <span class="kpi-label">PENDING ORDERS</span>
+            <div class="kpi-icon-wrap" style="background:#fefce8; color:#ca8a04;"><i data-lucide="clock" style="width:16px;height:16px;"></i></div>
+          </div>
+          <div class="kpi-number" id="kpi-pending-orders">8</div>
+          <div class="kpi-footer" style="color:#ca8a04;">
+            <span>Requires confirmation</span>
+          </div>
+        </div>
+
+        <!-- KPI 3 -->
+        <div class="kpi-card">
+          <div class="kpi-header">
+            <span class="kpi-label">TO PACK</span>
+            <div class="kpi-icon-wrap" style="background:#eff6ff; color:#2563eb;"><i data-lucide="package" style="width:16px;height:16px;"></i></div>
+          </div>
+          <div class="kpi-number" id="kpi-to-pack">6</div>
+          <div class="kpi-footer">
+            <span>In warehouse queue</span>
+          </div>
+        </div>
+
+        <!-- KPI 4 -->
+        <div class="kpi-card">
+          <div class="kpi-header">
+            <span class="kpi-label">READY TO SHIP</span>
+            <div class="kpi-icon-wrap" style="background:#f0fdf4; color:#16a34a;"><i data-lucide="truck" style="width:16px;height:16px;"></i></div>
+          </div>
+          <div class="kpi-number" id="kpi-ready-ship">10</div>
+          <div class="kpi-footer">
+            <span>Courier pickup scheduled</span>
+          </div>
+        </div>
+
+        <!-- KPI 5 -->
+        <div class="kpi-card">
+          <div class="kpi-header">
+            <span class="kpi-label">LOW STOCK</span>
+            <div class="kpi-icon-wrap" style="background:#fef2f2; color:#dc2626;"><i data-lucide="alert-triangle" style="width:16px;height:16px;"></i></div>
+          </div>
+          <div class="kpi-number" id="kpi-low-stock" style="color:#dc2626;">5</div>
+          <div class="kpi-footer" style="color:#dc2626;">
+            <span>Variants below threshold</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick Actions Strip -->
+      <div style="display:flex; gap:0.75rem; margin-bottom:2rem; flex-wrap:wrap;">
+        <a href="orders.html" class="btn-staff btn-staff-outline btn-staff-sm">
+          <i data-lucide="shopping-bag" style="width:14px;height:14px;"></i>
+          VIEW ALL ORDERS
+        </a>
+        <a href="inventory.html" class="btn-staff btn-staff-outline btn-staff-sm">
+          <i data-lucide="boxes" style="width:14px;height:14px;"></i>
+          CHECK INVENTORY
+        </a>
+        <a href="low-stock.html" class="btn-staff btn-staff-outline btn-staff-sm" style="color:#b91c1c; border-color:#fecaca;">
+          <i data-lucide="alert-triangle" style="width:14px;height:14px;"></i>
+          LOW STOCK ALERTS (5)
+        </a>
+        <a href="customers.html" class="btn-staff btn-staff-outline btn-staff-sm">
+          <i data-lucide="users" style="width:14px;height:14px;"></i>
+          CUSTOMER DIRECTORY
+        </a>
+      </div>
+
+      <!-- Recent Orders Operational Table -->
+      <div class="staff-card">
+        <div class="staff-card-header">
+          <div>
+            <h2 class="staff-card-title">RECENT CUSTOMER ORDERS</h2>
+            <span style="font-size:0.75rem; color:var(--staff-gray-500);">Live incoming orders requiring processing</span>
+          </div>
+          <a href="orders.html" class="btn-staff btn-staff-outline btn-staff-sm">View Full Order Book &rarr;</a>
+        </div>
+
+        <div class="staff-table-wrap">
+          <table class="staff-table">
+            <thead>
+              <tr>
+                <th>ORDER #</th>
+                <th>CUSTOMER</th>
+                <th>ITEMS</th>
+                <th>TOTAL</th>
+                <th>PAYMENT</th>
+                <th>STATUS</th>
+                <th>DATE</th>
+                <th style="text-align: right;">ACTION</th>
+              </tr>
+            </thead>
+            <tbody id="dashboard-recent-orders-tbody">
+              <!-- Dynamically Injected -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Low Stock Attention Table -->
+      <div class="staff-card">
+        <div class="staff-card-header">
+          <div>
+            <h2 class="staff-card-title">LOW STOCK ATTENTION</h2>
+            <span style="font-size:0.75rem; color:var(--staff-gray-500);">Garments currently at or below safety stock threshold (&le; 5 units)</span>
+          </div>
+          <a href="low-stock.html" class="btn-staff btn-staff-outline btn-staff-sm">View All Low Stock &rarr;</a>
+        </div>
+
+        <div class="staff-table-wrap">
+          <table class="staff-table">
+            <thead>
+              <tr>
+                <th>PRODUCT</th>
+                <th>SKU</th>
+                <th>VARIANT</th>
+                <th>CURRENT STOCK</th>
+                <th>THRESHOLD</th>
+                <th>STATUS</th>
+                <th style="text-align: right;">ACTION</th>
+              </tr>
+            </thead>
+            <tbody id="dashboard-low-stock-tbody">
+              <!-- Dynamically Injected -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <!-- Scripts -->
+  <script src="../products.js"></script>
+  <script src="../js/staff-data.js"></script>
+  <script src="../js/staff.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      STAFF.ui.init('dashboard');
+
+      const orders = STAFF.store.getOrders();
+      const inventory = STAFF.store.getInventory();
+
+      // Update KPI metrics
+      const pendingOrders = orders.filter(o => o.status === 'Pending').length;
+      const toPackOrders = orders.filter(o => o.status === 'Confirmed' || o.status === 'Processing').length;
+      const readyOrders = orders.filter(o => o.status === 'Ready to Ship' || o.status === 'Packed').length;
+      const lowStockItems = inventory.filter(i => i.stock <= i.threshold);
+
+      document.getElementById('kpi-pending-orders').textContent = pendingOrders;
+      document.getElementById('kpi-to-pack').textContent = toPackOrders;
+      document.getElementById('kpi-ready-ship').textContent = readyOrders;
+      document.getElementById('kpi-low-stock').textContent = lowStockItems.length;
+
+      // Render Recent Orders Table (Top 5)
+      const ordersTbody = document.getElementById('dashboard-recent-orders-tbody');
+      const recentOrders = orders.slice(0, 5);
+
+      ordersTbody.innerHTML = recentOrders.map(order => `
+        <tr>
+          <td class="mono-cell">
+            <a href="order-details.html?id=${order.orderId}" style="text-decoration:underline; font-weight:700;">
+              ${order.orderId}
+            </a>
+          </td>
+          <td>
+            <strong>${order.customer.name}</strong>
+            <span style="display:block; font-size:0.6875rem; color:var(--staff-gray-500);">${order.customer.phone}</span>
+          </td>
+          <td>${order.items.reduce((s, i) => s + i.quantity, 0)} items</td>
+          <td class="mono-cell">${STAFF.formatMoney(order.total)}</td>
+          <td>${STAFF.badge(order.paymentStatus)}</td>
+          <td>${STAFF.badge(order.status)}</td>
+          <td>${STAFF.formatDateOnly(order.date)}</td>
+          <td style="text-align: right;">
+            <a href="order-details.html?id=${order.orderId}" class="btn-staff btn-staff-outline btn-staff-sm">
+              <i data-lucide="eye" style="width:13px;height:13px;"></i>
+              VIEW
+            </a>
+          </td>
+        </tr>
+      `).join('');
+
+      // Render Low Stock Widget Table
+      const lowStockTbody = document.getElementById('dashboard-low-stock-tbody');
+      lowStockTbody.innerHTML = lowStockItems.slice(0, 4).map(item => `
+        <tr>
+          <td>
+            <strong>${item.name}</strong>
+            <span style="display:block; font-size:0.6875rem; color:var(--staff-gray-500);">${item.category}</span>
+          </td>
+          <td class="mono-cell">${item.sku}</td>
+          <td>${item.color} / <strong>${item.size}</strong></td>
+          <td class="mono-cell" style="font-weight:700; ${item.stock === 0 ? 'color:#dc2626;' : 'color:#ca8a04;'}">
+            ${item.stock} units
+          </td>
+          <td>${item.threshold} units</td>
+          <td>${STAFF.badge(item.status)}</td>
+          <td style="text-align: right;">
+            <a href="inventory.html?search=${encodeURIComponent(item.sku)}" class="btn-staff btn-staff-outline btn-staff-sm">
+              VIEW
+            </a>
+          </td>
+        </tr>
+      `).join('');
+
+      if (window.lucide) window.lucide.createIcons();
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Orders & Transactions | BRI APPARELL Admin</title>
+  <link rel="stylesheet" href="css/admin.css">
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+
+  <!-- Topbar -->
+  <header class="staff-topbar">
+    <div class="topbar-left">
+      <button class="topbar-icon-btn mobile-menu-toggle" id="mobile-menu-toggle" style="display: none;" aria-label="Toggle menu">
+        <i data-lucide="menu"></i>
+      </button>
+      <a href="index.html" class="staff-brand-badge">
+        BRI APPARELL
+        <span class="admin-role-pill">ADMIN</span>
+      </a>
+    </div>
+
+    <div class="topbar-search-wrap">
+      <i data-lucide="search" class="topbar-search-icon" style="width:16px;height:16px;"></i>
+      <input type="text" id="topbar-global-search" class="topbar-search-input" placeholder="Search orders, customers...">
+    </div>
+
+    <div class="topbar-right">
+      <a href="notifications.html" class="topbar-icon-btn" aria-label="Notifications">
+        <i data-lucide="bell" style="width:18px;height:18px;"></i>
+        <span class="notif-badge-dot" id="topbar-notif-dot" style="display:none;"></span>
+      </a>
+
+      <!-- Admin User Chip -->
+      <div class="staff-user-chip" id="admin-user-chip">
+        <div class="user-avatar-circle admin-user-avatar">AV</div>
+        <div class="user-text-info">
+          <span class="user-name admin-user-name">Administrator Vance</span>
+          <span class="user-role-label admin-user-role">Super Admin</span>
+        </div>
+        <i data-lucide="chevron-down" style="width:14px;height:14px;color:var(--staff-gray-500);"></i>
+
+        <div class="user-menu-dropdown" id="admin-user-dropdown">
+          <a href="profile.html" class="dropdown-item">My Profile</a>
+          <a href="settings.html" class="dropdown-item">System Settings</a>
+          <div class="dropdown-divider"></div>
+          <a href="#" class="dropdown-item admin-logout-btn" style="color:#b91c1c;">Sign Out</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="staff-app-container">
+    <!-- Sidebar -->
+    <aside class="staff-sidebar">
+      <div>
+        <div class="sidebar-nav-group">
+          <span class="sidebar-group-title">OVERVIEW</span>
+          <ul class="sidebar-nav-list">
+            <li class="sidebar-nav-item"><a href="index.html" class="sidebar-nav-link"><i data-lucide="layout-dashboard"></i> Dashboard</a></li>
+            <li class="sidebar-nav-item"><a href="reports.html" class="sidebar-nav-link"><i data-lucide="bar-chart-3"></i> Reports & Analytics</a></li>
+          </ul>
+        </div>
+        <div class="sidebar-nav-group">
+          <span class="sidebar-group-title">MANAGEMENT</span>
+          <ul class="sidebar-nav-list">
+            <li class="sidebar-nav-item"><a href="users.html" class="sidebar-nav-link"><i data-lucide="shield-check"></i> User Management</a></li>
+            <li class="sidebar-nav-item"><a href="customers.html" class="sidebar-nav-link"><i data-lucide="users"></i> Customers</a></li>
+            <li class="sidebar-nav-item"><a href="products.html" class="sidebar-nav-link"><i data-lucide="shirt"></i> Products & Catalog</a></li>
+            <li class="sidebar-nav-item"><a href="categories.html" class="sidebar-nav-link"><i data-lucide="folder-tree"></i> Categories</a></li>
+            <li class="sidebar-nav-item active"><a href="orders.html" class="sidebar-nav-link"><i data-lucide="shopping-bag"></i> Orders & Transactions</a></li>
+            <li class="sidebar-nav-item"><a href="inventory.html" class="sidebar-nav-link"><i data-lucide="boxes"></i> Inventory & Stock</a></li>
+            <li class="sidebar-nav-item"><a href="payments.html" class="sidebar-nav-link"><i data-lucide="credit-card"></i> Payments</a></li>
+          </ul>
+        </div>
+        <div class="sidebar-nav-group">
+          <span class="sidebar-group-title">SYSTEM</span>
+          <ul class="sidebar-nav-list">
+            <li class="sidebar-nav-item"><a href="notifications.html" class="sidebar-nav-link"><i data-lucide="bell"></i> Notifications</a></li>
+            <li class="sidebar-nav-item"><a href="settings.html" class="sidebar-nav-link"><i data-lucide="settings"></i> System Settings</a></li>
+            <li class="sidebar-nav-item"><a href="profile.html" class="sidebar-nav-link"><i data-lucide="user"></i> Admin Profile</a></li>
+          </ul>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="staff-main-content">
+      <div class="page-header" style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1.5rem;">
+        <div>
+          <h1 class="page-title" style="font-size:1.75rem; font-weight:800; font-family:var(--font-brand);">ORDERS & TRANSACTIONS</h1>
+          <p class="page-subtitle" style="color:var(--staff-gray-500); font-size:0.875rem;">Manage real-time customer purchases, dispatch logistics, and payment verification.</p>
+        </div>
+      </div>
+
+      <!-- Toolbar -->
+      <div class="admin-toolbar">
+        <div class="toolbar-search">
+          <i data-lucide="search" style="width:16px;height:16px;color:var(--staff-gray-500);"></i>
+          <input type="text" id="order-search-input" placeholder="Search Order ID, customer, email, phone...">
+        </div>
+        <div class="toolbar-filters">
+          <select id="order-status-filter" class="toolbar-select">
+            <option value="all">All Fulfillment Statuses</option>
+            <option value="Placed">Placed</option>
+            <option value="Confirmed">Confirmed</option>
+            <option value="Processing">Processing</option>
+            <option value="Packed">Packed</option>
+            <option value="Ready to Ship">Ready to Ship</option>
+            <option value="In Transit">In Transit</option>
+            <option value="Delivered">Delivered</option>
+            <option value="Cancelled">Cancelled</option>
+          </select>
+          <button class="btn btn-outline" id="refresh-orders-btn" style="padding:0.5rem 0.75rem;">
+            <i data-lucide="rotate-cw" style="width:14px;height:14px;"></i> Refresh
+          </button>
+        </div>
+      </div>
+
+      <!-- Orders Table -->
+      <div class="card" style="background:#fff; border:1px solid var(--border-subtle); border-radius:var(--radius-sm); padding:1rem 1.5rem;">
+        <div class="table-responsive">
+          <table class="data-table" style="width:100%; border-collapse:collapse; font-size:0.8125rem;">
+            <thead>
+              <tr style="text-align:left; border-bottom:1px solid var(--border-subtle); color:var(--staff-gray-500);">
+                <th style="padding:0.75rem 0.5rem;">ORDER ID</th>
+                <th style="padding:0.75rem 0.5rem;">CUSTOMER</th>
+                <th style="padding:0.75rem 0.5rem;">DATE</th>
+                <th style="padding:0.75rem 0.5rem;">ITEMS</th>
+                <th style="padding:0.75rem 0.5rem;">TOTAL</th>
+                <th style="padding:0.75rem 0.5rem;">PAYMENT</th>
+                <th style="padding:0.75rem 0.5rem;">STATUS (UPDATE LIVE)</th>
+                <th style="padding:0.75rem 0.5rem; text-align:right;">ACTION</th>
+              </tr>
+            </thead>
+            <tbody id="orders-tbody">
+              <tr><td colspan="8" style="padding:2rem; text-align:center; color:var(--staff-gray-500);">Loading orders...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="js/admin.js"></script>
+  <script>
+    let ordersList = [];
+
+    async function loadOrders() {
+      const search = document.getElementById('order-search-input').value.trim();
+      const status = document.getElementById('order-status-filter').value;
+
+      const params = new URLSearchParams();
+      if (search) params.append('search', search);
+      if (status !== 'all') params.append('status', status);
+
+      try {
+        const res = await Admin.api(`/orders?${params.toString()}`);
+        ordersList = res.orders || [];
+        renderOrders();
+      } catch (err) {
+        Admin.toast(err.message, 'error');
+      }
+    }
+
+    function renderOrders() {
+      const tbody = document.getElementById('orders-tbody');
+      if (ordersList.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="8" style="padding:2rem; text-align:center; color:var(--staff-gray-500);">No orders found.</td></tr>';
+        return;
+      }
+
+      tbody.innerHTML = ordersList.map(o => {
+        const itemsCount = (o.items && o.items.length) ? o.items.reduce((acc, i) => acc + (i.quantity || 1), 0) : 0;
+        let payBadge = o.payment_status === 'Paid'
+          ? '<span class="badge badge-success">Paid</span>'
+          : '<span class="badge badge-warning">Pending</span>';
+
+        return `
+          <tr style="border-bottom:1px solid var(--border-subtle);">
+            <td style="padding:0.75rem 0.5rem; font-family:var(--font-mono); font-weight:700;">
+              <a href="order-details.html?id=${o.id}" style="color:var(--staff-black); text-decoration:none;">${o.id}</a>
+            </td>
+            <td style="padding:0.75rem 0.5rem;">
+              <div style="font-weight:700; color:var(--staff-black);">${o.customer_name}</div>
+              <div style="font-size:0.75rem; color:var(--staff-gray-500);">${o.customer_email}</div>
+            </td>
+            <td style="padding:0.75rem 0.5rem; color:var(--staff-gray-500);">${Admin.formatDateOnly(o.created_at)}</td>
+            <td style="padding:0.75rem 0.5rem; font-family:var(--font-mono);">${itemsCount} pcs</td>
+            <td style="padding:0.75rem 0.5rem; font-family:var(--font-mono); font-weight:700;">${Admin.formatMoney(o.total)}</td>
+            <td style="padding:0.75rem 0.5rem;">
+              ${payBadge}
+              <div style="font-size:0.6875rem; color:var(--staff-gray-500); text-transform:uppercase; margin-top:2px;">${o.payment_method}</div>
+            </td>
+            <td style="padding:0.75rem 0.5rem;">
+              <select class="order-status-select toolbar-select" data-id="${o.id}" style="padding:0.25rem 0.5rem; font-size:0.75rem; font-weight:600;">
+                <option value="Placed" ${o.status === 'Placed' ? 'selected' : ''}>Placed</option>
+                <option value="Confirmed" ${o.status === 'Confirmed' ? 'selected' : ''}>Confirmed</option>
+                <option value="Processing" ${o.status === 'Processing' ? 'selected' : ''}>Processing</option>
+                <option value="Packed" ${o.status === 'Packed' ? 'selected' : ''}>Packed</option>
+                <option value="Ready to Ship" ${o.status === 'Ready to Ship' ? 'selected' : ''}>Ready to Ship</option>
+                <option value="In Transit" ${o.status === 'In Transit' ? 'selected' : ''}>In Transit</option>
+                <option value="Delivered" ${o.status === 'Delivered' ? 'selected' : ''}>Delivered</option>
+                <option value="Cancelled" ${o.status === 'Cancelled' ? 'selected' : ''}>Cancelled</option>
+              </select>
+            </td>
+            <td style="padding:0.75rem 0.5rem; text-align:right;">
+              <a href="order-details.html?id=${o.id}" class="btn-sm btn-outline" style="text-decoration:none; display:inline-flex; align-items:center; gap:0.25rem;">
+                <i data-lucide="eye" style="width:12px;height:12px;"></i> View
+              </a>
+            </td>
+          </tr>
+        `;
+      }).join('');
+
+      if (window.lucide) window.lucide.createIcons();
+
+      // Bind dynamic status changes
+      document.querySelectorAll('.order-status-select').forEach(sel => {
+        sel.addEventListener('change', async (e) => {
+          const orderId = e.target.dataset.id;
+          const newStatus = e.target.value;
+          try {
+            await Admin.api(`/orders/${orderId}/status`, {
+              method: 'PUT',
+              body: JSON.stringify({ status: newStatus, notes: `Status changed to ${newStatus} in admin console.` })
+            });
+            Admin.toast(`Order #${orderId} moved to ${newStatus}!`, 'success');
+          } catch (err) {
+            Admin.toast(err.message, 'error');
+            loadOrders();
+          }
+        });
+      });
+    }
+
+    document.getElementById('order-search-input').addEventListener('input', () => loadOrders());
+    document.getElementById('order-status-filter').addEventListener('change', () => loadOrders());
+    document.getElementById('refresh-orders-btn').addEventListener('click', () => loadOrders());
+
+    document.addEventListener('DOMContentLoaded', loadOrders);
+  </script>
+</body>
+</html>

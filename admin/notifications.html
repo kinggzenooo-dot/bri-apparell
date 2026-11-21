@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>System Notifications | BRI APPARELL Admin</title>
+  <link rel="stylesheet" href="css/admin.css">
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+
+  <!-- Topbar -->
+  <header class="staff-topbar">
+    <div class="topbar-left">
+      <button class="topbar-icon-btn mobile-menu-toggle" id="mobile-menu-toggle" style="display: none;" aria-label="Toggle menu">
+        <i data-lucide="menu"></i>
+      </button>
+      <a href="index.html" class="staff-brand-badge">
+        BRI APPARELL
+        <span class="admin-role-pill">ADMIN</span>
+      </a>
+    </div>
+
+    <div class="topbar-right">
+      <div class="staff-user-chip" id="admin-user-chip">
+        <div class="user-avatar-circle admin-user-avatar">AV</div>
+        <div class="user-text-info">
+          <span class="user-name admin-user-name">Administrator Vance</span>
+          <span class="user-role-label admin-user-role">Super Admin</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="staff-app-container">
+    <!-- Sidebar -->
+    <aside class="staff-sidebar">
+      <div>
+        <div class="sidebar-nav-group">
+          <span class="sidebar-group-title">OVERVIEW</span>
+          <ul class="sidebar-nav-list">
+            <li class="sidebar-nav-item"><a href="index.html" class="sidebar-nav-link"><i data-lucide="layout-dashboard"></i> Dashboard</a></li>
+            <li class="sidebar-nav-item"><a href="reports.html" class="sidebar-nav-link"><i data-lucide="bar-chart-3"></i> Reports & Analytics</a></li>
+          </ul>
+        </div>
+        <div class="sidebar-nav-group">
+          <span class="sidebar-group-title">MANAGEMENT</span>
+          <ul class="sidebar-nav-list">
+            <li class="sidebar-nav-item"><a href="users.html" class="sidebar-nav-link"><i data-lucide="shield-check"></i> User Management</a></li>
+            <li class="sidebar-nav-item"><a href="customers.html" class="sidebar-nav-link"><i data-lucide="users"></i> Customers</a></li>
+            <li class="sidebar-nav-item"><a href="products.html" class="sidebar-nav-link"><i data-lucide="shirt"></i> Products & Catalog</a></li>
+            <li class="sidebar-nav-item"><a href="categories.html" class="sidebar-nav-link"><i data-lucide="folder-tree"></i> Categories</a></li>
+            <li class="sidebar-nav-item"><a href="orders.html" class="sidebar-nav-link"><i data-lucide="shopping-bag"></i> Orders & Transactions</a></li>
+            <li class="sidebar-nav-item"><a href="inventory.html" class="sidebar-nav-link"><i data-lucide="boxes"></i> Inventory & Stock</a></li>
+            <li class="sidebar-nav-item"><a href="payments.html" class="sidebar-nav-link"><i data-lucide="credit-card"></i> Payments</a></li>
+          </ul>
+        </div>
+        <div class="sidebar-nav-group">
+          <span class="sidebar-group-title">SYSTEM</span>
+          <ul class="sidebar-nav-list">
+            <li class="sidebar-nav-item active"><a href="notifications.html" class="sidebar-nav-link"><i data-lucide="bell"></i> Notifications</a></li>
+            <li class="sidebar-nav-item"><a href="settings.html" class="sidebar-nav-link"><i data-lucide="settings"></i> System Settings</a></li>
+            <li class="sidebar-nav-item"><a href="profile.html" class="sidebar-nav-link"><i data-lucide="user"></i> Admin Profile</a></li>
+          </ul>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="staff-main-content">
+      <div class="page-header" style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1.5rem;">
+        <div>
+          <h1 class="page-title" style="font-size:1.75rem; font-weight:800; font-family:var(--font-brand);">SYSTEM NOTIFICATIONS</h1>
+          <p class="page-subtitle" style="color:var(--staff-gray-500); font-size:0.875rem;">Real-time event alerts for orders, inventory warnings, and member registrations.</p>
+        </div>
+        <button class="btn btn-outline" id="mark-all-read-btn" style="font-size:0.8125rem;">
+          <i data-lucide="check-check" style="width:14px;height:14px;"></i> Mark All As Read
+        </button>
+      </div>
+
+      <div class="card" style="background:#fff; border:1px solid var(--border-subtle); border-radius:var(--radius-sm); padding:1rem 1.5rem;">
+        <div id="notifications-list" style="display:flex; flex-direction:column; gap:0.75rem;">
+          <div style="text-align:center; padding:2rem; color:var(--staff-gray-500);">Loading notifications...</div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="js/admin.js"></script>
+  <script>
+    async function loadNotifications() {
+      try {
+        const res = await Admin.api('/notifications');
+        const list = document.getElementById('notifications-list');
+        if (!res.notifications || res.notifications.length === 0) {
+          list.innerHTML = '<div style="text-align:center; padding:2rem; color:var(--staff-gray-500);">No notifications recorded.</div>';
+          return;
+        }
+
+        list.innerHTML = res.notifications.map(n => `
+          <div style="display:flex; justify-content:space-between; align-items:flex-start; padding:1rem; border-radius:var(--radius-xs); background:${n.is_read ? 'transparent' : 'var(--staff-gray-50)'}; border:1px solid ${n.is_read ? 'var(--border-subtle)' : 'var(--admin-gold)'};">
+            <div style="display:flex; gap:0.85rem; align-items:flex-start;">
+              <div style="width:36px; height:36px; border-radius:var(--radius-xs); display:flex; align-items:center; justify-content:center; background:${n.type === 'stock' ? '#fee2e2' : (n.type === 'order' ? '#dcfce7' : '#e0e7ff')}; color:${n.type === 'stock' ? '#991b1b' : (n.type === 'order' ? '#15803d' : '#3730a3')};">
+                <i data-lucide="${n.type === 'stock' ? 'alert-triangle' : (n.type === 'order' ? 'shopping-bag' : 'bell')}" style="width:18px;height:18px;"></i>
+              </div>
+              <div>
+                <div style="font-weight:700; font-size:0.875rem;">${n.title}</div>
+                <div style="color:var(--staff-gray-600); font-size:0.8125rem; margin-top:2px;">${n.message}</div>
+                <div style="font-size:0.6875rem; color:var(--staff-gray-400); margin-top:4px;">${Admin.formatDate(n.created_at)}</div>
+              </div>
+            </div>
+            ${!n.is_read ? `
+              <button class="btn-sm btn-outline read-btn" data-id="${n.id}" style="padding:0.25rem 0.5rem; font-size:0.75rem;">
+                Mark Read
+              </button>
+            ` : ''}
+          </div>
+        `).join('');
+
+        if (window.lucide) window.lucide.createIcons();
+
+        document.querySelectorAll('.read-btn').forEach(btn => {
+          btn.addEventListener('click', async () => {
+            try {
+              await Admin.api(`/notifications/${btn.dataset.id}/read`, { method: 'PUT' });
+              Admin.toast('Notification marked as read.', 'success');
+              loadNotifications();
+              Admin.updateNotificationBadge();
+            } catch (err) {
+              Admin.toast(err.message, 'error');
+            }
+          });
+        });
+      } catch (err) {
+        Admin.toast(err.message, 'error');
+      }
+    }
+
+    document.getElementById('mark-all-read-btn').addEventListener('click', async () => {
+      try {
+        await Admin.api('/notifications/read-all', { method: 'POST' });
+        Admin.toast('All notifications marked as read.', 'success');
+        loadNotifications();
+        Admin.updateNotificationBadge();
+      } catch (err) {
+        Admin.toast(err.message, 'error');
+      }
+    });
+
+    document.addEventListener('DOMContentLoaded', loadNotifications);
+  </script>
+</body>
+</html>

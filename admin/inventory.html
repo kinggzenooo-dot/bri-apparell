@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Inventory & Stock Management | BRI APPARELL Admin</title>
+  <link rel="stylesheet" href="css/admin.css">
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+
+  <!-- Topbar -->
+  <header class="staff-topbar">
+    <div class="topbar-left">
+      <button class="topbar-icon-btn mobile-menu-toggle" id="mobile-menu-toggle" style="display: none;" aria-label="Toggle menu">
+        <i data-lucide="menu"></i>
+      </button>
+      <a href="index.html" class="staff-brand-badge">
+        BRI APPARELL
+        <span class="admin-role-pill">ADMIN</span>
+      </a>
+    </div>
+
+    <div class="topbar-search-wrap">
+      <i data-lucide="search" class="topbar-search-icon" style="width:16px;height:16px;"></i>
+      <input type="text" id="topbar-global-search" class="topbar-search-input" placeholder="Search inventory...">
+    </div>
+
+    <div class="topbar-right">
+      <a href="notifications.html" class="topbar-icon-btn" aria-label="Notifications">
+        <i data-lucide="bell" style="width:18px;height:18px;"></i>
+        <span class="notif-badge-dot" id="topbar-notif-dot" style="display:none;"></span>
+      </a>
+
+      <!-- Admin User Chip -->
+      <div class="staff-user-chip" id="admin-user-chip">
+        <div class="user-avatar-circle admin-user-avatar">AV</div>
+        <div class="user-text-info">
+          <span class="user-name admin-user-name">Administrator Vance</span>
+          <span class="user-role-label admin-user-role">Super Admin</span>
+        </div>
+        <i data-lucide="chevron-down" style="width:14px;height:14px;color:var(--staff-gray-500);"></i>
+
+        <div class="user-menu-dropdown" id="admin-user-dropdown">
+          <a href="profile.html" class="dropdown-item">My Profile</a>
+          <a href="settings.html" class="dropdown-item">System Settings</a>
+          <div class="dropdown-divider"></div>
+          <a href="#" class="dropdown-item admin-logout-btn" style="color:#b91c1c;">Sign Out</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="staff-app-container">
+    <!-- Sidebar -->
+    <aside class="staff-sidebar">
+      <div>
+        <div class="sidebar-nav-group">
+          <span class="sidebar-group-title">OVERVIEW</span>
+          <ul class="sidebar-nav-list">
+            <li class="sidebar-nav-item"><a href="index.html" class="sidebar-nav-link"><i data-lucide="layout-dashboard"></i> Dashboard</a></li>
+            <li class="sidebar-nav-item"><a href="reports.html" class="sidebar-nav-link"><i data-lucide="bar-chart-3"></i> Reports & Analytics</a></li>
+          </ul>
+        </div>
+        <div class="sidebar-nav-group">
+          <span class="sidebar-group-title">MANAGEMENT</span>
+          <ul class="sidebar-nav-list">
+            <li class="sidebar-nav-item"><a href="users.html" class="sidebar-nav-link"><i data-lucide="shield-check"></i> User Management</a></li>
+            <li class="sidebar-nav-item"><a href="customers.html" class="sidebar-nav-link"><i data-lucide="users"></i> Customers</a></li>
+            <li class="sidebar-nav-item"><a href="products.html" class="sidebar-nav-link"><i data-lucide="shirt"></i> Products & Catalog</a></li>
+            <li class="sidebar-nav-item"><a href="categories.html" class="sidebar-nav-link"><i data-lucide="folder-tree"></i> Categories</a></li>
+            <li class="sidebar-nav-item"><a href="orders.html" class="sidebar-nav-link"><i data-lucide="shopping-bag"></i> Orders & Transactions</a></li>
+            <li class="sidebar-nav-item active"><a href="inventory.html" class="sidebar-nav-link"><i data-lucide="boxes"></i> Inventory & Stock</a></li>
+            <li class="sidebar-nav-item"><a href="payments.html" class="sidebar-nav-link"><i data-lucide="credit-card"></i> Payments</a></li>
+          </ul>
+        </div>
+        <div class="sidebar-nav-group">
+          <span class="sidebar-group-title">SYSTEM</span>
+          <ul class="sidebar-nav-list">
+            <li class="sidebar-nav-item"><a href="notifications.html" class="sidebar-nav-link"><i data-lucide="bell"></i> Notifications</a></li>
+            <li class="sidebar-nav-item"><a href="settings.html" class="sidebar-nav-link"><i data-lucide="settings"></i> System Settings</a></li>
+            <li class="sidebar-nav-item"><a href="profile.html" class="sidebar-nav-link"><i data-lucide="user"></i> Admin Profile</a></li>
+          </ul>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="staff-main-content">
+      <div class="page-header" style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1.5rem;">
+        <div>
+          <h1 class="page-title" style="font-size:1.75rem; font-weight:800; font-family:var(--font-brand);">INVENTORY & STOCK</h1>
+          <p class="page-subtitle" style="color:var(--staff-gray-500); font-size:0.875rem;">Monitor multi-variant SKU inventory levels, warehouse bins, and reorder alerts.</p>
+        </div>
+      </div>
+
+      <!-- Toolbar -->
+      <div class="admin-toolbar">
+        <div class="toolbar-search">
+          <i data-lucide="search" style="width:16px;height:16px;color:var(--staff-gray-500);"></i>
+          <input type="text" id="inv-search-input" placeholder="Search by SKU, product name, color...">
+        </div>
+        <div class="toolbar-filters">
+          <select id="inv-status-filter" class="toolbar-select">
+            <option value="all">All Inventory</option>
+            <option value="low">Low Stock Only (&le; Threshold)</option>
+            <option value="out">Out of Stock Only</option>
+            <option value="in">In Stock Only</option>
+          </select>
+          <button class="btn btn-outline" id="refresh-inv-btn" style="padding:0.5rem 0.75rem;">
+            <i data-lucide="rotate-cw" style="width:14px;height:14px;"></i> Refresh
+          </button>
+        </div>
+      </div>
+
+      <!-- Inventory Table -->
+      <div class="card" style="background:#fff; border:1px solid var(--border-subtle); border-radius:var(--radius-sm); padding:1rem 1.5rem;">
+        <div class="table-responsive">
+          <table class="data-table" style="width:100%; border-collapse:collapse; font-size:0.8125rem;">
+            <thead>
+              <tr style="text-align:left; border-bottom:1px solid var(--border-subtle); color:var(--staff-gray-500);">
+                <th style="padding:0.75rem 0.5rem;">SKU</th>
+                <th style="padding:0.75rem 0.5rem;">PRODUCT</th>
+                <th style="padding:0.75rem 0.5rem;">COLOR</th>
+                <th style="padding:0.75rem 0.5rem;">SIZE</th>
+                <th style="padding:0.75rem 0.5rem;">STOCK</th>
+                <th style="padding:0.75rem 0.5rem;">THRESHOLD</th>
+                <th style="padding:0.75rem 0.5rem;">STATUS</th>
+                <th style="padding:0.75rem 0.5rem; text-align:right;">ACTION</th>
+              </tr>
+            </thead>
+            <tbody id="inventory-tbody">
+              <tr><td colspan="8" style="padding:2rem; text-align:center; color:var(--staff-gray-500);">Loading inventory records...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Modal: Adjust Stock -->
+  <div class="admin-modal-backdrop" id="modal-adjust-stock">
+    <div class="admin-modal-box">
+      <div class="admin-modal-header">
+        <h3 class="admin-modal-title">RESTOCK / INVENTORY ADJUSTMENT</h3>
+        <button class="topbar-icon-btn modal-close-btn" style="border:none; background:transparent;"><i data-lucide="x"></i></button>
+      </div>
+      <form id="form-adjust-stock">
+        <input type="hidden" id="adj-var-id">
+        <div class="admin-modal-body">
+          <div style="background:var(--staff-gray-50); padding:1rem; border-radius:var(--radius-xs); margin-bottom:1.25rem;">
+            <div style="font-size:0.75rem; color:var(--staff-gray-500);">SKU CODE:</div>
+            <strong id="adj-sku-label" style="font-family:var(--font-mono); font-size:0.9375rem;">—</strong>
+            <div id="adj-prod-label" style="font-size:0.8125rem; color:var(--staff-gray-600); margin-top:2px;">—</div>
+            <div style="margin-top:0.5rem; font-size:0.8125rem;">
+              Current Available Stock: <strong id="adj-curr-stock" style="font-family:var(--font-mono); font-size:1.125rem;">0</strong> pcs
+            </div>
+          </div>
+
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin-bottom:1rem;">
+            <div class="form-group">
+              <label class="form-label">ADJUSTMENT TYPE</label>
+              <select id="adj-type" class="form-input">
+                <option value="RESTOCK">Warehouse Restock (+)</option>
+                <option value="AUDIT_CORRECTION">Audit Correction (+ / -)</option>
+                <option value="DAMAGE">Damaged / Written-off (-)</option>
+                <option value="RETURN">Customer Return (+)</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">NEW TOTAL STOCK</label>
+              <input type="number" id="adj-new-stock" class="form-input" required min="0">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">AUDIT REASON / PURCHASE ORDER REFERENCE</label>
+            <input type="text" id="adj-reason" class="form-input" placeholder="e.g. PO-2026-Batch3 Restock">
+          </div>
+        </div>
+        <div class="admin-modal-footer">
+          <button type="button" class="btn btn-outline modal-close-btn">Cancel</button>
+          <button type="submit" class="btn btn-primary">Apply Stock Update</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="js/admin.js"></script>
+  <script>
+    let inventoryList = [];
+
+    async function loadInventory() {
+      const search = document.getElementById('inv-search-input').value.trim();
+      const status = document.getElementById('inv-status-filter').value;
+
+      const params = new URLSearchParams();
+      if (search) params.append('search', search);
+      if (status !== 'all') params.append('status', status);
+
+      try {
+        const res = await Admin.api(`/inventory?${params.toString()}`);
+        inventoryList = res.inventory || [];
+        renderInventory();
+      } catch (err) {
+        Admin.toast(err.message, 'error');
+      }
+    }
+
+    function renderInventory() {
+      const tbody = document.getElementById('inventory-tbody');
+      if (inventoryList.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="8" style="padding:2rem; text-align:center; color:var(--staff-gray-500);">No inventory records found.</td></tr>';
+        return;
+      }
+
+      tbody.innerHTML = inventoryList.map(v => {
+        let statBadge = '<span class="badge badge-success">In Stock</span>';
+        if (v.stock_quantity === 0) {
+          statBadge = '<span class="badge badge-danger">Out of Stock</span>';
+        } else if (v.stock_quantity <= v.threshold) {
+          statBadge = '<span class="badge badge-warning">Low Stock</span>';
+        }
+
+        return `
+          <tr style="border-bottom:1px solid var(--border-subtle); background:${v.stock_quantity <= v.threshold ? 'rgba(254, 242, 242, 0.4)' : 'transparent'};">
+            <td style="padding:0.75rem 0.5rem; font-family:var(--font-mono); font-weight:700;">${v.sku}</td>
+            <td style="padding:0.75rem 0.5rem; font-weight:600;">${v.product_name}</td>
+            <td style="padding:0.75rem 0.5rem;">${v.color_name}</td>
+            <td style="padding:0.75rem 0.5rem; font-family:var(--font-mono);">${v.size}</td>
+            <td style="padding:0.75rem 0.5rem; font-family:var(--font-mono); font-weight:800; font-size:0.9375rem; color:${v.stock_quantity <= v.threshold ? '#b91c1c' : 'inherit'};">
+              ${v.stock_quantity}
+            </td>
+            <td style="padding:0.75rem 0.5rem; font-family:var(--font-mono); color:var(--staff-gray-500);">${v.threshold}</td>
+            <td style="padding:0.75rem 0.5rem;">${statBadge}</td>
+            <td style="padding:0.75rem 0.5rem; text-align:right;">
+              <button class="btn-sm btn-outline restock-btn" data-id="${v.id}" data-sku="${v.sku}" data-name="${v.product_name} (${v.color_name} - ${v.size})" data-stock="${v.stock_quantity}">
+                <i data-lucide="edit-3" style="width:12px;height:12px;"></i> Adjust
+              </button>
+            </td>
+          </tr>
+        `;
+      }).join('');
+
+      if (window.lucide) window.lucide.createIcons();
+
+      document.querySelectorAll('.restock-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          document.getElementById('adj-var-id').value = btn.dataset.id;
+          document.getElementById('adj-sku-label').textContent = btn.dataset.sku;
+          document.getElementById('adj-prod-label').textContent = btn.dataset.name;
+          document.getElementById('adj-curr-stock').textContent = btn.dataset.stock;
+          document.getElementById('adj-new-stock').value = btn.dataset.stock;
+          document.getElementById('modal-adjust-stock').classList.add('open');
+        });
+      });
+    }
+
+    document.querySelectorAll('.modal-close-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.getElementById('modal-adjust-stock').classList.remove('open');
+      });
+    });
+
+    document.getElementById('form-adjust-stock').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const variant_id = document.getElementById('adj-var-id').value;
+      const new_stock = parseInt(document.getElementById('adj-new-stock').value);
+      const change_type = document.getElementById('adj-type').value;
+      const reason = document.getElementById('adj-reason').value.trim() || 'Manual Admin Stock Adjustment';
+
+      try {
+        await Admin.api('/inventory/adjust', {
+          method: 'POST',
+          body: JSON.stringify({ variant_id, new_stock, change_type, reason })
+        });
+        Admin.toast('Inventory stock updated successfully!', 'success');
+        document.getElementById('modal-adjust-stock').classList.remove('open');
+        loadInventory();
+      } catch (err) {
+        Admin.toast(err.message, 'error');
+      }
+    });
+
+    document.getElementById('inv-search-input').addEventListener('input', () => loadInventory());
+    document.getElementById('inv-status-filter').addEventListener('change', () => loadInventory());
+    document.getElementById('refresh-inv-btn').addEventListener('click', () => loadInventory());
+
+    document.addEventListener('DOMContentLoaded', loadInventory);
+  </script>
+</body>
+</html>

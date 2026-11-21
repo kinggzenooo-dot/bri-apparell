@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Product Details | BRI APPARELL</title>
+  <meta name="description" content="Discover detailed specifications, heavyweight fabric compositions, and sizing for BRI APPARELL garments.">
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+
+  <!-- Announcement Bar -->
+  <div class="announcement-bar">
+    <div class="container" style="text-align: center;">
+      <span>COMPLIMENTARY NATIONWIDE SHIPPING ON ORDERS OVER ₱2,500</span>
+      <a href="promotions.html">USE CODE: FREESHIP2500</a>
+    </div>
+  </div>
+
+  <!-- Main Navigation Header -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <div class="header-left">
+        <button class="mobile-nav-toggle icon-btn" aria-label="Open menu">
+          <i data-lucide="menu"></i>
+        </button>
+        <a href="index.html" class="brand-logo">BRI APPARELL</a>
+      </div>
+
+      <nav class="main-nav">
+        <a href="index.html" class="nav-link">HOME</a>
+        <a href="shop.html" class="nav-link active">SHOP</a>
+        <a href="collections.html" class="nav-link">COLLECTIONS</a>
+        <a href="promotions.html" class="nav-link">PROMOTIONS</a>
+        <a href="about.html" class="nav-link">ABOUT US</a>
+        <a href="contact.html" class="nav-link">CONTACT</a>
+      </nav>
+
+      <div class="utility-nav">
+        <button class="icon-btn trigger-search-btn" aria-label="Search">
+          <i data-lucide="search"></i>
+        </button>
+        <a href="wishlist.html" class="icon-btn" aria-label="Wishlist">
+          <i data-lucide="heart"></i>
+          <span class="badge-count wishlist-count-badge" style="display: none;">0</span>
+        </a>
+        <a href="cart.html" class="icon-btn" aria-label="Shopping Bag">
+          <i data-lucide="shopping-bag"></i>
+          <span class="badge-count bag-count-badge" style="display: none;">0</span>
+        </a>
+        <a href="account.html" class="icon-btn" aria-label="My Account">
+          <i data-lucide="user"></i>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Navigation Drawer -->
+  <div class="mobile-nav-drawer">
+    <div class="mobile-drawer-content">
+      <div class="mobile-drawer-header">
+        <span class="brand-logo" style="font-size: 1.25rem;">BRI APPARELL</span>
+        <button class="mobile-drawer-close icon-btn" aria-label="Close menu">
+          <i data-lucide="x"></i>
+        </button>
+      </div>
+      <div class="mobile-nav-list">
+        <a href="index.html" class="mobile-nav-link">HOME <i data-lucide="arrow-right" style="width:16px;height:16px;"></i></a>
+        <a href="shop.html" class="mobile-nav-link">SHOP <i data-lucide="arrow-right" style="width:16px;height:16px;"></i></a>
+        <a href="collections.html" class="mobile-nav-link">COLLECTIONS <i data-lucide="arrow-right" style="width:16px;height:16px;"></i></a>
+        <a href="promotions.html" class="mobile-nav-link">PROMOTIONS <i data-lucide="arrow-right" style="width:16px;height:16px;"></i></a>
+        <a href="about.html" class="mobile-nav-link">ABOUT US <i data-lucide="arrow-right" style="width:16px;height:16px;"></i></a>
+        <a href="contact.html" class="mobile-nav-link">CONTACT <i data-lucide="arrow-right" style="width:16px;height:16px;"></i></a>
+      </div>
+      <div class="mobile-drawer-footer">
+        <button class="mobile-utility-link trigger-search-btn"><i data-lucide="search" style="width:18px;height:18px;"></i> Search</button>
+        <a href="wishlist.html" class="mobile-utility-link"><i data-lucide="heart" style="width:18px;height:18px;"></i> Wishlist</a>
+        <a href="cart.html" class="mobile-utility-link"><i data-lucide="shopping-bag" style="width:18px;height:18px;"></i> Shopping Bag</a>
+        <a href="account.html" class="mobile-utility-link"><i data-lucide="user" style="width:18px;height:18px;"></i> My Account</a>
+      </div>
+    </div>
+  </div>
+
+  <main>
+    <div class="container">
+      <!-- Breadcrumb Navigation -->
+      <nav style="padding: 1.5rem 0 0.5rem; font-size: 0.75rem; color: var(--text-muted); display: flex; gap: 0.5rem; align-items: center;">
+        <a href="index.html">HOME</a>
+        <span>/</span>
+        <a href="shop.html">SHOP</a>
+        <span>/</span>
+        <span id="breadcrumb-category" style="color: var(--text-muted); text-transform: uppercase;">CATEGORY</span>
+        <span>/</span>
+        <span id="breadcrumb-product" style="color: var(--color-black); font-weight: 600;">PRODUCT</span>
+      </nav>
+
+      <!-- Main Product Detail Layout -->
+      <div class="product-detail-layout" id="pdp-container">
+        <!-- Injected via JavaScript based on URL parameter ?id= -->
+      </div>
+
+      <!-- Related Products Section -->
+      <section class="section-spacing" style="border-top: 1px solid var(--border-color); padding-top: 4rem;">
+        <div style="display:flex; justify-content:space-between; align-items:flex-end; margin-bottom: 2.5rem;">
+          <div>
+            <span class="eyebrow">CURATED RECOMMENDATIONS</span>
+            <h2 class="editorial-title" style="font-size: 2rem;">YOU MAY ALSO LIKE</h2>
+          </div>
+          <a href="shop.html" class="btn-text">EXPLORE ALL PIECES &rarr;</a>
+        </div>
+        <div class="product-grid" id="pdp-related-grid">
+          <!-- Injected via JavaScript -->
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <!-- Size Guide Modal -->
+  <div class="modal-backdrop" id="size-guide-modal">
+    <div class="modal-box" style="max-width: 680px; padding: 2.5rem;">
+      <button class="modal-close-btn" id="close-size-guide" aria-label="Close modal">
+        <i data-lucide="x" style="width:20px;height:20px;"></i>
+      </button>
+      <span class="eyebrow">MEASUREMENT CHART</span>
+      <h3 class="editorial-title" style="font-size: 1.5rem; margin-bottom: 0.5rem;">BRI APPARELL SIZE GUIDE</h3>
+      <p style="color: var(--text-secondary); font-size: 0.875rem; margin-bottom: 1.5rem;">
+        All measurements are given in centimeters (cm) and inches. Our garments feature relaxed, boxy contemporary silhouettes. If you prefer a tailored fit, we recommend sizing down.
+      </p>
+
+      <div style="overflow-x: auto;">
+        <table style="width: 100%; border-collapse: collapse; font-size: 0.8125rem; text-align: left;">
+          <thead>
+            <tr style="border-bottom: 2px solid var(--color-black); font-weight: 700; text-transform: uppercase;">
+              <th style="padding: 0.75rem 0.5rem;">SIZE</th>
+              <th style="padding: 0.75rem 0.5rem;">CHEST (CM / IN)</th>
+              <th style="padding: 0.75rem 0.5rem;">SHOULDER (CM / IN)</th>
+              <th style="padding: 0.75rem 0.5rem;">LENGTH (CM / IN)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="border-bottom: 1px solid var(--border-color);">
+              <td style="padding: 0.75rem 0.5rem; font-weight: 700;">XS</td>
+              <td style="padding: 0.75rem 0.5rem;">104 cm / 41"</td>
+              <td style="padding: 0.75rem 0.5rem;">50 cm / 19.5"</td>
+              <td style="padding: 0.75rem 0.5rem;">68 cm / 26.8"</td>
+            </tr>
+            <tr style="border-bottom: 1px solid var(--border-color);">
+              <td style="padding: 0.75rem 0.5rem; font-weight: 700;">S</td>
+              <td style="padding: 0.75rem 0.5rem;">110 cm / 43.3"</td>
+              <td style="padding: 0.75rem 0.5rem;">52 cm / 20.5"</td>
+              <td style="padding: 0.75rem 0.5rem;">70 cm / 27.5"</td>
+            </tr>
+            <tr style="border-bottom: 1px solid var(--border-color);">
+              <td style="padding: 0.75rem 0.5rem; font-weight: 700;">M</td>
+              <td style="padding: 0.75rem 0.5rem;">116 cm / 45.6"</td>
+              <td style="padding: 0.75rem 0.5rem;">54 cm / 21.2"</td>
+              <td style="padding: 0.75rem 0.5rem;">72 cm / 28.3"</td>
+            </tr>
+            <tr style="border-bottom: 1px solid var(--border-color);">
+              <td style="padding: 0.75rem 0.5rem; font-weight: 700;">L</td>
+              <td style="padding: 0.75rem 0.5rem;">122 cm / 48.0"</td>
+              <td style="padding: 0.75rem 0.5rem;">56 cm / 22.0"</td>
+              <td style="padding: 0.75rem 0.5rem;">74 cm / 29.1"</td>
+            </tr>
+            <tr style="border-bottom: 1px solid var(--border-color);">
+              <td style="padding: 0.75rem 0.5rem; font-weight: 700;">XL</td>
+              <td style="padding: 0.75rem 0.5rem;">128 cm / 50.4"</td>
+              <td style="padding: 0.75rem 0.5rem;">58 cm / 22.8"</td>
+              <td style="padding: 0.75rem 0.5rem;">76 cm / 29.9"</td>
+            </tr>
+            <tr>
+              <td style="padding: 0.75rem 0.5rem; font-weight: 700;">XXL</td>
+              <td style="padding: 0.75rem 0.5rem;">134 cm / 52.8"</td>
+              <td style="padding: 0.75rem 0.5rem;">60 cm / 23.6"</td>
+              <td style="padding: 0.75rem 0.5rem;">78 cm / 30.7"</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div style="margin-top: 1.5rem; padding: 1rem; background-color: var(--color-bg-subtle); font-size: 0.75rem; color: var(--text-secondary);">
+        <strong>MODEL SPECIFICATIONS:</strong> Male model is 6'1" (185 cm) wearing size L. Female model is 5'9" (175 cm) wearing size S.
+      </div>
+    </div>
+  </div>
+
+  <!-- Site Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-top-grid">
+        <div>
+          <h3 class="footer-brand-title">BRI APPARELL</h3>
+          <p class="footer-brand-desc">
+            Modern, minimalist clothing crafted with architectural precision and high-grade organic textiles.
+          </p>
+          <div class="footer-social-links">
+            <a href="https://instagram.com" target="_blank" rel="noopener" class="footer-social-btn" aria-label="Instagram">
+              <i data-lucide="instagram" style="width:16px;height:16px;"></i>
+            </a>
+            <a href="https://facebook.com" target="_blank" rel="noopener" class="footer-social-btn" aria-label="Facebook">
+              <i data-lucide="facebook" style="width:16px;height:16px;"></i>
+            </a>
+            <a href="https://tiktok.com" target="_blank" rel="noopener" class="footer-social-btn" aria-label="TikTok">
+              <i data-lucide="video" style="width:16px;height:16px;"></i>
+            </a>
+          </div>
+        </div>
+
+        <div>
+          <h4 class="footer-column-title">SHOP</h4>
+          <ul class="footer-links">
+            <li><a href="shop.html?filter=new" class="footer-link">New Arrivals</a></li>
+            <li><a href="shop.html?category=Tops" class="footer-link">Tops & Tees</a></li>
+            <li><a href="shop.html?category=Bottoms" class="footer-link">Trousers & Shorts</a></li>
+            <li><a href="shop.html?category=Outerwear" class="footer-link">Jackets & Coats</a></li>
+            <li><a href="collections.html" class="footer-link">Collections</a></li>
+            <li><a href="promotions.html" class="footer-link">Promotions</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="footer-column-title">CUSTOMER CARE</h4>
+          <ul class="footer-links">
+            <li><a href="contact.html" class="footer-link">Contact Concierge</a></li>
+            <li><a href="contact.html#shipping" class="footer-link">Shipping & Delivery</a></li>
+            <li><a href="contact.html#returns" class="footer-link">Returns & Exchanges</a></li>
+            <li><a href="contact.html#faqs" class="footer-link">FAQs</a></li>
+            <li><a href="about.html#sustainability" class="footer-link">Sustainability</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="footer-column-title">ACCOUNT</h4>
+          <ul class="footer-links">
+            <li><a href="account.html" class="footer-link">My Account</a></li>
+            <li><a href="account.html?tab=orders" class="footer-link">Track Orders</a></li>
+            <li><a href="wishlist.html" class="footer-link">Saved Wishlist</a></li>
+            <li><a href="cart.html" class="footer-link">Shopping Bag</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="footer-column-title">MANILA FLAGSHIP</h4>
+          <p style="font-size: 0.8125rem; color: var(--color-gray-light); line-height: 1.6; margin-bottom: 0.75rem;">
+            Unit 102, The Minimalist Pavilion<br>
+            Bonifacio High Street, BGC, Taguig<br>
+            Open Daily: 10AM – 8PM
+          </p>
+          <a href="contact.html" class="btn-text" style="color: #fff; border-color: #fff; font-size: 0.75rem;">VISIT STORE &rarr;</a>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>&copy; 2026 BRI APPARELL. All rights reserved.</p>
+        <div class="footer-bottom-links">
+          <a href="about.html">Privacy Policy</a>
+          <a href="about.html">Terms & Conditions</a>
+          <a href="about.html">Accessibility</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="products.js"></script>
+  <script src="script.js"></script>
+  <script>
+    // Product Detail Page Hydration
+    document.addEventListener('DOMContentLoaded', () => {
+      const urlParams = new URLSearchParams(window.location.search);
+      const productId = urlParams.get('id') || 'bri-001';
+      const product = PRODUCTS.find(p => p.id === productId) || PRODUCTS[0];
+
+      // Update page title & breadcrumbs
+      document.title = `${product.name} | BRI APPARELL`;
+      document.getElementById('breadcrumb-category').textContent = product.category;
+      document.getElementById('breadcrumb-product').textContent = product.name;
+
+      let selectedColor = product.colors[0]?.name || '';
+      let selectedSize = product.sizes.find(s => s.inStock)?.size || product.sizes[0].size;
+      let quantity = 1;
+
+      const pdpContainer = document.getElementById('pdp-container');
+      const isWishlisted = BRI.wishlist.has(product.id);
+
+      pdpContainer.innerHTML = `
+        <!-- Gallery -->
+        <div class="pdp-gallery-container">
+          <div class="pdp-thumbnail-strip">
+            ${product.images.map((img, i) => `
+              <div class="pdp-thumbnail-item ${i === 0 ? 'active' : ''}" data-index="${i}">
+                <img src="${img}" alt="${product.name} view ${i+1}">
+              </div>
+            `).join('')}
+          </div>
+          <div class="pdp-main-image-wrap" id="pdp-main-wrap">
+            <img src="${product.images[0]}" alt="${product.name}" class="pdp-main-image" id="pdp-main-img">
+          </div>
+        </div>
+
+        <!-- Info & Actions -->
+        <div class="pdp-info-panel">
+          <div class="pdp-header">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <span class="eyebrow">${product.category} &bull; ${product.gender}</span>
+              ${product.isSale ? `<span class="badge badge-sale">SALE</span>` : (product.isNew ? `<span class="badge badge-dark">NEW ARRIVAL</span>` : '')}
+            </div>
+            <h1 class="pdp-title">${product.name}</h1>
+            
+            <div class="pdp-price-row">
+              <span class="pdp-current-price">${BRI.formatPrice(product.isSale ? product.salePrice : product.price)}</span>
+              ${product.isSale ? `<span class="pdp-original-price">${BRI.formatPrice(product.price)}</span>` : ''}
+              ${product.isSale ? `<span style="font-size:0.75rem; font-weight:700; color:var(--color-sale-accent); letter-spacing:0.05em;">SAVE ${BRI.formatPrice(product.price - product.salePrice)}</span>` : ''}
+            </div>
+
+            <div class="pdp-rating-row">
+              <div style="display:flex; gap:2px; color:var(--color-black);">
+                <i data-lucide="star" style="width:14px;height:14px;fill:currentColor;"></i>
+                <i data-lucide="star" style="width:14px;height:14px;fill:currentColor;"></i>
+                <i data-lucide="star" style="width:14px;height:14px;fill:currentColor;"></i>
+                <i data-lucide="star" style="width:14px;height:14px;fill:currentColor;"></i>
+                <i data-lucide="star" style="width:14px;height:14px;fill:currentColor;"></i>
+              </div>
+              <span>${product.rating} (${product.reviewCount} customer reviews)</span>
+            </div>
+          </div>
+
+          <p style="font-size: 0.9375rem; color: var(--text-secondary); line-height: 1.7;">
+            ${product.description}
+          </p>
+
+          <!-- Color Swatches -->
+          <div class="pdp-selector-group">
+            <div class="pdp-selector-label-row">
+              <span>COLOR: <strong id="selected-color-label">${selectedColor}</strong></span>
+            </div>
+            <div class="color-swatch-list">
+              ${product.colors.map((c, i) => `
+                <button class="color-swatch-btn ${i === 0 ? 'active' : ''}" data-name="${c.name}" style="background-color:${c.hex};" title="${c.name}"></button>
+              `).join('')}
+            </div>
+          </div>
+
+          <!-- Size Selector -->
+          <div class="pdp-selector-group">
+            <div class="pdp-selector-label-row">
+              <span>SIZE: <strong id="selected-size-label">${selectedSize}</strong></span>
+              <button class="btn-text" id="open-size-guide-btn" style="font-size:0.75rem;">SIZE GUIDE & MEASUREMENTS</button>
+            </div>
+            <div class="size-btn-grid">
+              ${product.sizes.map(s => `
+                <button class="size-btn ${s.size === selectedSize ? 'active' : ''}" data-size="${s.size}" ${!s.inStock ? 'disabled' : ''}>
+                  ${s.size}
+                </button>
+              `).join('')}
+            </div>
+          </div>
+
+          <!-- Quantity & Purchase CTAs -->
+          <div class="pdp-actions-row">
+            <div class="quantity-stepper">
+              <button class="qty-btn" id="qty-minus" aria-label="Decrease quantity">
+                <i data-lucide="minus" style="width:14px;height:14px;"></i>
+              </button>
+              <input type="text" class="qty-input" id="qty-value" value="1" readonly>
+              <button class="qty-btn" id="qty-plus" aria-label="Increase quantity">
+                <i data-lucide="plus" style="width:14px;height:14px;"></i>
+              </button>
+            </div>
+
+            <button class="btn btn-primary btn-lg" id="pdp-add-to-bag" style="flex:1;">
+              <i data-lucide="shopping-bag" style="width:18px;height:18px;"></i>
+              ADD TO BAG
+            </button>
+
+            <button class="btn btn-outline" id="pdp-wishlist-toggle" aria-label="Save to wishlist" style="padding: 0 1.25rem;">
+              <i data-lucide="heart" style="width:20px;height:20px; ${isWishlisted ? 'fill:currentColor;' : ''}"></i>
+            </button>
+          </div>
+
+          <button class="btn btn-outline btn-block" id="pdp-buy-now">
+            BUY NOW &mdash; EXPRESS CHECKOUT
+          </button>
+
+          <!-- Value Props -->
+          <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 1rem; padding: 1.25rem; background-color: var(--color-bg-subtle); border:1px solid var(--border-color); font-size:0.75rem;">
+            <div style="display:flex; align-items:center; gap:0.5rem;">
+              <i data-lucide="truck" style="width:16px;height:16px;"></i>
+              <span>Free Shipping over ₱2,500</span>
+            </div>
+            <div style="display:flex; align-items:center; gap:0.5rem;">
+              <i data-lucide="rotate-ccw" style="width:16px;height:16px;"></i>
+              <span>Complimentary 30-Day Returns</span>
+            </div>
+          </div>
+
+          <!-- Accordion Information Tabs -->
+          <div class="pdp-accordions">
+            <div class="accordion-item open">
+              <button class="accordion-header">
+                <span>DETAILS & SPECIFICATIONS</span>
+                <i data-lucide="chevron-down" class="accordion-icon" style="width:18px;height:18px;"></i>
+              </button>
+              <div class="accordion-body">
+                <ul style="list-style: disc; padding-left: 1.25rem; display:flex; flex-direction:column; gap:0.4rem;">
+                  ${product.details.map(d => `<li>${d}</li>`).join('')}
+                </ul>
+              </div>
+            </div>
+
+            <div class="accordion-item">
+              <button class="accordion-header">
+                <span>MATERIALS & COMPOSITION</span>
+                <i data-lucide="chevron-down" class="accordion-icon" style="width:18px;height:18px;"></i>
+              </button>
+              <div class="accordion-body">
+                <p><strong>Fabric:</strong> ${product.materials}</p>
+                <p style="margin-top:0.5rem;">Sustainably sourced fibers milled to precise structural density specifications.</p>
+              </div>
+            </div>
+
+            <div class="accordion-item">
+              <button class="accordion-header">
+                <span>CARE INSTRUCTIONS</span>
+                <i data-lucide="chevron-down" class="accordion-icon" style="width:18px;height:18px;"></i>
+              </button>
+              <div class="accordion-body">
+                <ul style="list-style: disc; padding-left: 1.25rem; display:flex; flex-direction:column; gap:0.4rem;">
+                  ${product.care.map(c => `<li>${c}</li>`).join('')}
+                </ul>
+              </div>
+            </div>
+
+            <div class="accordion-item">
+              <button class="accordion-header">
+                <span>DELIVERY & COMPLIMENTARY RETURNS</span>
+                <i data-lucide="chevron-down" class="accordion-icon" style="width:18px;height:18px;"></i>
+              </button>
+              <div class="accordion-body">
+                <p>Standard delivery within Metro Manila: 2–3 business days. Provincial orders: 4–6 business days. Express next-day dispatch available at checkout.</p>
+                <p style="margin-top:0.5rem;">We offer 30-day hassle-free returns on all unworn items in original packaging.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+
+      if (window.lucide) window.lucide.createIcons();
+
+      // Thumbnail Image Switcher
+      const thumbnails = document.querySelectorAll('.pdp-thumbnail-item');
+      const mainImg = document.getElementById('pdp-main-img');
+      thumbnails.forEach(thumb => {
+        thumb.addEventListener('click', () => {
+          thumbnails.forEach(t => t.classList.remove('active'));
+          thumb.classList.add('active');
+          const idx = parseInt(thumb.getAttribute('data-index'), 10);
+          mainImg.src = product.images[idx];
+        });
+      });
+
+      // Color Swatch Switcher
+      document.querySelectorAll('.color-swatch-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          document.querySelectorAll('.color-swatch-btn').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          selectedColor = btn.getAttribute('data-name');
+          document.getElementById('selected-color-label').textContent = selectedColor;
+        });
+      });
+
+      // Size Button Switcher
+      document.querySelectorAll('.size-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          document.querySelectorAll('.size-btn').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          selectedSize = btn.getAttribute('data-size');
+          document.getElementById('selected-size-label').textContent = selectedSize;
+        });
+      });
+
+      // Quantity Stepper
+      const qtyInput = document.getElementById('qty-value');
+      document.getElementById('qty-minus').addEventListener('click', () => {
+        if (quantity > 1) {
+          quantity--;
+          qtyInput.value = quantity;
+        }
+      });
+      document.getElementById('qty-plus').addEventListener('click', () => {
+        if (quantity < 10) {
+          quantity++;
+          qtyInput.value = quantity;
+        }
+      });
+
+      // Add to Bag Button
+      document.getElementById('pdp-add-to-bag').addEventListener('click', () => {
+        BRI.cart.addItem(product.id, selectedSize, selectedColor, quantity);
+      });
+
+      // Buy Now Button
+      document.getElementById('pdp-buy-now').addEventListener('click', () => {
+        BRI.cart.addItem(product.id, selectedSize, selectedColor, quantity);
+        window.location.href = 'checkout.html';
+      });
+
+      // Wishlist Toggle
+      const pdpWishlistBtn = document.getElementById('pdp-wishlist-toggle');
+      pdpWishlistBtn.addEventListener('click', () => {
+        const added = BRI.wishlist.toggle(product.id);
+        const icon = pdpWishlistBtn.querySelector('svg');
+        if (icon) {
+          icon.style.fill = added ? 'currentColor' : 'none';
+        }
+      });
+
+      // Accordion Headers
+      document.querySelectorAll('.accordion-header').forEach(header => {
+        header.addEventListener('click', () => {
+          const item = header.parentElement;
+          item.classList.toggle('open');
+        });
+      });
+
+      // Size Guide Modal
+      const sizeGuideModal = document.getElementById('size-guide-modal');
+      document.getElementById('open-size-guide-btn').addEventListener('click', () => {
+        sizeGuideModal.classList.add('open');
+        document.body.classList.add('no-scroll');
+      });
+      document.getElementById('close-size-guide').addEventListener('click', () => {
+        sizeGuideModal.classList.remove('open');
+        document.body.classList.remove('no-scroll');
+      });
+      sizeGuideModal.addEventListener('click', (e) => {
+        if (e.target === sizeGuideModal) {
+          sizeGuideModal.classList.remove('open');
+          document.body.classList.remove('no-scroll');
+        }
+      });
+
+      // Render Related Products
+      const relatedContainer = document.getElementById('pdp-related-grid');
+      const related = PRODUCTS.filter(p => p.id !== product.id && (p.category === product.category || p.gender === product.gender)).slice(0, 4);
+      relatedContainer.innerHTML = related.map(p => BRI.renderProductCard(p)).join('');
+      BRI.bindProductCardEvents(relatedContainer);
+    });
+  </script>
+</body>
+</html>

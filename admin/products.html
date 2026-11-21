@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Product Catalog Management | BRI APPARELL Admin</title>
+  <link rel="stylesheet" href="css/admin.css">
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+
+  <!-- Topbar -->
+  <header class="staff-topbar">
+    <div class="topbar-left">
+      <button class="topbar-icon-btn mobile-menu-toggle" id="mobile-menu-toggle" style="display: none;" aria-label="Toggle menu">
+        <i data-lucide="menu"></i>
+      </button>
+      <a href="index.html" class="staff-brand-badge">
+        BRI APPARELL
+        <span class="admin-role-pill">ADMIN</span>
+      </a>
+    </div>
+
+    <div class="topbar-search-wrap">
+      <i data-lucide="search" class="topbar-search-icon" style="width:16px;height:16px;"></i>
+      <input type="text" id="topbar-global-search" class="topbar-search-input" placeholder="Search catalog...">
+    </div>
+
+    <div class="topbar-right">
+      <a href="notifications.html" class="topbar-icon-btn" aria-label="Notifications">
+        <i data-lucide="bell" style="width:18px;height:18px;"></i>
+        <span class="notif-badge-dot" id="topbar-notif-dot" style="display:none;"></span>
+      </a>
+
+      <!-- Admin User Chip -->
+      <div class="staff-user-chip" id="admin-user-chip">
+        <div class="user-avatar-circle admin-user-avatar">AV</div>
+        <div class="user-text-info">
+          <span class="user-name admin-user-name">Administrator Vance</span>
+          <span class="user-role-label admin-user-role">Super Admin</span>
+        </div>
+        <i data-lucide="chevron-down" style="width:14px;height:14px;color:var(--staff-gray-500);"></i>
+
+        <div class="user-menu-dropdown" id="admin-user-dropdown">
+          <a href="profile.html" class="dropdown-item">My Profile</a>
+          <a href="settings.html" class="dropdown-item">System Settings</a>
+          <div class="dropdown-divider"></div>
+          <a href="#" class="dropdown-item admin-logout-btn" style="color:#b91c1c;">Sign Out</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="staff-app-container">
+    <!-- Sidebar -->
+    <aside class="staff-sidebar">
+      <div>
+        <div class="sidebar-nav-group">
+          <span class="sidebar-group-title">OVERVIEW</span>
+          <ul class="sidebar-nav-list">
+            <li class="sidebar-nav-item"><a href="index.html" class="sidebar-nav-link"><i data-lucide="layout-dashboard"></i> Dashboard</a></li>
+            <li class="sidebar-nav-item"><a href="reports.html" class="sidebar-nav-link"><i data-lucide="bar-chart-3"></i> Reports & Analytics</a></li>
+          </ul>
+        </div>
+        <div class="sidebar-nav-group">
+          <span class="sidebar-group-title">MANAGEMENT</span>
+          <ul class="sidebar-nav-list">
+            <li class="sidebar-nav-item"><a href="users.html" class="sidebar-nav-link"><i data-lucide="shield-check"></i> User Management</a></li>
+            <li class="sidebar-nav-item"><a href="customers.html" class="sidebar-nav-link"><i data-lucide="users"></i> Customers</a></li>
+            <li class="sidebar-nav-item active"><a href="products.html" class="sidebar-nav-link"><i data-lucide="shirt"></i> Products & Catalog</a></li>
+            <li class="sidebar-nav-item"><a href="categories.html" class="sidebar-nav-link"><i data-lucide="folder-tree"></i> Categories</a></li>
+            <li class="sidebar-nav-item"><a href="orders.html" class="sidebar-nav-link"><i data-lucide="shopping-bag"></i> Orders & Transactions</a></li>
+            <li class="sidebar-nav-item"><a href="inventory.html" class="sidebar-nav-link"><i data-lucide="boxes"></i> Inventory & Stock</a></li>
+            <li class="sidebar-nav-item"><a href="payments.html" class="sidebar-nav-link"><i data-lucide="credit-card"></i> Payments</a></li>
+          </ul>
+        </div>
+        <div class="sidebar-nav-group">
+          <span class="sidebar-group-title">SYSTEM</span>
+          <ul class="sidebar-nav-list">
+            <li class="sidebar-nav-item"><a href="notifications.html" class="sidebar-nav-link"><i data-lucide="bell"></i> Notifications</a></li>
+            <li class="sidebar-nav-item"><a href="settings.html" class="sidebar-nav-link"><i data-lucide="settings"></i> System Settings</a></li>
+            <li class="sidebar-nav-item"><a href="profile.html" class="sidebar-nav-link"><i data-lucide="user"></i> Admin Profile</a></li>
+          </ul>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="staff-main-content">
+      <div class="page-header" style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1.5rem;">
+        <div>
+          <h1 class="page-title" style="font-size:1.75rem; font-weight:800; font-family:var(--font-brand);">PRODUCT CATALOG</h1>
+          <p class="page-subtitle" style="color:var(--staff-gray-500); font-size:0.875rem;">Manage apparel pieces, editorial collections, retail pricing, and garment specs.</p>
+        </div>
+        <button class="btn btn-primary" id="open-add-prod-modal" style="font-size:0.8125rem;">
+          <i data-lucide="plus" style="width:16px;height:16px;"></i> Add New Garment
+        </button>
+      </div>
+
+      <!-- Toolbar -->
+      <div class="admin-toolbar">
+        <div class="toolbar-search">
+          <i data-lucide="search" style="width:16px;height:16px;color:var(--staff-gray-500);"></i>
+          <input type="text" id="prod-search-input" placeholder="Search product name, ID, category...">
+        </div>
+        <div class="toolbar-filters">
+          <select id="prod-category-filter" class="toolbar-select">
+            <option value="all">All Categories</option>
+            <option value="Tops">Tops</option>
+            <option value="Bottoms">Bottoms</option>
+            <option value="Outerwear">Outerwear</option>
+            <option value="Accessories">Accessories</option>
+            <option value="Footwear">Footwear</option>
+          </select>
+          <select id="prod-status-filter" class="toolbar-select">
+            <option value="all">All Products</option>
+            <option value="active">Active Only</option>
+            <option value="sale">On Sale</option>
+            <option value="featured">Featured Pieces</option>
+          </select>
+          <button class="btn btn-outline" id="refresh-prods-btn" style="padding:0.5rem 0.75rem;">
+            <i data-lucide="rotate-cw" style="width:14px;height:14px;"></i> Refresh
+          </button>
+        </div>
+      </div>
+
+      <!-- Products Table -->
+      <div class="card" style="background:#fff; border:1px solid var(--border-subtle); border-radius:var(--radius-sm); padding:1rem 1.5rem;">
+        <div class="table-responsive">
+          <table class="data-table" style="width:100%; border-collapse:collapse; font-size:0.8125rem;">
+            <thead>
+              <tr style="text-align:left; border-bottom:1px solid var(--border-subtle); color:var(--staff-gray-500);">
+                <th style="padding:0.75rem 0.5rem;">ITEM</th>
+                <th style="padding:0.75rem 0.5rem;">CATEGORY</th>
+                <th style="padding:0.75rem 0.5rem;">REGULAR PRICE</th>
+                <th style="padding:0.75rem 0.5rem;">SALE PRICE</th>
+                <th style="padding:0.75rem 0.5rem;">BADGES</th>
+                <th style="padding:0.75rem 0.5rem;">STATUS</th>
+                <th style="padding:0.75rem 0.5rem; text-align:right;">ACTIONS</th>
+              </tr>
+            </thead>
+            <tbody id="products-tbody">
+              <tr><td colspan="7" style="padding:2rem; text-align:center; color:var(--staff-gray-500);">Loading catalog items...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Modal: Create Product -->
+  <div class="admin-modal-backdrop" id="modal-add-product">
+    <div class="admin-modal-box" style="max-width: 760px;">
+      <div class="admin-modal-header">
+        <h3 class="admin-modal-title">ADD NEW PRODUCT TO CATALOG</h3>
+        <button class="topbar-icon-btn modal-close-btn" style="border:none; background:transparent;"><i data-lucide="x"></i></button>
+      </div>
+      <form id="form-create-product">
+        <div class="admin-modal-body">
+          <div style="display:grid; grid-template-columns:2fr 1fr; gap:1rem; margin-bottom:1rem;">
+            <div class="form-group">
+              <label class="form-label">GARMENT / PRODUCT NAME</label>
+              <input type="text" id="add-prod-name" class="form-input" required placeholder="e.g. Architectural Oversized Trench Coat">
+            </div>
+            <div class="form-group">
+              <label class="form-label">PRODUCT CODE / ID (OPTIONAL)</label>
+              <input type="text" id="add-prod-id" class="form-input" placeholder="e.g. bri-017">
+            </div>
+          </div>
+
+          <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:1rem; margin-bottom:1rem;">
+            <div class="form-group">
+              <label class="form-label">CATEGORY</label>
+              <select id="add-prod-cat" class="form-input" required>
+                <option value="Tops">Tops</option>
+                <option value="Bottoms">Bottoms</option>
+                <option value="Outerwear">Outerwear</option>
+                <option value="Accessories">Accessories</option>
+                <option value="Footwear">Footwear</option>
+                <option value="Headwear">Headwear</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">REGULAR PRICE (₱)</label>
+              <input type="number" id="add-prod-price" class="form-input" required placeholder="2495" min="0">
+            </div>
+            <div class="form-group">
+              <label class="form-label">SALE PRICE (₱) (OPTIONAL)</label>
+              <input type="number" id="add-prod-sale-price" class="form-input" placeholder="1995" min="0">
+            </div>
+          </div>
+
+          <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:1rem; margin-bottom:1rem;">
+            <div class="form-group">
+              <label class="form-label">COLLECTION SLUG</label>
+              <input type="text" id="add-prod-coll" class="form-input" placeholder="essentials">
+            </div>
+            <div class="form-group">
+              <label class="form-label">HIGHLIGHT TAG</label>
+              <input type="text" id="add-prod-tag" class="form-input" placeholder="Best Seller / Limited Batch">
+            </div>
+            <div class="form-group">
+              <label class="form-label">GENDER</label>
+              <select id="add-prod-gender" class="form-input">
+                <option value="Unisex">Unisex</option>
+                <option value="Men">Men</option>
+                <option value="Women">Women</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group" style="margin-bottom:1rem;">
+            <label class="form-label">SHORT EDITORIAL SYNOPSIS</label>
+            <input type="text" id="add-prod-short" class="form-input" placeholder="280 GSM luxury combed cotton with dropped shoulders...">
+          </div>
+
+          <div class="form-group" style="margin-bottom:1rem;">
+            <label class="form-label">FULL DESCRIPTION</label>
+            <textarea id="add-prod-desc" class="form-input" rows="3" placeholder="Crafted with architectural tailoring..."></textarea>
+          </div>
+
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin-bottom:1rem;">
+            <div class="form-group">
+              <label class="form-label">PRIMARY IMAGE URL</label>
+              <input type="url" id="add-prod-img" class="form-input" required value="https://images.unsplash.com/photo-1521572267360-ee0c2909d518?q=80&w=1000">
+            </div>
+            <div class="form-group">
+              <label class="form-label">MATERIALS COMPOSITION</label>
+              <input type="text" id="add-prod-mat" class="form-input" placeholder="100% Combed Heavyweight Organic Cotton">
+            </div>
+          </div>
+
+          <div style="display:flex; gap:1.5rem; margin-top:0.5rem; font-size:0.8125rem;">
+            <label style="display:flex; align-items:center; gap:0.4rem; cursor:pointer;">
+              <input type="checkbox" id="add-prod-feat"> Feature on Storefront Homepage
+            </label>
+            <label style="display:flex; align-items:center; gap:0.4rem; cursor:pointer;">
+              <input type="checkbox" id="add-prod-new" checked> Mark as New Arrival
+            </label>
+            <label style="display:flex; align-items:center; gap:0.4rem; cursor:pointer;">
+              <input type="checkbox" id="add-prod-sale"> Active Sale
+            </label>
+          </div>
+        </div>
+        <div class="admin-modal-footer">
+          <button type="button" class="btn btn-outline modal-close-btn">Cancel</button>
+          <button type="submit" class="btn btn-primary" id="btn-save-prod">Save & Publish Garment</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal: Edit Product -->
+  <div class="admin-modal-backdrop" id="modal-edit-product">
+    <div class="admin-modal-box">
+      <div class="admin-modal-header">
+        <h3 class="admin-modal-title">EDIT GARMENT DETAILS</h3>
+        <button class="topbar-icon-btn modal-close-btn" style="border:none; background:transparent;"><i data-lucide="x"></i></button>
+      </div>
+      <form id="form-edit-product">
+        <input type="hidden" id="edit-prod-id">
+        <div class="admin-modal-body">
+          <div class="form-group" style="margin-bottom:1rem;">
+            <label class="form-label">GARMENT NAME</label>
+            <input type="text" id="edit-prod-name" class="form-input" required>
+          </div>
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin-bottom:1rem;">
+            <div class="form-group">
+              <label class="form-label">REGULAR PRICE (₱)</label>
+              <input type="number" id="edit-prod-price" class="form-input" required min="0">
+            </div>
+            <div class="form-group">
+              <label class="form-label">SALE PRICE (₱)</label>
+              <input type="number" id="edit-prod-sale-price" class="form-input" min="0">
+            </div>
+          </div>
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin-bottom:1rem;">
+            <div class="form-group">
+              <label class="form-label">CATEGORY</label>
+              <select id="edit-prod-cat" class="form-input">
+                <option value="Tops">Tops</option>
+                <option value="Bottoms">Bottoms</option>
+                <option value="Outerwear">Outerwear</option>
+                <option value="Accessories">Accessories</option>
+                <option value="Footwear">Footwear</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">HIGHLIGHT TAG</label>
+              <input type="text" id="edit-prod-tag" class="form-input">
+            </div>
+          </div>
+          <div class="form-group" style="margin-bottom:1rem;">
+            <label class="form-label">SHORT SYNOPSIS</label>
+            <input type="text" id="edit-prod-short" class="form-input">
+          </div>
+          <div style="display:flex; gap:1.5rem; margin-top:0.5rem; font-size:0.8125rem;">
+            <label style="display:flex; align-items:center; gap:0.4rem; cursor:pointer;">
+              <input type="checkbox" id="edit-prod-feat"> Featured
+            </label>
+            <label style="display:flex; align-items:center; gap:0.4rem; cursor:pointer;">
+              <input type="checkbox" id="edit-prod-sale"> Active Sale
+            </label>
+            <label style="display:flex; align-items:center; gap:0.4rem; cursor:pointer;">
+              <input type="checkbox" id="edit-prod-active" checked> Published (Active)
+            </label>
+          </div>
+        </div>
+        <div class="admin-modal-footer">
+          <button type="button" class="btn btn-outline modal-close-btn">Cancel</button>
+          <button type="submit" class="btn btn-primary">Save Changes</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="js/admin.js"></script>
+  <script>
+    let productsList = [];
+
+    async function loadProducts() {
+      const search = document.getElementById('prod-search-input').value.trim();
+      const cat = document.getElementById('prod-category-filter').value;
+      const stat = document.getElementById('prod-status-filter').value;
+
+      const params = new URLSearchParams();
+      params.append('include_inactive', 'true');
+      if (search) params.append('search', search);
+      if (cat !== 'all') params.append('category', cat);
+      if (stat === 'sale') params.append('sale', 'true');
+      if (stat === 'featured') params.append('featured', 'true');
+
+      try {
+        const res = await Admin.api(`/products?${params.toString()}`);
+        productsList = res.products || [];
+        renderProducts();
+      } catch (err) {
+        Admin.toast(err.message, 'error');
+      }
+    }
+
+    function renderProducts() {
+      const tbody = document.getElementById('products-tbody');
+      if (productsList.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="7" style="padding:2rem; text-align:center; color:var(--staff-gray-500);">No products found in catalog.</td></tr>';
+        return;
+      }
+
+      tbody.innerHTML = productsList.map(p => {
+        const thumb = (p.images && p.images[0]) ? p.images[0] : 'https://images.unsplash.com/photo-1521572267360-ee0c2909d518?q=80&w=200';
+        return `
+          <tr style="border-bottom:1px solid var(--border-subtle);">
+            <td style="padding:0.75rem 0.5rem;">
+              <div style="display:flex; align-items:center; gap:0.85rem;">
+                <img src="${thumb}" alt="${p.name}" style="width:44px; height:54px; object-fit:cover; border-radius:2px; border:1px solid var(--border-subtle);">
+                <div>
+                  <div style="font-weight:700; color:var(--staff-black);">${p.name}</div>
+                  <div style="font-family:var(--font-mono); font-size:0.75rem; color:var(--staff-gray-500);">${p.id}</div>
+                </div>
+              </div>
+            </td>
+            <td style="padding:0.75rem 0.5rem; font-weight:600;">${p.category}</td>
+            <td style="padding:0.75rem 0.5rem; font-family:var(--font-mono); font-weight:700;">${Admin.formatMoney(p.price)}</td>
+            <td style="padding:0.75rem 0.5rem; font-family:var(--font-mono); font-weight:700; color:${p.salePrice ? '#b91c1c' : 'var(--staff-gray-400)'};">
+              ${p.salePrice ? Admin.formatMoney(p.salePrice) : '—'}
+            </td>
+            <td style="padding:0.75rem 0.5rem;">
+              <div style="display:flex; gap:0.25rem; flex-wrap:wrap;">
+                ${p.isFeatured ? '<span class="badge" style="background:#fef3c7; color:#92400e;">Featured</span>' : ''}
+                ${p.isSale ? '<span class="badge badge-danger">Sale</span>' : ''}
+                ${p.isNew ? '<span class="badge badge-info">New</span>' : ''}
+              </div>
+            </td>
+            <td style="padding:0.75rem 0.5rem;">
+              <span class="badge ${p.isActive ? 'badge-success' : 'badge-neutral'}">${p.isActive ? 'Active' : 'Archived'}</span>
+            </td>
+            <td style="padding:0.75rem 0.5rem; text-align:right;">
+              <div style="display:inline-flex; gap:0.35rem;">
+                <button class="btn-sm btn-outline edit-prod-btn" data-id="${p.id}" title="Edit Product">
+                  <i data-lucide="edit-2" style="width:12px;height:12px;"></i>
+                </button>
+                <a href="../product-detail.html?id=${p.id}" target="_blank" class="btn-sm btn-outline" title="View on Storefront">
+                  <i data-lucide="external-link" style="width:12px;height:12px;"></i>
+                </a>
+                <button class="btn-sm btn-outline del-prod-btn" data-id="${p.id}" data-name="${p.name}" title="Deactivate">
+                  <i data-lucide="trash-2" style="width:12px;height:12px;color:#b91c1c;"></i>
+                </button>
+              </div>
+            </td>
+          </tr>
+        `;
+      }).join('');
+
+      if (window.lucide) window.lucide.createIcons();
+
+      // Bind edits
+      document.querySelectorAll('.edit-prod-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const p = productsList.find(x => x.id === btn.dataset.id);
+          if (p) openEditProductModal(p);
+        });
+      });
+
+      // Bind deletes
+      document.querySelectorAll('.del-prod-btn').forEach(btn => {
+        btn.addEventListener('click', async () => {
+          if (!confirm(`Are you sure you want to deactivate ${btn.dataset.name}?`)) return;
+          try {
+            await Admin.api(`/products/${btn.dataset.id}`, { method: 'DELETE' });
+            Admin.toast(`Product ${btn.dataset.name} deactivated.`, 'success');
+            loadProducts();
+          } catch (err) {
+            Admin.toast(err.message, 'error');
+          }
+        });
+      });
+    }
+
+    function openEditProductModal(p) {
+      document.getElementById('edit-prod-id').value = p.id;
+      document.getElementById('edit-prod-name').value = p.name;
+      document.getElementById('edit-prod-price').value = p.price;
+      document.getElementById('edit-prod-sale-price').value = p.salePrice || '';
+      document.getElementById('edit-prod-cat').value = p.category;
+      document.getElementById('edit-prod-tag').value = p.tag || '';
+      document.getElementById('edit-prod-short').value = p.shortDesc || '';
+      document.getElementById('edit-prod-feat').checked = !!p.isFeatured;
+      document.getElementById('edit-prod-sale').checked = !!p.isSale;
+      document.getElementById('edit-prod-active').checked = !!p.isActive;
+
+      document.getElementById('modal-edit-product').classList.add('open');
+    }
+
+    document.getElementById('open-add-prod-modal').addEventListener('click', () => {
+      document.getElementById('modal-add-product').classList.add('open');
+    });
+
+    document.querySelectorAll('.modal-close-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.getElementById('modal-add-product').classList.remove('open');
+        document.getElementById('modal-edit-product').classList.remove('open');
+      });
+    });
+
+    document.getElementById('form-create-product').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const payload = {
+        name: document.getElementById('add-prod-name').value.trim(),
+        id: document.getElementById('add-prod-id').value.trim() || undefined,
+        category: document.getElementById('add-prod-cat').value,
+        price: parseFloat(document.getElementById('add-prod-price').value),
+        salePrice: document.getElementById('add-prod-sale-price').value ? parseFloat(document.getElementById('add-prod-sale-price').value) : null,
+        collection: document.getElementById('add-prod-coll').value.trim() || 'essentials',
+        tag: document.getElementById('add-prod-tag').value.trim(),
+        gender: document.getElementById('add-prod-gender').value,
+        shortDesc: document.getElementById('add-prod-short').value.trim(),
+        description: document.getElementById('add-prod-desc').value.trim(),
+        images: [document.getElementById('add-prod-img').value.trim()],
+        materials: document.getElementById('add-prod-mat').value.trim(),
+        isFeatured: document.getElementById('add-prod-feat').checked,
+        isNew: document.getElementById('add-prod-new').checked,
+        isSale: document.getElementById('add-prod-sale').checked
+      };
+
+      try {
+        await Admin.api('/products', { method: 'POST', body: JSON.stringify(payload) });
+        Admin.toast(`Product '${payload.name}' added to catalog!`, 'success');
+        document.getElementById('modal-add-product').classList.remove('open');
+        document.getElementById('form-create-product').reset();
+        loadProducts();
+      } catch (err) {
+        Admin.toast(err.message, 'error');
+      }
+    });
+
+    document.getElementById('form-edit-product').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const id = document.getElementById('edit-prod-id').value;
+      const payload = {
+        name: document.getElementById('edit-prod-name').value.trim(),
+        price: parseFloat(document.getElementById('edit-prod-price').value),
+        salePrice: document.getElementById('edit-prod-sale-price').value ? parseFloat(document.getElementById('edit-prod-sale-price').value) : null,
+        category: document.getElementById('edit-prod-cat').value,
+        tag: document.getElementById('edit-prod-tag').value.trim(),
+        shortDesc: document.getElementById('edit-prod-short').value.trim(),
+        isFeatured: document.getElementById('edit-prod-feat').checked,
+        isSale: document.getElementById('edit-prod-sale').checked,
+        isActive: document.getElementById('edit-prod-active').checked
+      };
+
+      try {
+        await Admin.api(`/products/${id}`, { method: 'PUT', body: JSON.stringify(payload) });
+        Admin.toast('Product updated successfully.', 'success');
+        document.getElementById('modal-edit-product').classList.remove('open');
+        loadProducts();
+      } catch (err) {
+        Admin.toast(err.message, 'error');
+      }
+    });
+
+    document.getElementById('prod-search-input').addEventListener('input', () => loadProducts());
+    document.getElementById('prod-category-filter').addEventListener('change', () => loadProducts());
+    document.getElementById('prod-status-filter').addEventListener('change', () => loadProducts());
+    document.getElementById('refresh-prods-btn').addEventListener('click', () => loadProducts());
+
+    document.addEventListener('DOMContentLoaded', loadProducts);
+  </script>
+</body>
+</html>

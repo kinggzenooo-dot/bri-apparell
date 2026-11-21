@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>System Settings | BRI APPARELL Admin</title>
+  <link rel="stylesheet" href="css/admin.css">
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+
+  <!-- Topbar -->
+  <header class="staff-topbar">
+    <div class="topbar-left">
+      <button class="topbar-icon-btn mobile-menu-toggle" id="mobile-menu-toggle" style="display: none;" aria-label="Toggle menu">
+        <i data-lucide="menu"></i>
+      </button>
+      <a href="index.html" class="staff-brand-badge">
+        BRI APPARELL
+        <span class="admin-role-pill">ADMIN</span>
+      </a>
+    </div>
+
+    <div class="topbar-right">
+      <a href="notifications.html" class="topbar-icon-btn" aria-label="Notifications">
+        <i data-lucide="bell" style="width:18px;height:18px;"></i>
+        <span class="notif-badge-dot" id="topbar-notif-dot" style="display:none;"></span>
+      </a>
+
+      <!-- Admin User Chip -->
+      <div class="staff-user-chip" id="admin-user-chip">
+        <div class="user-avatar-circle admin-user-avatar">AV</div>
+        <div class="user-text-info">
+          <span class="user-name admin-user-name">Administrator Vance</span>
+          <span class="user-role-label admin-user-role">Super Admin</span>
+        </div>
+        <i data-lucide="chevron-down" style="width:14px;height:14px;color:var(--staff-gray-500);"></i>
+
+        <div class="user-menu-dropdown" id="admin-user-dropdown">
+          <a href="profile.html" class="dropdown-item">My Profile</a>
+          <a href="settings.html" class="dropdown-item">System Settings</a>
+          <div class="dropdown-divider"></div>
+          <a href="#" class="dropdown-item admin-logout-btn" style="color:#b91c1c;">Sign Out</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="staff-app-container">
+    <!-- Sidebar -->
+    <aside class="staff-sidebar">
+      <div>
+        <div class="sidebar-nav-group">
+          <span class="sidebar-group-title">OVERVIEW</span>
+          <ul class="sidebar-nav-list">
+            <li class="sidebar-nav-item"><a href="index.html" class="sidebar-nav-link"><i data-lucide="layout-dashboard"></i> Dashboard</a></li>
+            <li class="sidebar-nav-item"><a href="reports.html" class="sidebar-nav-link"><i data-lucide="bar-chart-3"></i> Reports & Analytics</a></li>
+          </ul>
+        </div>
+        <div class="sidebar-nav-group">
+          <span class="sidebar-group-title">MANAGEMENT</span>
+          <ul class="sidebar-nav-list">
+            <li class="sidebar-nav-item"><a href="users.html" class="sidebar-nav-link"><i data-lucide="shield-check"></i> User Management</a></li>
+            <li class="sidebar-nav-item"><a href="customers.html" class="sidebar-nav-link"><i data-lucide="users"></i> Customers</a></li>
+            <li class="sidebar-nav-item"><a href="products.html" class="sidebar-nav-link"><i data-lucide="shirt"></i> Products & Catalog</a></li>
+            <li class="sidebar-nav-item"><a href="categories.html" class="sidebar-nav-link"><i data-lucide="folder-tree"></i> Categories</a></li>
+            <li class="sidebar-nav-item"><a href="orders.html" class="sidebar-nav-link"><i data-lucide="shopping-bag"></i> Orders & Transactions</a></li>
+            <li class="sidebar-nav-item"><a href="inventory.html" class="sidebar-nav-link"><i data-lucide="boxes"></i> Inventory & Stock</a></li>
+            <li class="sidebar-nav-item"><a href="payments.html" class="sidebar-nav-link"><i data-lucide="credit-card"></i> Payments</a></li>
+          </ul>
+        </div>
+        <div class="sidebar-nav-group">
+          <span class="sidebar-group-title">SYSTEM</span>
+          <ul class="sidebar-nav-list">
+            <li class="sidebar-nav-item"><a href="notifications.html" class="sidebar-nav-link"><i data-lucide="bell"></i> Notifications</a></li>
+            <li class="sidebar-nav-item active"><a href="settings.html" class="sidebar-nav-link"><i data-lucide="settings"></i> System Settings</a></li>
+            <li class="sidebar-nav-item"><a href="profile.html" class="sidebar-nav-link"><i data-lucide="user"></i> Admin Profile</a></li>
+          </ul>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="staff-main-content">
+      <div class="page-header" style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1.5rem;">
+        <div>
+          <h1 class="page-title" style="font-size:1.75rem; font-weight:800; font-family:var(--font-brand);">SYSTEM CONFIGURATION</h1>
+          <p class="page-subtitle" style="color:var(--staff-gray-500); font-size:0.875rem;">Global storefront settings, checkout logistics parameters, and fiscal rules.</p>
+        </div>
+      </div>
+
+      <div class="card" style="background:#fff; border:1px solid var(--border-subtle); border-radius:var(--radius-sm); padding:2rem; max-width:800px;">
+        <form id="form-settings">
+          <h3 style="font-size:0.9375rem; font-weight:700; text-transform:uppercase; letter-spacing:0.05em; margin-bottom:1.25rem; border-bottom:1px solid var(--border-subtle); padding-bottom:0.5rem;">
+            STORE IDENTITY & CONCIERGE
+          </h3>
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:1.25rem; margin-bottom:1.5rem;">
+            <div class="form-group">
+              <label class="form-label">STORE NAME</label>
+              <input type="text" id="set-store-name" class="form-input" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">SUPPORT CONCIERGE EMAIL</label>
+              <input type="email" id="set-store-email" class="form-input" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">CUSTOMER HOTLINE</label>
+              <input type="text" id="set-store-phone" class="form-input" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">CURRENCY SYMBOL</label>
+              <input type="text" id="set-currency" class="form-input" required value="₱">
+            </div>
+          </div>
+
+          <h3 style="font-size:0.9375rem; font-weight:700; text-transform:uppercase; letter-spacing:0.05em; margin-bottom:1.25rem; border-bottom:1px solid var(--border-subtle); padding-bottom:0.5rem;">
+            SHIPPING & FULFILLMENT RULES
+          </h3>
+          <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:1.25rem; margin-bottom:1.5rem;">
+            <div class="form-group">
+              <label class="form-label">FREE SHIPPING THRESHOLD (₱)</label>
+              <input type="number" id="set-free-ship" class="form-input" required min="0">
+            </div>
+            <div class="form-group">
+              <label class="form-label">STANDARD SHIPPING (₱)</label>
+              <input type="number" id="set-std-ship" class="form-input" required min="0">
+            </div>
+            <div class="form-group">
+              <label class="form-label">EXPRESS COURIER (₱)</label>
+              <input type="number" id="set-exp-ship" class="form-input" required min="0">
+            </div>
+          </div>
+
+          <h3 style="font-size:0.9375rem; font-weight:700; text-transform:uppercase; letter-spacing:0.05em; margin-bottom:1.25rem; border-bottom:1px solid var(--border-subtle); padding-bottom:0.5rem;">
+            FISCAL & OPERATIONAL SWITCHES
+          </h3>
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:1.25rem; margin-bottom:2rem;">
+            <div class="form-group">
+              <label class="form-label">TAX RATE (VAT)</label>
+              <input type="number" step="0.01" id="set-tax" class="form-input" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">STOREFRONT STATUS</label>
+              <select id="set-maint" class="form-input">
+                <option value="false">Live (Storefront Accessible)</option>
+                <option value="true">Maintenance Mode (Storefront Paused)</option>
+              </select>
+            </div>
+          </div>
+
+          <button type="submit" class="btn btn-primary btn-lg" id="btn-save-settings">
+            <i data-lucide="save" style="width:16px;height:16px;"></i> Save System Configuration
+          </button>
+        </form>
+      </div>
+    </main>
+  </div>
+
+  <script src="js/admin.js"></script>
+  <script>
+    async function loadSettings() {
+      try {
+        const res = await Admin.api('/settings');
+        const s = res.settings || {};
+        document.getElementById('set-store-name').value = s.store_name || 'BRI APPARELL';
+        document.getElementById('set-store-email').value = s.store_email || 'concierge@briapparell.com';
+        document.getElementById('set-store-phone').value = s.store_phone || '+63 917 892 4567';
+        document.getElementById('set-currency').value = s.currency_symbol || '₱';
+        document.getElementById('set-free-ship').value = s.free_shipping_threshold || '2500';
+        document.getElementById('set-std-ship').value = s.standard_shipping_fee || '150';
+        document.getElementById('set-exp-ship').value = s.express_shipping_fee || '280';
+        document.getElementById('set-tax').value = s.tax_rate || '0.12';
+        document.getElementById('set-maint').value = s.maintenance_mode || 'false';
+      } catch (err) {
+        Admin.toast(err.message, 'error');
+      }
+    }
+
+    document.getElementById('form-settings').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const payload = {
+        store_name: document.getElementById('set-store-name').value.trim(),
+        store_email: document.getElementById('set-store-email').value.trim(),
+        store_phone: document.getElementById('set-store-phone').value.trim(),
+        currency_symbol: document.getElementById('set-currency').value.trim(),
+        free_shipping_threshold: document.getElementById('set-free-ship').value,
+        standard_shipping_fee: document.getElementById('set-std-ship').value,
+        express_shipping_fee: document.getElementById('set-exp-ship').value,
+        tax_rate: document.getElementById('set-tax').value,
+        maintenance_mode: document.getElementById('set-maint').value
+      };
+
+      try {
+        await Admin.api('/settings', { method: 'PUT', body: JSON.stringify(payload) });
+        Admin.toast('System settings updated successfully in database.', 'success');
+      } catch (err) {
+        Admin.toast(err.message, 'error');
+      }
+    });
+
+    document.addEventListener('DOMContentLoaded', loadSettings);
+  </script>
+</body>
+</html>

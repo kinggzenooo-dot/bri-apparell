@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Inventory Stock Monitor | BRI APPARELL Staff</title>
+  <link rel="stylesheet" href="../css/staff.css">
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+
+  <!-- Topbar -->
+  <header class="staff-topbar">
+    <div class="topbar-left">
+      <button class="topbar-icon-btn mobile-menu-toggle" id="mobile-menu-toggle" style="display: none;" aria-label="Toggle menu">
+        <i data-lucide="menu"></i>
+      </button>
+      <a href="dashboard.html" class="staff-brand-badge">
+        BRI APPARELL
+        <span class="staff-role-pill">STAFF</span>
+      </a>
+    </div>
+
+    <div class="topbar-search-wrap">
+      <i data-lucide="search" class="topbar-search-icon" style="width:16px;height:16px;"></i>
+      <input type="text" id="topbar-global-search" class="topbar-search-input" placeholder="Search orders, SKU, customer name, phone... (Press Enter)">
+    </div>
+
+    <div class="topbar-right">
+      <a href="notifications.html" class="topbar-icon-btn" aria-label="Notifications">
+        <i data-lucide="bell" style="width:18px;height:18px;"></i>
+        <span class="notif-badge-dot" id="topbar-notif-dot"></span>
+      </a>
+
+      <div class="staff-user-chip" id="staff-user-chip">
+        <div class="user-avatar-circle">AV</div>
+        <div class="user-text-info">
+          <span class="user-name">Alexander Vance</span>
+          <span class="user-role-label">EMP-0012 &bull; Retail Staff</span>
+        </div>
+        <i data-lucide="chevron-down" style="width:14px;height:14px;color:var(--staff-gray-500);"></i>
+
+        <div class="user-menu-dropdown" id="staff-user-dropdown">
+          <a href="profile.html" class="dropdown-item"><i data-lucide="user" style="width:16px;height:16px;"></i> My Profile</a>
+          <a href="profile.html#security" class="dropdown-item"><i data-lucide="lock" style="width:16px;height:16px;"></i> Change Password</a>
+          <div class="dropdown-divider"></div>
+          <a href="../index.html" class="dropdown-item" style="color:#b91c1c;"><i data-lucide="log-out" style="width:16px;height:16px;"></i> Exit to Storefront</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="staff-app-container">
+    <!-- Sidebar Navigation -->
+    <aside class="staff-sidebar">
+      <div>
+        <div class="sidebar-nav-group">
+          <span class="sidebar-group-title">OPERATIONS</span>
+          <ul class="sidebar-nav-list">
+            <li class="sidebar-nav-item"><a href="dashboard.html" class="sidebar-link"><i data-lucide="layout-grid"></i><span>Dashboard</span></a></li>
+            <li class="sidebar-nav-item"><a href="orders.html" class="sidebar-link"><i data-lucide="shopping-bag"></i><span>Orders</span><span class="sidebar-link-badge" id="badge-pending-orders">0</span></a></li>
+          </ul>
+        </div>
+
+        <div class="sidebar-nav-group">
+          <span class="sidebar-group-title">CATALOG & STOCK</span>
+          <ul class="sidebar-nav-list">
+            <li class="sidebar-nav-item"><a href="products.html" class="sidebar-link"><i data-lucide="package"></i><span>All Products</span></a></li>
+            <li class="sidebar-nav-item"><a href="inventory.html" class="sidebar-link active"><i data-lucide="boxes"></i><span>Inventory Stock</span></a></li>
+            <li class="sidebar-nav-item"><a href="low-stock.html" class="sidebar-link"><i data-lucide="alert-triangle"></i><span>Low Stock Alert</span><span class="sidebar-link-badge" id="badge-low-stock" style="background-color:#dc2626;">0</span></a></li>
+            <li class="sidebar-nav-item"><a href="stock-history.html" class="sidebar-link"><i data-lucide="history"></i><span>Stock Movement Log</span></a></li>
+          </ul>
+        </div>
+
+        <div class="sidebar-nav-group">
+          <span class="sidebar-group-title">RELATIONS</span>
+          <ul class="sidebar-nav-list">
+            <li class="sidebar-nav-item"><a href="customers.html" class="sidebar-link"><i data-lucide="users"></i><span>Customers</span></a></li>
+            <li class="sidebar-nav-item"><a href="reviews.html" class="sidebar-link"><i data-lucide="message-square"></i><span>Product Reviews</span></a></li>
+          </ul>
+        </div>
+
+        <div class="sidebar-nav-group">
+          <span class="sidebar-group-title">SYSTEM & USER</span>
+          <ul class="sidebar-nav-list">
+            <li class="sidebar-nav-item"><a href="notifications.html" class="sidebar-link"><i data-lucide="bell"></i><span>Notifications</span></a></li>
+            <li class="sidebar-nav-item"><a href="profile.html" class="sidebar-link"><i data-lucide="user-check"></i><span>My Profile</span></a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="sidebar-footer">
+        <a href="../index.html" class="sidebar-client-portal-link">
+          <i data-lucide="external-link" style="width:14px;height:14px;"></i>
+          <span>View Customer Website</span>
+        </a>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="staff-main-wrapper">
+      
+      <div class="staff-page-header">
+        <div>
+          <div class="staff-breadcrumbs">
+            <span>STOCK</span> &bull; <span>VARIANT INVENTORY</span>
+          </div>
+          <h1 class="staff-page-title">INVENTORY STOCK MONITOR</h1>
+          <p class="staff-page-desc">Track real-time stock levels, SKU locations, and safety thresholds across all sizes and colorways.</p>
+        </div>
+
+        <div class="header-actions">
+          <a href="low-stock.html" class="btn-staff btn-staff-danger btn-staff-sm">
+            <i data-lucide="alert-triangle" style="width:14px;height:14px;"></i>
+            VIEW LOW STOCK (5)
+          </a>
+          <a href="stock-history.html" class="btn-staff btn-staff-outline btn-staff-sm">
+            <i data-lucide="history" style="width:14px;height:14px;"></i>
+            MOVEMENT LOG
+          </a>
+        </div>
+      </div>
+
+      <!-- Toolbar Search & Multi-Filters -->
+      <div class="staff-toolbar">
+        <div class="toolbar-left" style="max-width: 780px;">
+          <div style="position:relative; flex:1;">
+            <i data-lucide="search" style="position:absolute; left:0.75rem; top:50%; transform:translateY(-50%); width:15px; height:15px; color:var(--staff-gray-500);"></i>
+            <input type="text" id="inv-search-input" class="staff-input" placeholder="Search by SKU, product name, or colorway..." style="width:100%; padding-left:2.25rem;">
+          </div>
+
+          <select class="staff-select" id="inv-category-filter">
+            <option value="all">Category: All</option>
+            <option value="Tops">Tops</option>
+            <option value="Bottoms">Bottoms</option>
+            <option value="Outerwear">Outerwear</option>
+            <option value="Accessories">Accessories</option>
+          </select>
+
+          <select class="staff-select" id="inv-size-filter">
+            <option value="all">Size: All</option>
+            <option value="XS">XS</option>
+            <option value="S">S</option>
+            <option value="M">M</option>
+            <option value="L">L</option>
+            <option value="XL">XL</option>
+            <option value="One Size">One Size</option>
+          </select>
+
+          <select class="staff-select" id="inv-status-filter">
+            <option value="all">Status: All</option>
+            <option value="In Stock">In Stock</option>
+            <option value="Low Stock">Low Stock</option>
+            <option value="Out of Stock">Out of Stock</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Inventory Table Card -->
+      <div class="staff-card">
+        <div class="staff-table-wrap">
+          <table class="staff-table">
+            <thead>
+              <tr>
+                <th>PRODUCT</th>
+                <th>SKU</th>
+                <th>COLOR / VARIANT</th>
+                <th>SIZE</th>
+                <th>WAREHOUSE RACK</th>
+                <th>CURRENT STOCK</th>
+                <th>THRESHOLD</th>
+                <th>STATUS</th>
+              </tr>
+            </thead>
+            <tbody id="inventory-table-tbody">
+              <!-- Injected via JavaScript -->
+            </tbody>
+          </table>
+        </div>
+
+        <div id="inv-empty-state" style="display:none; text-align:center; padding: 4rem 1rem;">
+          <h3 style="font-size:1.125rem; font-weight:700; margin-bottom:0.35rem;">NO VARIANTS FOUND</h3>
+          <p style="font-size:0.8125rem; color:var(--staff-gray-600);">No inventory records match your selected filters.</p>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <!-- Scripts -->
+  <script src="../products.js"></script>
+  <script src="../js/staff-data.js"></script>
+  <script src="../js/staff.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      STAFF.ui.init('inventory');
+
+      const urlParams = new URLSearchParams(window.location.search);
+      const initialSearch = urlParams.get('search') || '';
+
+      const tbody = document.getElementById('inventory-table-tbody');
+      const emptyState = document.getElementById('inv-empty-state');
+      const searchInput = document.getElementById('inv-search-input');
+      const categoryFilter = document.getElementById('inv-category-filter');
+      const sizeFilter = document.getElementById('inv-size-filter');
+      const statusFilter = document.getElementById('inv-status-filter');
+
+      if (initialSearch) searchInput.value = initialSearch;
+
+      function renderInventory() {
+        let items = STAFF.store.getInventory();
+        const query = searchInput.value.trim().toLowerCase();
+        const cat = categoryFilter.value;
+        const size = sizeFilter.value;
+        const stat = statusFilter.value;
+
+        if (cat !== 'all') {
+          items = items.filter(i => i.category.toLowerCase() === cat.toLowerCase());
+        }
+
+        if (size !== 'all') {
+          items = items.filter(i => i.size.toLowerCase() === size.toLowerCase());
+        }
+
+        if (stat !== 'all') {
+          items = items.filter(i => i.status.toLowerCase() === stat.toLowerCase());
+        }
+
+        if (query) {
+          items = items.filter(i => 
+            i.name.toLowerCase().includes(query) ||
+            i.sku.toLowerCase().includes(query) ||
+            i.color.toLowerCase().includes(query)
+          );
+        }
+
+        if (items.length === 0) {
+          tbody.innerHTML = '';
+          emptyState.style.display = 'block';
+        } else {
+          emptyState.style.display = 'none';
+          tbody.innerHTML = items.map(item => `
+            <tr>
+              <td><strong>${item.name}</strong></td>
+              <td class="mono-cell" style="font-size:0.75rem;">${item.sku}</td>
+              <td>${item.color}</td>
+              <td><strong>${item.size}</strong></td>
+              <td><span style="font-family:var(--font-mono); font-size:0.75rem; background:var(--staff-gray-100); padding:0.15rem 0.45rem; border-radius:2px;">${item.location}</span></td>
+              <td class="mono-cell" style="font-weight:700; ${item.stock === 0 ? 'color:#dc2626;' : (item.stock <= item.threshold ? 'color:#ca8a04;' : '')}">
+                ${item.stock} units
+              </td>
+              <td>${item.threshold} units</td>
+              <td>${STAFF.badge(item.status)}</td>
+            </tr>
+          `).join('');
+        }
+
+        if (window.lucide) window.lucide.createIcons();
+      }
+
+      searchInput.addEventListener('input', renderInventory);
+      categoryFilter.addEventListener('change', renderInventory);
+      sizeFilter.addEventListener('change', renderInventory);
+      statusFilter.addEventListener('change', renderInventory);
+
+      renderInventory();
+    });
+  </script>
+</body>
+</html>

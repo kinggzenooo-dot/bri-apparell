@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shopping Bag | BRI APPARELL</title>
+  <meta name="description" content="Review your selected BRI APPARELL garments, adjust quantities, and calculate complimentary nationwide shipping.">
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+
+  <!-- Announcement Bar -->
+  <div class="announcement-bar">
+    <div class="container" style="text-align: center;">
+      <span>COMPLIMENTARY NATIONWIDE SHIPPING ON ORDERS OVER ₱2,500</span>
+      <a href="promotions.html">USE CODE: FREESHIP2500</a>
+    </div>
+  </div>
+
+  <!-- Main Navigation Header -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <div class="header-left">
+        <button class="mobile-nav-toggle icon-btn" aria-label="Open menu">
+          <i data-lucide="menu"></i>
+        </button>
+        <a href="index.html" class="brand-logo">BRI APPARELL</a>
+      </div>
+
+      <nav class="main-nav">
+        <a href="index.html" class="nav-link">HOME</a>
+        <a href="shop.html" class="nav-link">SHOP</a>
+        <a href="collections.html" class="nav-link">COLLECTIONS</a>
+        <a href="promotions.html" class="nav-link">PROMOTIONS</a>
+        <a href="about.html" class="nav-link">ABOUT US</a>
+        <a href="contact.html" class="nav-link">CONTACT</a>
+      </nav>
+
+      <div class="utility-nav">
+        <button class="icon-btn trigger-search-btn" aria-label="Search">
+          <i data-lucide="search"></i>
+        </button>
+        <a href="wishlist.html" class="icon-btn" aria-label="Wishlist">
+          <i data-lucide="heart"></i>
+          <span class="badge-count wishlist-count-badge" style="display: none;">0</span>
+        </a>
+        <a href="cart.html" class="icon-btn" aria-label="Shopping Bag">
+          <i data-lucide="shopping-bag"></i>
+          <span class="badge-count bag-count-badge" style="display: none;">0</span>
+        </a>
+        <a href="account.html" class="icon-btn" aria-label="My Account">
+          <i data-lucide="user"></i>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Navigation Drawer -->
+  <div class="mobile-nav-drawer">
+    <div class="mobile-drawer-content">
+      <div class="mobile-drawer-header">
+        <span class="brand-logo" style="font-size: 1.25rem;">BRI APPARELL</span>
+        <button class="mobile-drawer-close icon-btn" aria-label="Close menu">
+          <i data-lucide="x"></i>
+        </button>
+      </div>
+      <div class="mobile-nav-list">
+        <a href="index.html" class="mobile-nav-link">HOME <i data-lucide="arrow-right" style="width:16px;height:16px;"></i></a>
+        <a href="shop.html" class="mobile-nav-link">SHOP <i data-lucide="arrow-right" style="width:16px;height:16px;"></i></a>
+        <a href="collections.html" class="mobile-nav-link">COLLECTIONS <i data-lucide="arrow-right" style="width:16px;height:16px;"></i></a>
+        <a href="promotions.html" class="mobile-nav-link">PROMOTIONS <i data-lucide="arrow-right" style="width:16px;height:16px;"></i></a>
+        <a href="about.html" class="mobile-nav-link">ABOUT US <i data-lucide="arrow-right" style="width:16px;height:16px;"></i></a>
+        <a href="contact.html" class="mobile-nav-link">CONTACT <i data-lucide="arrow-right" style="width:16px;height:16px;"></i></a>
+      </div>
+      <div class="mobile-drawer-footer">
+        <button class="mobile-utility-link trigger-search-btn"><i data-lucide="search" style="width:18px;height:18px;"></i> Search</button>
+        <a href="wishlist.html" class="mobile-utility-link"><i data-lucide="heart" style="width:18px;height:18px;"></i> Wishlist</a>
+        <a href="cart.html" class="mobile-utility-link"><i data-lucide="shopping-bag" style="width:18px;height:18px;"></i> Shopping Bag</a>
+        <a href="account.html" class="mobile-utility-link"><i data-lucide="user" style="width:18px;height:18px;"></i> My Account</a>
+      </div>
+    </div>
+  </div>
+
+  <main>
+    <section class="section-spacing-sm">
+      <div class="container">
+        
+        <div style="margin-bottom: 2rem;">
+          <span class="eyebrow">CHECKOUT PREPARATION</span>
+          <h1 class="editorial-title" style="font-size: clamp(2rem, 3.5vw, 2.75rem);">SHOPPING BAG</h1>
+        </div>
+
+        <!-- Populated Cart View -->
+        <div id="cart-populated-view" class="cart-layout">
+          
+          <!-- Left Column: Items List & Shipping Progress -->
+          <div>
+            <!-- Free Shipping Progress Meter -->
+            <div class="free-shipping-meter">
+              <div style="display:flex; justify-content:space-between; align-items:center; font-size:0.8125rem; font-weight:600;">
+                <span id="shipping-progress-text">Calculate your free shipping progress...</span>
+                <span id="shipping-progress-percent">0%</span>
+              </div>
+              <div class="meter-bar-track">
+                <div class="meter-bar-fill" id="shipping-progress-bar" style="width: 0%;"></div>
+              </div>
+            </div>
+
+            <!-- Cart Table Header -->
+            <div class="cart-table-header">
+              <span>PRODUCT</span>
+              <span>QUANTITY</span>
+              <span style="text-align: right;">TOTAL</span>
+              <span></span>
+            </div>
+
+            <!-- Cart Items Container -->
+            <div id="cart-items-list">
+              <!-- Dynamically Populated -->
+            </div>
+
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-top: 2rem;">
+              <a href="shop.html" class="btn-text">&larr; CONTINUE BROWSING</a>
+              <button class="btn-text" id="clear-bag-btn" style="color:var(--color-gray-dark); border-color:var(--color-gray-dark);">CLEAR BAG</button>
+            </div>
+          </div>
+
+          <!-- Right Column: Summary Card -->
+          <div>
+            <div class="order-summary-card">
+              <h3 style="font-size: 1.125rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; border-bottom: 1px solid var(--border-color); padding-bottom: 1rem;">
+                ORDER SUMMARY
+              </h3>
+
+              <!-- Promo Code Box -->
+              <div style="margin: 0.5rem 0;">
+                <label style="font-size:0.75rem; font-weight:700; text-transform:uppercase; display:block; margin-bottom:0.4rem;">VOUCHER / PROMO CODE</label>
+                <div style="display:flex;">
+                  <input type="text" id="cart-promo-input" placeholder="e.g. BRIFIRST10" style="flex:1; padding:0.75rem 0.85rem; border:1px solid var(--border-color); border-right:none; background:#fff; font-size:0.8125rem; text-transform:uppercase;">
+                  <button class="btn btn-primary btn-sm" id="cart-apply-promo-btn" style="padding:0.75rem 1.25rem;">APPLY</button>
+                </div>
+                <div id="cart-applied-promo-tag" style="display:none; margin-top:0.6rem; font-size:0.75rem; color:var(--color-success); display:flex; justify-content:space-between; align-items:center;">
+                  <span id="promo-name-display"></span>
+                  <button class="btn-text" id="remove-promo-btn" style="font-size:0.6875rem; color:var(--color-sale-accent); border-color:transparent;">Remove</button>
+                </div>
+              </div>
+
+              <!-- Calculation Lines -->
+              <div class="summary-line">
+                <span>Bag Subtotal</span>
+                <span id="cart-subtotal-val">₱0</span>
+              </div>
+
+              <div class="summary-line" id="promo-discount-line" style="display: none; color: var(--color-sale-accent);">
+                <span>Discount Applied</span>
+                <span id="cart-discount-val">-₱0</span>
+              </div>
+
+              <div class="summary-line">
+                <span>Estimated Courier Delivery</span>
+                <span id="cart-shipping-val">₱150</span>
+              </div>
+
+              <div class="summary-line total">
+                <span>ESTIMATED TOTAL</span>
+                <span id="cart-grand-total-val">₱0</span>
+              </div>
+
+              <a href="checkout.html" class="btn btn-primary btn-block btn-lg" style="margin-top: 1rem;">
+                PROCEED TO CHECKOUT &rarr;
+              </a>
+
+              <div style="font-size: 0.75rem; color: var(--text-muted); text-align: center; line-height: 1.5; margin-top: 0.5rem;">
+                Taxes calculated at final payment stage. Complimentary 30-day returns on all garments.
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Empty Cart State -->
+        <div id="cart-empty-view" style="display: none; text-align: center; padding: 6rem 1rem;">
+          <div style="width: 72px; height: 72px; border-radius: 50%; background: var(--color-bg-subtle); display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem;">
+            <i data-lucide="shopping-bag" style="width: 32px; height: 32px; color: var(--color-black);"></i>
+          </div>
+          <h2 class="editorial-title" style="font-size: 2rem; margin-bottom: 0.5rem;">YOUR BAG IS EMPTY</h2>
+          <p style="color: var(--text-secondary); font-size: 0.9375rem; max-width: 420px; margin: 0 auto 2rem;">
+            Discover our latest capsule collections crafted in heavyweight organic cottons and architectural cuts.
+          </p>
+          <a href="shop.html" class="btn btn-primary btn-lg">DISCOVER NEW ARRIVALS</a>
+        </div>
+
+      </div>
+    </section>
+  </main>
+
+  <!-- Site Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-top-grid">
+        <div>
+          <h3 class="footer-brand-title">BRI APPARELL</h3>
+          <p class="footer-brand-desc">
+            Modern, minimalist clothing crafted with architectural precision and high-grade organic textiles.
+          </p>
+          <div class="footer-social-links">
+            <a href="https://instagram.com" target="_blank" rel="noopener" class="footer-social-btn" aria-label="Instagram">
+              <i data-lucide="instagram" style="width:16px;height:16px;"></i>
+            </a>
+            <a href="https://facebook.com" target="_blank" rel="noopener" class="footer-social-btn" aria-label="Facebook">
+              <i data-lucide="facebook" style="width:16px;height:16px;"></i>
+            </a>
+            <a href="https://tiktok.com" target="_blank" rel="noopener" class="footer-social-btn" aria-label="TikTok">
+              <i data-lucide="video" style="width:16px;height:16px;"></i>
+            </a>
+          </div>
+        </div>
+
+        <div>
+          <h4 class="footer-column-title">SHOP</h4>
+          <ul class="footer-links">
+            <li><a href="shop.html?filter=new" class="footer-link">New Arrivals</a></li>
+            <li><a href="shop.html?category=Tops" class="footer-link">Tops & Tees</a></li>
+            <li><a href="shop.html?category=Bottoms" class="footer-link">Trousers & Shorts</a></li>
+            <li><a href="shop.html?category=Outerwear" class="footer-link">Jackets & Coats</a></li>
+            <li><a href="collections.html" class="footer-link">Collections</a></li>
+            <li><a href="promotions.html" class="footer-link">Promotions</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="footer-column-title">CUSTOMER CARE</h4>
+          <ul class="footer-links">
+            <li><a href="contact.html" class="footer-link">Contact Concierge</a></li>
+            <li><a href="contact.html#shipping" class="footer-link">Shipping & Delivery</a></li>
+            <li><a href="contact.html#returns" class="footer-link">Returns & Exchanges</a></li>
+            <li><a href="contact.html#faqs" class="footer-link">FAQs</a></li>
+            <li><a href="about.html#sustainability" class="footer-link">Sustainability</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="footer-column-title">ACCOUNT</h4>
+          <ul class="footer-links">
+            <li><a href="account.html" class="footer-link">My Account</a></li>
+            <li><a href="account.html?tab=orders" class="footer-link">Track Orders</a></li>
+            <li><a href="wishlist.html" class="footer-link">Saved Wishlist</a></li>
+            <li><a href="cart.html" class="footer-link">Shopping Bag</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="footer-column-title">MANILA FLAGSHIP</h4>
+          <p style="font-size: 0.8125rem; color: var(--color-gray-light); line-height: 1.6; margin-bottom: 0.75rem;">
+            Unit 102, The Minimalist Pavilion<br>
+            Bonifacio High Street, BGC, Taguig<br>
+            Open Daily: 10AM – 8PM
+          </p>
+          <a href="contact.html" class="btn-text" style="color: #fff; border-color: #fff; font-size: 0.75rem;">VISIT STORE &rarr;</a>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>&copy; 2026 BRI APPARELL. All rights reserved.</p>
+        <div class="footer-bottom-links">
+          <a href="about.html">Privacy Policy</a>
+          <a href="about.html">Terms & Conditions</a>
+          <a href="about.html">Accessibility</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="products.js"></script>
+  <script src="script.js"></script>
+  <script>
+    // Cart Page Calculations and Rendering
+    document.addEventListener('DOMContentLoaded', () => {
+      const populatedView = document.getElementById('cart-populated-view');
+      const emptyView = document.getElementById('cart-empty-view');
+      const itemsList = document.getElementById('cart-items-list');
+
+      function renderCart() {
+        const items = BRI.cart.getItems();
+
+        if (items.length === 0) {
+          populatedView.style.display = 'none';
+          emptyView.style.display = 'block';
+          return;
+        }
+
+        populatedView.style.display = 'grid';
+        emptyView.style.display = 'none';
+
+        // Render Cart Items
+        itemsList.innerHTML = items.map((item, index) => {
+          const product = PRODUCTS.find(p => p.id === item.id);
+          if (!product) return '';
+          const unitPrice = product.isSale ? product.salePrice : product.price;
+          const itemTotal = unitPrice * item.quantity;
+
+          return `
+            <div class="cart-item-row">
+              <div class="cart-product-info">
+                <img src="${product.images[0]}" alt="${product.name}" class="cart-item-img">
+                <div>
+                  <span class="eyebrow" style="margin-bottom:0.2rem;">${product.category}</span>
+                  <a href="product-detail.html?id=${product.id}" style="font-weight:600; font-size:0.9375rem; display:block; margin-bottom:0.25rem;">${product.name}</a>
+                  <div style="font-size:0.8125rem; color:var(--text-secondary);">
+                    <span>Size: <strong>${item.size}</strong></span> &bull; <span>Color: <strong>${item.color}</strong></span>
+                  </div>
+                  <div style="font-size:0.875rem; font-weight:700; margin-top:0.35rem;">
+                    ${BRI.formatPrice(unitPrice)}
+                  </div>
+                </div>
+              </div>
+
+              <!-- Quantity Stepper -->
+              <div>
+                <div class="quantity-stepper" style="height: 40px;">
+                  <button class="qty-btn item-qty-minus" data-index="${index}" aria-label="Decrease">
+                    <i data-lucide="minus" style="width:12px;height:12px;"></i>
+                  </button>
+                  <input type="text" class="qty-input" value="${item.quantity}" readonly style="width:36px; font-size:0.8125rem;">
+                  <button class="qty-btn item-qty-plus" data-index="${index}" aria-label="Increase">
+                    <i data-lucide="plus" style="width:12px;height:12px;"></i>
+                  </button>
+                </div>
+              </div>
+
+              <!-- Total Item Price -->
+              <div style="text-align: right; font-weight: 700; font-size: 0.9375rem;">
+                ${BRI.formatPrice(itemTotal)}
+              </div>
+
+              <!-- Remove Item Button -->
+              <div style="text-align: right;">
+                <button class="icon-btn item-remove-btn" data-index="${index}" aria-label="Remove item" style="width:32px;height:32px;">
+                  <i data-lucide="trash-2" style="width:16px;height:16px;"></i>
+                </button>
+              </div>
+            </div>
+          `;
+        }).join('');
+
+        if (window.lucide) window.lucide.createIcons();
+
+        // Calculate Totals & Free Shipping Bar
+        const subtotal = BRI.cart.getSubtotal();
+        const threshold = STORE_CONFIG.freeShippingThreshold;
+        const progressBar = document.getElementById('shipping-progress-bar');
+        const progressText = document.getElementById('shipping-progress-text');
+        const progressPercent = document.getElementById('shipping-progress-percent');
+
+        const percentage = Math.min(100, Math.round((subtotal / threshold) * 100));
+        progressBar.style.width = `${percentage}%`;
+        progressPercent.textContent = `${percentage}%`;
+
+        if (subtotal >= threshold) {
+          progressText.innerHTML = `<strong>CONGRATULATIONS:</strong> You've unlocked COMPLIMENTARY shipping!`;
+        } else {
+          const diff = threshold - subtotal;
+          progressText.innerHTML = `Add <strong>${BRI.formatPrice(diff)}</strong> more to qualify for <strong>COMPLIMENTARY SHIPPING</strong>`;
+        }
+
+        // Apply Promo Disounts
+        const appliedPromo = BRI.promo.getApplied();
+        let discount = 0;
+        let shippingFee = subtotal >= threshold ? 0 : STORE_CONFIG.standardShippingFee;
+
+        if (appliedPromo) {
+          if (appliedPromo.discountPercent) {
+            discount = Math.round(subtotal * (appliedPromo.discountPercent / 100));
+          } else if (appliedPromo.discountFixed) {
+            shippingFee = 0;
+          }
+
+          document.getElementById('promo-discount-line').style.display = discount > 0 ? 'flex' : 'none';
+          document.getElementById('cart-discount-val').textContent = `-${BRI.formatPrice(discount)}`;
+          document.getElementById('cart-applied-promo-tag').style.display = 'flex';
+          document.getElementById('promo-name-display').textContent = `Code "${appliedPromo.code}" applied (${appliedPromo.description})`;
+        } else {
+          document.getElementById('promo-discount-line').style.display = 'none';
+          document.getElementById('cart-applied-promo-tag').style.display = 'none';
+        }
+
+        const grandTotal = Math.max(0, subtotal - discount + shippingFee);
+
+        document.getElementById('cart-subtotal-val').textContent = BRI.formatPrice(subtotal);
+        document.getElementById('cart-shipping-val').textContent = shippingFee === 0 ? 'COMPLIMENTARY' : BRI.formatPrice(shippingFee);
+        document.getElementById('cart-grand-total-val').textContent = BRI.formatPrice(grandTotal);
+
+        // Bind Row Events
+        itemsList.querySelectorAll('.item-qty-minus').forEach(btn => {
+          btn.addEventListener('click', () => {
+            const idx = parseInt(btn.getAttribute('data-index'), 10);
+            BRI.cart.updateQuantity(idx, items[idx].quantity - 1);
+            renderCart();
+          });
+        });
+
+        itemsList.querySelectorAll('.item-qty-plus').forEach(btn => {
+          btn.addEventListener('click', () => {
+            const idx = parseInt(btn.getAttribute('data-index'), 10);
+            BRI.cart.updateQuantity(idx, items[idx].quantity + 1);
+            renderCart();
+          });
+        });
+
+        itemsList.querySelectorAll('.item-remove-btn').forEach(btn => {
+          btn.addEventListener('click', () => {
+            const idx = parseInt(btn.getAttribute('data-index'), 10);
+            BRI.cart.removeItem(idx);
+            renderCart();
+          });
+        });
+      }
+
+      // Clear Bag Button
+      document.getElementById('clear-bag-btn').addEventListener('click', () => {
+        if (confirm('Are you sure you want to clear your shopping bag?')) {
+          BRI.cart.clear();
+          renderCart();
+        }
+      });
+
+      // Apply Promo Code
+      document.getElementById('cart-apply-promo-btn').addEventListener('click', () => {
+        const input = document.getElementById('cart-promo-input');
+        const res = BRI.promo.apply(input.value);
+        if (res.success) {
+          BRI.toast.show(res.message, 'check');
+          renderCart();
+        } else {
+          BRI.toast.show(res.message, 'alert');
+        }
+      });
+
+      // Remove Promo Code
+      document.getElementById('remove-promo-btn').addEventListener('click', () => {
+        BRI.promo.remove();
+        BRI.toast.show('Promo code removed.');
+        renderCart();
+      });
+
+      // Initial Cart Render
+      renderCart();
+    });
+  </script>
+</body>
+</html>

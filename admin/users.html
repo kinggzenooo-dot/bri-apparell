@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User Management | BRI APPARELL Admin</title>
+  <link rel="stylesheet" href="css/admin.css">
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+
+  <!-- Topbar -->
+  <header class="staff-topbar">
+    <div class="topbar-left">
+      <button class="topbar-icon-btn mobile-menu-toggle" id="mobile-menu-toggle" style="display: none;" aria-label="Toggle menu">
+        <i data-lucide="menu"></i>
+      </button>
+      <a href="index.html" class="staff-brand-badge">
+        BRI APPARELL
+        <span class="admin-role-pill">ADMIN</span>
+      </a>
+    </div>
+
+    <div class="topbar-search-wrap">
+      <i data-lucide="search" class="topbar-search-icon" style="width:16px;height:16px;"></i>
+      <input type="text" id="topbar-global-search" class="topbar-search-input" placeholder="Search system...">
+    </div>
+
+    <div class="topbar-right">
+      <a href="notifications.html" class="topbar-icon-btn" aria-label="Notifications">
+        <i data-lucide="bell" style="width:18px;height:18px;"></i>
+        <span class="notif-badge-dot" id="topbar-notif-dot" style="display:none;"></span>
+      </a>
+
+      <!-- Admin User Chip -->
+      <div class="staff-user-chip" id="admin-user-chip">
+        <div class="user-avatar-circle admin-user-avatar">AV</div>
+        <div class="user-text-info">
+          <span class="user-name admin-user-name">Administrator Vance</span>
+          <span class="user-role-label admin-user-role">Super Admin</span>
+        </div>
+        <i data-lucide="chevron-down" style="width:14px;height:14px;color:var(--staff-gray-500);"></i>
+
+        <div class="user-menu-dropdown" id="admin-user-dropdown">
+          <a href="profile.html" class="dropdown-item">My Profile</a>
+          <a href="settings.html" class="dropdown-item">System Settings</a>
+          <div class="dropdown-divider"></div>
+          <a href="#" class="dropdown-item admin-logout-btn" style="color:#b91c1c;">Sign Out</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="staff-app-container">
+    <!-- Sidebar -->
+    <aside class="staff-sidebar">
+      <div>
+        <div class="sidebar-nav-group">
+          <span class="sidebar-group-title">OVERVIEW</span>
+          <ul class="sidebar-nav-list">
+            <li class="sidebar-nav-item"><a href="index.html" class="sidebar-nav-link"><i data-lucide="layout-dashboard"></i> Dashboard</a></li>
+            <li class="sidebar-nav-item"><a href="reports.html" class="sidebar-nav-link"><i data-lucide="bar-chart-3"></i> Reports & Analytics</a></li>
+          </ul>
+        </div>
+        <div class="sidebar-nav-group">
+          <span class="sidebar-group-title">MANAGEMENT</span>
+          <ul class="sidebar-nav-list">
+            <li class="sidebar-nav-item active"><a href="users.html" class="sidebar-nav-link"><i data-lucide="shield-check"></i> User Management</a></li>
+            <li class="sidebar-nav-item"><a href="customers.html" class="sidebar-nav-link"><i data-lucide="users"></i> Customers</a></li>
+            <li class="sidebar-nav-item"><a href="products.html" class="sidebar-nav-link"><i data-lucide="shirt"></i> Products & Catalog</a></li>
+            <li class="sidebar-nav-item"><a href="categories.html" class="sidebar-nav-link"><i data-lucide="folder-tree"></i> Categories</a></li>
+            <li class="sidebar-nav-item"><a href="orders.html" class="sidebar-nav-link"><i data-lucide="shopping-bag"></i> Orders & Transactions</a></li>
+            <li class="sidebar-nav-item"><a href="inventory.html" class="sidebar-nav-link"><i data-lucide="boxes"></i> Inventory & Stock</a></li>
+            <li class="sidebar-nav-item"><a href="payments.html" class="sidebar-nav-link"><i data-lucide="credit-card"></i> Payments</a></li>
+          </ul>
+        </div>
+        <div class="sidebar-nav-group">
+          <span class="sidebar-group-title">SYSTEM</span>
+          <ul class="sidebar-nav-list">
+            <li class="sidebar-nav-item"><a href="notifications.html" class="sidebar-nav-link"><i data-lucide="bell"></i> Notifications</a></li>
+            <li class="sidebar-nav-item"><a href="settings.html" class="sidebar-nav-link"><i data-lucide="settings"></i> System Settings</a></li>
+            <li class="sidebar-nav-item"><a href="profile.html" class="sidebar-nav-link"><i data-lucide="user"></i> Admin Profile</a></li>
+          </ul>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="staff-main-content">
+      <div class="page-header" style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1.5rem;">
+        <div>
+          <h1 class="page-title" style="font-size:1.75rem; font-weight:800; font-family:var(--font-brand);">USER MANAGEMENT</h1>
+          <p class="page-subtitle" style="color:var(--staff-gray-500); font-size:0.875rem;">Manage executive administrators, retail staff, and customer accounts.</p>
+        </div>
+        <button class="btn btn-primary" id="open-add-user-modal" style="font-size:0.8125rem;">
+          <i data-lucide="user-plus" style="width:16px;height:16px;"></i> Create User Account
+        </button>
+      </div>
+
+      <!-- Toolbar -->
+      <div class="admin-toolbar">
+        <div class="toolbar-search">
+          <i data-lucide="search" style="width:16px;height:16px;color:var(--staff-gray-500);"></i>
+          <input type="text" id="user-search-input" placeholder="Search by name, email, phone...">
+        </div>
+        <div class="toolbar-filters">
+          <select id="role-filter" class="toolbar-select">
+            <option value="all">All Roles</option>
+            <option value="admin">Administrators</option>
+            <option value="staff">Staff Members</option>
+            <option value="customer">Customers</option>
+          </select>
+          <select id="status-filter" class="toolbar-select">
+            <option value="all">All Statuses</option>
+            <option value="Active">Active</option>
+            <option value="Inactive">Inactive</option>
+            <option value="Suspended">Suspended</option>
+          </select>
+          <button class="btn btn-outline" id="refresh-users-btn" style="padding:0.5rem 0.75rem;">
+            <i data-lucide="rotate-cw" style="width:14px;height:14px;"></i> Refresh
+          </button>
+        </div>
+      </div>
+
+      <!-- Users Table Card -->
+      <div class="card" style="background:#fff; border:1px solid var(--border-subtle); border-radius:var(--radius-sm); padding:1rem 1.5rem;">
+        <div class="table-responsive">
+          <table class="data-table" style="width:100%; border-collapse:collapse; font-size:0.8125rem;">
+            <thead>
+              <tr style="text-align:left; border-bottom:1px solid var(--border-subtle); color:var(--staff-gray-500);">
+                <th style="padding:0.75rem 0.5rem;">USER</th>
+                <th style="padding:0.75rem 0.5rem;">ROLE</th>
+                <th style="padding:0.75rem 0.5rem;">DEPARTMENT</th>
+                <th style="padding:0.75rem 0.5rem;">PHONE</th>
+                <th style="padding:0.75rem 0.5rem;">STATUS</th>
+                <th style="padding:0.75rem 0.5rem;">JOINED</th>
+                <th style="padding:0.75rem 0.5rem; text-align:right;">ACTIONS</th>
+              </tr>
+            </thead>
+            <tbody id="users-tbody">
+              <tr><td colspan="7" style="padding:2rem; text-align:center; color:var(--staff-gray-500);">Loading system users...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Modal: Create User -->
+  <div class="admin-modal-backdrop" id="modal-add-user">
+    <div class="admin-modal-box">
+      <div class="admin-modal-header">
+        <h3 class="admin-modal-title">CREATE NEW USER ACCOUNT</h3>
+        <button class="topbar-icon-btn modal-close-btn" style="border:none; background:transparent;"><i data-lucide="x"></i></button>
+      </div>
+      <form id="form-create-user">
+        <div class="admin-modal-body">
+          <div class="form-group" style="margin-bottom:1rem;">
+            <label class="form-label">FULL NAME</label>
+            <input type="text" id="new-user-name" class="form-input" required placeholder="e.g. Maria Santos">
+          </div>
+          <div class="form-group" style="margin-bottom:1rem;">
+            <label class="form-label">EMAIL ADDRESS</label>
+            <input type="email" id="new-user-email" class="form-input" required placeholder="user@briapparell.com">
+          </div>
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin-bottom:1rem;">
+            <div class="form-group">
+              <label class="form-label">SYSTEM ROLE</label>
+              <select id="new-user-role" class="form-input" required>
+                <option value="staff">Staff Member</option>
+                <option value="admin">Administrator</option>
+                <option value="customer">Customer</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">DEPARTMENT</label>
+              <input type="text" id="new-user-dept" class="form-input" placeholder="Retail Operations">
+            </div>
+          </div>
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin-bottom:1rem;">
+            <div class="form-group">
+              <label class="form-label">PHONE NUMBER</label>
+              <input type="text" id="new-user-phone" class="form-input" placeholder="+63 917 ...">
+            </div>
+            <div class="form-group">
+              <label class="form-label">INITIAL PASSWORD</label>
+              <input type="password" id="new-user-pass" class="form-input" required placeholder="Min. 6 chars" value="password123">
+            </div>
+          </div>
+        </div>
+        <div class="admin-modal-footer">
+          <button type="button" class="btn btn-outline modal-close-btn">Cancel</button>
+          <button type="submit" class="btn btn-primary" id="btn-save-new-user">Create User Account</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal: Edit User -->
+  <div class="admin-modal-backdrop" id="modal-edit-user">
+    <div class="admin-modal-box">
+      <div class="admin-modal-header">
+        <h3 class="admin-modal-title">EDIT USER ACCOUNT</h3>
+        <button class="topbar-icon-btn modal-close-btn" style="border:none; background:transparent;"><i data-lucide="x"></i></button>
+      </div>
+      <form id="form-edit-user">
+        <input type="hidden" id="edit-user-id">
+        <div class="admin-modal-body">
+          <div class="form-group" style="margin-bottom:1rem;">
+            <label class="form-label">FULL NAME</label>
+            <input type="text" id="edit-user-name" class="form-input" required>
+          </div>
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin-bottom:1rem;">
+            <div class="form-group">
+              <label class="form-label">SYSTEM ROLE</label>
+              <select id="edit-user-role" class="form-input" required>
+                <option value="admin">Administrator</option>
+                <option value="staff">Staff Member</option>
+                <option value="customer">Customer</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">ACCOUNT STATUS</label>
+              <select id="edit-user-status" class="form-input" required>
+                <option value="Active">Active</option>
+                <option value="Inactive">Inactive</option>
+                <option value="Suspended">Suspended</option>
+              </select>
+            </div>
+          </div>
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin-bottom:1rem;">
+            <div class="form-group">
+              <label class="form-label">DEPARTMENT</label>
+              <input type="text" id="edit-user-dept" class="form-input">
+            </div>
+            <div class="form-group">
+              <label class="form-label">PHONE NUMBER</label>
+              <input type="text" id="edit-user-phone" class="form-input">
+            </div>
+          </div>
+        </div>
+        <div class="admin-modal-footer">
+          <button type="button" class="btn btn-outline modal-close-btn">Cancel</button>
+          <button type="submit" class="btn btn-primary" id="btn-save-edit-user">Save Changes</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="js/admin.js"></script>
+  <script>
+    let usersList = [];
+
+    async function loadUsers() {
+      const search = document.getElementById('user-search-input').value.trim();
+      const role = document.getElementById('role-filter').value;
+      const status = document.getElementById('status-filter').value;
+
+      const params = new URLSearchParams();
+      if (search) params.append('search', search);
+      if (role !== 'all') params.append('role', role);
+      if (status !== 'all') params.append('status', status);
+
+      try {
+        const res = await Admin.api(`/users?${params.toString()}`);
+        usersList = res.users || [];
+        renderUsers();
+      } catch (err) {
+        Admin.toast(err.message || 'Failed to load users', 'error');
+      }
+    }
+
+    function renderUsers() {
+      const tbody = document.getElementById('users-tbody');
+      if (usersList.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="7" style="padding:2rem; text-align:center; color:var(--staff-gray-500);">No user records found matching criteria.</td></tr>';
+        return;
+      }
+
+      tbody.innerHTML = usersList.map(u => {
+        let roleBadge = '<span class="badge badge-neutral">Customer</span>';
+        if (u.role === 'admin') roleBadge = '<span class="badge" style="background:#fef3c7; color:#92400e; font-weight:700;">Admin</span>';
+        if (u.role === 'staff') roleBadge = '<span class="badge" style="background:#eff6ff; color:#1e40af; font-weight:700;">Staff</span>';
+
+        let statusBadge = u.status === 'Active' 
+          ? '<span class="badge badge-success">Active</span>' 
+          : '<span class="badge badge-danger">Inactive</span>';
+
+        return `
+          <tr style="border-bottom:1px solid var(--border-subtle);">
+            <td style="padding:0.75rem 0.5rem;">
+              <div style="display:flex; align-items:center; gap:0.6rem;">
+                <div class="user-avatar-circle" style="width:32px; height:32px; font-size:0.75rem;">${u.avatar_initials || 'US'}</div>
+                <div>
+                  <div style="font-weight:700; color:var(--staff-black);">${u.full_name}</div>
+                  <div style="font-size:0.75rem; color:var(--staff-gray-500);">${u.email}</div>
+                </div>
+              </div>
+            </td>
+            <td style="padding:0.75rem 0.5rem;">${roleBadge}</td>
+            <td style="padding:0.75rem 0.5rem; color:var(--staff-gray-600);">${u.department || '—'}</td>
+            <td style="padding:0.75rem 0.5rem; font-family:var(--font-mono);">${u.phone || '—'}</td>
+            <td style="padding:0.75rem 0.5rem;">${statusBadge}</td>
+            <td style="padding:0.75rem 0.5rem; color:var(--staff-gray-500);">${Admin.formatDateOnly(u.created_at)}</td>
+            <td style="padding:0.75rem 0.5rem; text-align:right;">
+              <div style="display:inline-flex; gap:0.35rem;">
+                <button class="btn-sm btn-outline edit-btn" data-id="${u.id}" title="Edit User">
+                  <i data-lucide="edit-2" style="width:12px;height:12px;"></i> Edit
+                </button>
+                <button class="btn-sm btn-outline deactivate-btn" data-id="${u.id}" data-name="${u.full_name}" title="Toggle Active">
+                  <i data-lucide="power" style="width:12px;height:12px;"></i>
+                </button>
+              </div>
+            </td>
+          </tr>
+        `;
+      }).join('');
+
+      if (window.lucide) window.lucide.createIcons();
+
+      // Bind edit clicks
+      document.querySelectorAll('.edit-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const u = usersList.find(x => x.id == btn.dataset.id);
+          if (u) openEditModal(u);
+        });
+      });
+
+      // Bind deactivate clicks
+      document.querySelectorAll('.deactivate-btn').forEach(btn => {
+        btn.addEventListener('click', async () => {
+          if (!confirm(`Are you sure you want to deactivate or update account status for ${btn.dataset.name}?`)) return;
+          try {
+            await Admin.api(`/users/${btn.dataset.id}`, { method: 'DELETE' });
+            Admin.toast(`User ${btn.dataset.name} status updated.`, 'success');
+            loadUsers();
+          } catch (err) {
+            Admin.toast(err.message, 'error');
+          }
+        });
+      });
+    }
+
+    function openEditModal(user) {
+      document.getElementById('edit-user-id').value = user.id;
+      document.getElementById('edit-user-name').value = user.full_name;
+      document.getElementById('edit-user-role').value = user.role;
+      document.getElementById('edit-user-status').value = user.status;
+      document.getElementById('edit-user-dept').value = user.department || '';
+      document.getElementById('edit-user-phone').value = user.phone || '';
+
+      document.getElementById('modal-edit-user').classList.add('open');
+    }
+
+    // Modal Triggers & Form Submissions
+    document.getElementById('open-add-user-modal').addEventListener('click', () => {
+      document.getElementById('modal-add-user').classList.add('open');
+    });
+
+    document.querySelectorAll('.modal-close-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.getElementById('modal-add-user').classList.remove('open');
+        document.getElementById('modal-edit-user').classList.remove('open');
+      });
+    });
+
+    document.getElementById('form-create-user').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const payload = {
+        full_name: document.getElementById('new-user-name').value.trim(),
+        email: document.getElementById('new-user-email').value.trim(),
+        role: document.getElementById('new-user-role').value,
+        department: document.getElementById('new-user-dept').value.trim(),
+        phone: document.getElementById('new-user-phone').value.trim(),
+        password: document.getElementById('new-user-pass').value
+      };
+
+      try {
+        await Admin.api('/users', { method: 'POST', body: JSON.stringify(payload) });
+        Admin.toast(`User ${payload.full_name} created successfully.`, 'success');
+        document.getElementById('modal-add-user').classList.remove('open');
+        document.getElementById('form-create-user').reset();
+        loadUsers();
+      } catch (err) {
+        Admin.toast(err.message, 'error');
+      }
+    });
+
+    document.getElementById('form-edit-user').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const id = document.getElementById('edit-user-id').value;
+      const payload = {
+        full_name: document.getElementById('edit-user-name').value.trim(),
+        role: document.getElementById('edit-user-role').value,
+        status: document.getElementById('edit-user-status').value,
+        department: document.getElementById('edit-user-dept').value.trim(),
+        phone: document.getElementById('edit-user-phone').value.trim()
+      };
+
+      try {
+        await Admin.api(`/users/${id}`, { method: 'PUT', body: JSON.stringify(payload) });
+        Admin.toast('User updated successfully.', 'success');
+        document.getElementById('modal-edit-user').classList.remove('open');
+        loadUsers();
+      } catch (err) {
+        Admin.toast(err.message, 'error');
+      }
+    });
+
+    document.getElementById('user-search-input').addEventListener('input', () => loadUsers());
+    document.getElementById('role-filter').addEventListener('change', () => loadUsers());
+    document.getElementById('status-filter').addEventListener('change', () => loadUsers());
+    document.getElementById('refresh-users-btn').addEventListener('click', () => loadUsers());
+
+    document.addEventListener('DOMContentLoaded', loadUsers);
+  </script>
+</body>
+</html>

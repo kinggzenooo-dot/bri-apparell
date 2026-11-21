@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BRI APPARELL | Essentials, Redefined. Modern Minimalist Clothing</title>
+  <meta name="description" content="Discover BRI APPARELL. Premium contemporary apparel, heavy organic cottons, and architectural silhouettes tailored for modern living.">
+  <link rel="stylesheet" href="styles.css">
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+
+  <!-- Announcement Bar -->
+  <div class="announcement-bar">
+    <div class="container" style="text-align: center;">
+      <span>COMPLIMENTARY NATIONWIDE SHIPPING ON ORDERS OVER ₱2,500</span>
+      <a href="promotions.html">USE CODE: FREESHIP2500</a>
+    </div>
+  </div>
+
+  <!-- Main Navigation Header -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <div class="header-left">
+        <button class="mobile-nav-toggle icon-btn" aria-label="Open menu">
+          <i data-lucide="menu"></i>
+        </button>
+        <a href="index.html" class="brand-logo">BRI APPARELL</a>
+      </div>
+
+      <nav class="main-nav">
+        <a href="index.html" class="nav-link active">HOME</a>
+        <a href="shop.html" class="nav-link">SHOP</a>
+        <a href="collections.html" class="nav-link">COLLECTIONS</a>
+        <a href="promotions.html" class="nav-link">PROMOTIONS</a>
+        <a href="about.html" class="nav-link">ABOUT US</a>
+        <a href="contact.html" class="nav-link">CONTACT</a>
+      </nav>
+
+      <div class="utility-nav">
+        <button class="icon-btn trigger-search-btn" aria-label="Search">
+          <i data-lucide="search"></i>
+        </button>
+        <a href="wishlist.html" class="icon-btn" aria-label="Wishlist">
+          <i data-lucide="heart"></i>
+          <span class="badge-count wishlist-count-badge" style="display: none;">0</span>
+        </a>
+        <a href="cart.html" class="icon-btn" aria-label="Shopping Bag">
+          <i data-lucide="shopping-bag"></i>
+          <span class="badge-count bag-count-badge" style="display: none;">0</span>
+        </a>
+        <a href="account.html" class="icon-btn" aria-label="My Account">
+          <i data-lucide="user"></i>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Navigation Drawer -->
+  <div class="mobile-nav-drawer">
+    <div class="mobile-drawer-content">
+      <div class="mobile-drawer-header">
+        <span class="brand-logo" style="font-size: 1.25rem;">BRI APPARELL</span>
+        <button class="mobile-drawer-close icon-btn" aria-label="Close menu">
+          <i data-lucide="x"></i>
+        </button>
+      </div>
+      <div class="mobile-nav-list">
+        <a href="index.html" class="mobile-nav-link">HOME <i data-lucide="arrow-right" style="width:16px;height:16px;"></i></a>
+        <a href="shop.html" class="mobile-nav-link">SHOP <i data-lucide="arrow-right" style="width:16px;height:16px;"></i></a>
+        <a href="collections.html" class="mobile-nav-link">COLLECTIONS <i data-lucide="arrow-right" style="width:16px;height:16px;"></i></a>
+        <a href="promotions.html" class="mobile-nav-link">PROMOTIONS <i data-lucide="arrow-right" style="width:16px;height:16px;"></i></a>
+        <a href="about.html" class="mobile-nav-link">ABOUT US <i data-lucide="arrow-right" style="width:16px;height:16px;"></i></a>
+        <a href="contact.html" class="mobile-nav-link">CONTACT <i data-lucide="arrow-right" style="width:16px;height:16px;"></i></a>
+      </div>
+      <div class="mobile-drawer-footer">
+        <button class="mobile-utility-link trigger-search-btn"><i data-lucide="search" style="width:18px;height:18px;"></i> Search</button>
+        <a href="wishlist.html" class="mobile-utility-link"><i data-lucide="heart" style="width:18px;height:18px;"></i> Wishlist</a>
+        <a href="cart.html" class="mobile-utility-link"><i data-lucide="shopping-bag" style="width:18px;height:18px;"></i> Shopping Bag</a>
+        <a href="account.html" class="mobile-utility-link"><i data-lucide="user" style="width:18px;height:18px;"></i> My Account</a>
+      </div>
+    </div>
+  </div>
+
+  <main>
+    <!-- Hero Section -->
+    <section class="hero-section">
+      <div class="hero-media-bg">
+        <img src="https://images.unsplash.com/photo-1509631179647-0177331693ae?q=80&w=1920&auto=format&fit=crop" alt="BRI APPARELL Editorial Fashion">
+      </div>
+      <div class="hero-overlay"></div>
+      <div class="container">
+        <div class="hero-content">
+          <span class="eyebrow hero-eyebrow">BRI APPARELL &mdash; SEASON 2026</span>
+          <h1 class="hero-title">ESSENTIALS, REDEFINED.</h1>
+          <p class="hero-desc">
+            Architectural tailoring meets ultra-heavyweight combed organic cottons. Designed with purist intention for effortless everyday confidence.
+          </p>
+          <div class="hero-cta-group">
+            <a href="shop.html" class="btn btn-primary-white btn-lg">SHOP NOW</a>
+            <a href="collections.html" class="btn btn-outline-white btn-lg">EXPLORE COLLECTION</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Featured Collection (New Arrivals) -->
+    <section class="section-spacing">
+      <div class="container">
+        <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 2.5rem; flex-wrap: wrap; gap: 1rem;">
+          <div>
+            <span class="eyebrow">CURATED SELECTION</span>
+            <h2 class="editorial-title" style="font-size: clamp(1.75rem, 3.5vw, 2.5rem);">NEW ARRIVALS</h2>
+          </div>
+          <a href="shop.html?filter=new" class="btn-text">VIEW ALL PIECES &rarr;</a>
+        </div>
+
+        <div class="product-grid" id="homepage-new-arrivals">
+          <!-- Dynamically Injected from products.js -->
+        </div>
+      </div>
+    </section>
+
+    <!-- Shop By Category Section -->
+    <section class="section-spacing" style="background-color: var(--color-bg-subtle);">
+      <div class="container">
+        <div style="text-align: center; max-width: 600px; margin: 0 auto 3.5rem;">
+          <span class="eyebrow">CATEGORIES</span>
+          <h2 class="editorial-title" style="font-size: clamp(1.75rem, 3.5vw, 2.5rem);">SHOP BY DISCIPLINE</h2>
+          <p class="text-editorial-lead" style="font-size: 0.9375rem; margin-top: 0.5rem;">Explore curated capsules designed for versatile layering and elevated form.</p>
+        </div>
+
+        <div class="category-grid">
+          <!-- Category 1: MEN -->
+          <a href="shop.html?category=Men" class="category-tile">
+            <img src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?q=80&w=800&auto=format&fit=crop" alt="Men's Collection" class="category-tile-bg">
+            <div class="category-tile-overlay"></div>
+            <div class="category-tile-content">
+              <div>
+                <span class="eyebrow" style="color: rgba(255,255,255,0.7); margin-bottom: 0.25rem;">CURATION</span>
+                <h3 class="category-tile-title">MEN</h3>
+              </div>
+              <span class="category-tile-link">SHOP <i data-lucide="arrow-right" style="width:14px;height:14px;"></i></span>
+            </div>
+          </a>
+
+          <!-- Category 2: WOMEN -->
+          <a href="shop.html?category=Women" class="category-tile">
+            <img src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?q=80&w=800&auto=format&fit=crop" alt="Women's Collection" class="category-tile-bg">
+            <div class="category-tile-overlay"></div>
+            <div class="category-tile-content">
+              <div>
+                <span class="eyebrow" style="color: rgba(255,255,255,0.7); margin-bottom: 0.25rem;">CURATION</span>
+                <h3 class="category-tile-title">WOMEN</h3>
+              </div>
+              <span class="category-tile-link">SHOP <i data-lucide="arrow-right" style="width:14px;height:14px;"></i></span>
+            </div>
+          </a>
+
+          <!-- Category 3: TOPS -->
+          <a href="shop.html?category=Tops" class="category-tile">
+            <img src="https://images.unsplash.com/photo-1521572267360-ee0c2909d518?q=80&w=800&auto=format&fit=crop" alt="Tops Collection" class="category-tile-bg">
+            <div class="category-tile-overlay"></div>
+            <div class="category-tile-content">
+              <div>
+                <span class="eyebrow" style="color: rgba(255,255,255,0.7); margin-bottom: 0.25rem;">HEAVYWEIGHT COTTONS</span>
+                <h3 class="category-tile-title">TOPS</h3>
+              </div>
+              <span class="category-tile-link">SHOP <i data-lucide="arrow-right" style="width:14px;height:14px;"></i></span>
+            </div>
+          </a>
+
+          <!-- Category 4: BOTTOMS -->
+          <a href="shop.html?category=Bottoms" class="category-tile">
+            <img src="https://images.unsplash.com/photo-1624378439575-d8705ad7ae80?q=80&w=800&auto=format&fit=crop" alt="Bottoms Collection" class="category-tile-bg">
+            <div class="category-tile-overlay"></div>
+            <div class="category-tile-content">
+              <div>
+                <span class="eyebrow" style="color: rgba(255,255,255,0.7); margin-bottom: 0.25rem;">PLEATED & CARGO</span>
+                <h3 class="category-tile-title">BOTTOMS</h3>
+              </div>
+              <span class="category-tile-link">SHOP <i data-lucide="arrow-right" style="width:14px;height:14px;"></i></span>
+            </div>
+          </a>
+
+          <!-- Category 5: OUTERWEAR -->
+          <a href="shop.html?category=Outerwear" class="category-tile">
+            <img src="https://images.unsplash.com/photo-1591047139829-d91aecb6caea?q=80&w=800&auto=format&fit=crop" alt="Outerwear Collection" class="category-tile-bg">
+            <div class="category-tile-overlay"></div>
+            <div class="category-tile-content">
+              <div>
+                <span class="eyebrow" style="color: rgba(255,255,255,0.7); margin-bottom: 0.25rem;">JACKETS & COATS</span>
+                <h3 class="category-tile-title">OUTERWEAR</h3>
+              </div>
+              <span class="category-tile-link">SHOP <i data-lucide="arrow-right" style="width:14px;height:14px;"></i></span>
+            </div>
+          </a>
+
+          <!-- Category 6: ACCESSORIES -->
+          <a href="shop.html?category=Accessories" class="category-tile">
+            <img src="https://images.unsplash.com/photo-1544816155-12df9643f363?q=80&w=800&auto=format&fit=crop" alt="Accessories Collection" class="category-tile-bg">
+            <div class="category-tile-overlay"></div>
+            <div class="category-tile-content">
+              <div>
+                <span class="eyebrow" style="color: rgba(255,255,255,0.7); margin-bottom: 0.25rem;">LEATHER & CANVAS</span>
+                <h3 class="category-tile-title">ACCESSORIES</h3>
+              </div>
+              <span class="category-tile-link">SHOP <i data-lucide="arrow-right" style="width:14px;height:14px;"></i></span>
+            </div>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Promotional Spotlight Banner -->
+    <section class="promo-spotlight-section">
+      <div class="container-fluid" style="padding: 0;">
+        <div class="promo-spotlight-grid">
+          <div class="promo-spotlight-content">
+            <span class="eyebrow" style="color: rgba(255,255,255,0.7);">SEASONAL PROMOTION</span>
+            <h2 class="editorial-title" style="color: #fff; font-size: clamp(2rem, 4vw, 3.25rem); margin-bottom: 1rem;">
+              UP TO 30% OFF SELECTED STYLES
+            </h2>
+            <p style="color: rgba(255,255,255,0.8); font-size: 1rem; line-height: 1.6; max-width: 480px; margin-bottom: 2rem;">
+              Elevate your daily rotation with limited-edition seasonal discounts. Use code <strong>SUMMER30</strong> at checkout on qualifying garments.
+            </p>
+            <div>
+              <a href="promotions.html" class="btn btn-primary-white btn-lg">SHOP PROMOTIONS</a>
+            </div>
+          </div>
+          <div class="promo-spotlight-media">
+            <img src="https://images.unsplash.com/photo-1556905055-8f358a7a47b2?q=80&w=1200&auto=format&fit=crop" alt="BRI APPARELL Promotion">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Brand Story Section -->
+    <section class="section-spacing brand-story-section">
+      <div class="container">
+        <div class="brand-story-grid">
+          <div>
+            <span class="eyebrow">THE PHILOSOPHY</span>
+            <h2 class="brand-story-quote">
+              "DESIGNED FOR EVERYDAY CONFIDENCE."
+            </h2>
+            <p class="text-editorial-lead" style="margin-bottom: 1.5rem;">
+              At BRI APPARELL, we believe true luxury lies in simplicity, structural precision, and uncompromising craftsmanship. We discard the ephemeral noise of fast fashion in pursuit of timeless silhouettes.
+            </p>
+            <p style="color: var(--text-secondary); font-size: 0.9375rem; line-height: 1.7; margin-bottom: 2rem;">
+              Every stitch, drape, and cut is engineered from custom-milled organic textiles and structured Japanese twills designed to wear seamlessly across years, not seasons.
+            </p>
+            <a href="about.html" class="btn btn-outline">ABOUT BRI APPARELL</a>
+          </div>
+          <div>
+            <div style="aspect-ratio: 4/5; overflow: hidden; background: #000;">
+              <img src="https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?q=80&w=1000&auto=format&fit=crop" alt="BRI APPARELL Craftsmanship" style="width: 100%; height: 100%; object-fit: cover;">
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Newsletter Section -->
+    <section class="section-spacing newsletter-section">
+      <div class="container">
+        <div class="newsletter-box">
+          <span class="eyebrow">JOIN THE COMMUNITY</span>
+          <h2 class="editorial-title" style="font-size: clamp(2rem, 3.5vw, 2.75rem); margin-bottom: 0.75rem;">STAY IN THE LOOP</h2>
+          <p style="color: var(--text-secondary); font-size: 0.9375rem; line-height: 1.6;">
+            Sign up for new arrivals, private archive sales, and editorial releases. Receive 10% off your first order.
+          </p>
+          <form class="newsletter-form" id="newsletter-form">
+            <input type="email" class="newsletter-input" placeholder="Enter your email address" required>
+            <button type="submit" class="btn btn-primary">SUBSCRIBE</button>
+          </form>
+          <p style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.85rem;">
+            By subscribing you agree to our Privacy Policy. Unsubscribe anytime.
+          </p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Site Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-top-grid">
+        <!-- Brand Info -->
+        <div>
+          <h3 class="footer-brand-title">BRI APPARELL</h3>
+          <p class="footer-brand-desc">
+            Modern, minimalist clothing crafted with architectural precision and high-grade organic textiles.
+          </p>
+          <div class="footer-social-links">
+            <a href="https://instagram.com" target="_blank" rel="noopener" class="footer-social-btn" aria-label="Instagram">
+              <i data-lucide="instagram" style="width:16px;height:16px;"></i>
+            </a>
+            <a href="https://facebook.com" target="_blank" rel="noopener" class="footer-social-btn" aria-label="Facebook">
+              <i data-lucide="facebook" style="width:16px;height:16px;"></i>
+            </a>
+            <a href="https://tiktok.com" target="_blank" rel="noopener" class="footer-social-btn" aria-label="TikTok">
+              <i data-lucide="video" style="width:16px;height:16px;"></i>
+            </a>
+          </div>
+        </div>
+
+        <!-- Shop Links -->
+        <div>
+          <h4 class="footer-column-title">SHOP</h4>
+          <ul class="footer-links">
+            <li><a href="shop.html?filter=new" class="footer-link">New Arrivals</a></li>
+            <li><a href="shop.html?category=Tops" class="footer-link">Tops & Tees</a></li>
+            <li><a href="shop.html?category=Bottoms" class="footer-link">Trousers & Shorts</a></li>
+            <li><a href="shop.html?category=Outerwear" class="footer-link">Jackets & Coats</a></li>
+            <li><a href="collections.html" class="footer-link">Collections</a></li>
+            <li><a href="promotions.html" class="footer-link">Promotions</a></li>
+          </ul>
+        </div>
+
+        <!-- Customer Service -->
+        <div>
+          <h4 class="footer-column-title">CUSTOMER CARE</h4>
+          <ul class="footer-links">
+            <li><a href="contact.html" class="footer-link">Contact Concierge</a></li>
+            <li><a href="contact.html#shipping" class="footer-link">Shipping & Delivery</a></li>
+            <li><a href="contact.html#returns" class="footer-link">Returns & Exchanges</a></li>
+            <li><a href="contact.html#faqs" class="footer-link">FAQs</a></li>
+            <li><a href="about.html#sustainability" class="footer-link">Sustainability</a></li>
+          </ul>
+        </div>
+
+        <!-- Account -->
+        <div>
+          <h4 class="footer-column-title">ACCOUNT</h4>
+          <ul class="footer-links">
+            <li><a href="account.html" class="footer-link">My Account</a></li>
+            <li><a href="account.html?tab=orders" class="footer-link">Track Orders</a></li>
+            <li><a href="wishlist.html" class="footer-link">Saved Wishlist</a></li>
+            <li><a href="cart.html" class="footer-link">Shopping Bag</a></li>
+          </ul>
+        </div>
+
+        <!-- Flagship Store -->
+        <div>
+          <h4 class="footer-column-title">MANILA FLAGSHIP</h4>
+          <p style="font-size: 0.8125rem; color: var(--color-gray-light); line-height: 1.6; margin-bottom: 0.75rem;">
+            Unit 102, The Minimalist Pavilion<br>
+            Bonifacio High Street, BGC, Taguig<br>
+            Open Daily: 10AM – 8PM
+          </p>
+          <a href="contact.html" class="btn-text" style="color: #fff; border-color: #fff; font-size: 0.75rem;">VISIT STORE &rarr;</a>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>&copy; 2026 BRI APPARELL. All rights reserved.</p>
+        <div class="footer-bottom-links">
+          <a href="about.html">Privacy Policy</a>
+          <a href="about.html">Terms & Conditions</a>
+          <a href="about.html">Accessibility</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="products.js"></script>
+  <script src="script.js"></script>
+  <script>
+    // Initialize Homepage New Arrivals Grid
+    document.addEventListener('DOMContentLoaded', () => {
+      const container = document.getElementById('homepage-new-arrivals');
+      if (container) {
+        const featured = PRODUCTS.filter(p => p.isFeatured).slice(0, 4);
+        container.innerHTML = featured.map(p => BRI.renderProductCard(p)).join('');
+        BRI.bindProductCardEvents(container);
+      }
+
+      // Newsletter form submission
+      const newsletterForm = document.getElementById('newsletter-form');
+      if (newsletterForm) {
+        newsletterForm.addEventListener('submit', (e) => {
+          e.preventDefault();
+          const email = newsletterForm.querySelector('input').value;
+          BRI.toast.show(`Thank you! Subscription confirmed for ${email}. Enjoy code BRIFIRST10.`);
+          newsletterForm.reset();
+        });
+      }
+    });
+  </script>
+</body>
+</html>

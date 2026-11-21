@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Customer Concierge & Flagship | BRI APPARELL</title>
+  <meta name="description" content="Get in touch with the BRI APPARELL concierge team for sizing advice, order inquiries, and flagship store appointments.">
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+
+  <!-- Announcement Bar -->
+  <div class="announcement-bar">
+    <div class="container" style="text-align: center;">
+      <span>COMPLIMENTARY NATIONWIDE SHIPPING ON ORDERS OVER ₱2,500</span>
+      <a href="promotions.html">USE CODE: FREESHIP2500</a>
+    </div>
+  </div>
+
+  <!-- Main Navigation Header -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <div class="header-left">
+        <button class="mobile-nav-toggle icon-btn" aria-label="Open menu">
+          <i data-lucide="menu"></i>
+        </button>
+        <a href="index.html" class="brand-logo">BRI APPARELL</a>
+      </div>
+
+      <nav class="main-nav">
+        <a href="index.html" class="nav-link">HOME</a>
+        <a href="shop.html" class="nav-link">SHOP</a>
+        <a href="collections.html" class="nav-link">COLLECTIONS</a>
+        <a href="promotions.html" class="nav-link">PROMOTIONS</a>
+        <a href="about.html" class="nav-link">ABOUT US</a>
+        <a href="contact.html" class="nav-link active">CONTACT</a>
+      </nav>
+
+      <div class="utility-nav">
+        <button class="icon-btn trigger-search-btn" aria-label="Search">
+          <i data-lucide="search"></i>
+        </button>
+        <a href="wishlist.html" class="icon-btn" aria-label="Wishlist">
+          <i data-lucide="heart"></i>
+          <span class="badge-count wishlist-count-badge" style="display: none;">0</span>
+        </a>
+        <a href="cart.html" class="icon-btn" aria-label="Shopping Bag">
+          <i data-lucide="shopping-bag"></i>
+          <span class="badge-count bag-count-badge" style="display: none;">0</span>
+        </a>
+        <a href="account.html" class="icon-btn" aria-label="My Account">
+          <i data-lucide="user"></i>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Navigation Drawer -->
+  <div class="mobile-nav-drawer">
+    <div class="mobile-drawer-content">
+      <div class="mobile-drawer-header">
+        <span class="brand-logo" style="font-size: 1.25rem;">BRI APPARELL</span>
+        <button class="mobile-drawer-close icon-btn" aria-label="Close menu">
+          <i data-lucide="x"></i>
+        </button>
+      </div>
+      <div class="mobile-nav-list">
+        <a href="index.html" class="mobile-nav-link">HOME <i data-lucide="arrow-right" style="width:16px;height:16px;"></i></a>
+        <a href="shop.html" class="mobile-nav-link">SHOP <i data-lucide="arrow-right" style="width:16px;height:16px;"></i></a>
+        <a href="collections.html" class="mobile-nav-link">COLLECTIONS <i data-lucide="arrow-right" style="width:16px;height:16px;"></i></a>
+        <a href="promotions.html" class="mobile-nav-link">PROMOTIONS <i data-lucide="arrow-right" style="width:16px;height:16px;"></i></a>
+        <a href="about.html" class="mobile-nav-link">ABOUT US <i data-lucide="arrow-right" style="width:16px;height:16px;"></i></a>
+        <a href="contact.html" class="mobile-nav-link">CONTACT <i data-lucide="arrow-right" style="width:16px;height:16px;"></i></a>
+      </div>
+      <div class="mobile-drawer-footer">
+        <button class="mobile-utility-link trigger-search-btn"><i data-lucide="search" style="width:18px;height:18px;"></i> Search</button>
+        <a href="wishlist.html" class="mobile-utility-link"><i data-lucide="heart" style="width:18px;height:18px;"></i> Wishlist</a>
+        <a href="cart.html" class="mobile-utility-link"><i data-lucide="shopping-bag" style="width:18px;height:18px;"></i> Shopping Bag</a>
+        <a href="account.html" class="mobile-utility-link"><i data-lucide="user" style="width:18px;height:18px;"></i> My Account</a>
+      </div>
+    </div>
+  </div>
+
+  <main>
+    <!-- Contact Header -->
+    <section class="shop-hero-header">
+      <div class="container">
+        <span class="eyebrow">ASSISTANCE & APPOINTMENTS</span>
+        <h1 class="editorial-title" style="font-size: clamp(2.25rem, 4vw, 3.5rem); margin-bottom: 0.5rem;">CLIENT CONCIERGE</h1>
+        <p class="text-editorial-lead" style="font-size: 1rem;">Our atelier team is at your disposal for garment inquiries and styling advice.</p>
+      </div>
+    </section>
+
+    <!-- Two-Column Contact Layout -->
+    <section class="section-spacing">
+      <div class="container">
+        <div style="display: grid; grid-template-columns: 1.2fr 1fr; gap: 4.5rem; align-items: flex-start;" class="contact-main-grid">
+          
+          <!-- Left Column: Contact Form -->
+          <div>
+            <span class="eyebrow">INQUIRY FORM</span>
+            <h2 class="editorial-title" style="font-size: 1.75rem; margin-bottom: 1.5rem;">SEND A MESSAGE</h2>
+
+            <form id="contact-form" style="background:var(--color-bg-subtle); padding:2.5rem; border:1px solid var(--border-color);">
+              <div class="form-grid-2">
+                <div class="form-group">
+                  <label class="form-label" for="contact-name">FULL NAME *</label>
+                  <input type="text" id="contact-name" class="form-input" placeholder="Alexander Vance" required>
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="contact-email">EMAIL ADDRESS *</label>
+                  <input type="email" id="contact-email" class="form-input" placeholder="alexander@example.com" required>
+                </div>
+              </div>
+
+              <div class="form-grid-2">
+                <div class="form-group">
+                  <label class="form-label" for="contact-subject">TOPIC / SUBJECT *</label>
+                  <select id="contact-subject" class="form-select">
+                    <option value="General Inquiry">General Garment Inquiry</option>
+                    <option value="Order Tracking">Order & Delivery Status</option>
+                    <option value="Sizing Advice">Fit & Sizing Consultation</option>
+                    <option value="Returns">Returns & Exchanges</option>
+                    <option value="Press">Press & Editorial Partnerships</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="contact-order-id">ORDER REFERENCE (OPTIONAL)</label>
+                  <input type="text" id="contact-order-id" class="form-input" placeholder="e.g. BRI-2026-8942">
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="contact-message">YOUR MESSAGE *</label>
+                <textarea id="contact-message" class="form-textarea" rows="5" placeholder="How may our concierge team assist you?" required></textarea>
+              </div>
+
+              <button type="submit" class="btn btn-primary btn-block btn-lg" style="margin-top: 1rem;">
+                TRANSMIT MESSAGE &rarr;
+              </button>
+            </form>
+          </div>
+
+          <!-- Right Column: Direct Channels & Flagship Location -->
+          <div style="display: flex; flex-direction: column; gap: 2.5rem;">
+            
+            <!-- Direct Info -->
+            <div style="background:var(--color-white); border:1px solid var(--border-color); padding:2rem;">
+              <span class="eyebrow">DIRECT CHANNELS</span>
+              <h3 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 1.25rem;">CLIENT SERVICES</h3>
+              
+              <div style="display:flex; flex-direction:column; gap:1.25rem; font-size:0.875rem;">
+                <div style="display:flex; gap:1rem;">
+                  <i data-lucide="mail" style="width:20px;height:20px; color:var(--color-black); flex-shrink:0;"></i>
+                  <div>
+                    <strong style="display:block;">EMAIL CONCIERGE</strong>
+                    <a href="mailto:concierge@briapparell.com" style="color:var(--text-secondary); text-decoration:underline;">concierge@briapparell.com</a>
+                  </div>
+                </div>
+
+                <div style="display:flex; gap:1rem;">
+                  <i data-lucide="phone" style="width:20px;height:20px; color:var(--color-black); flex-shrink:0;"></i>
+                  <div>
+                    <strong style="display:block;">DIRECT TELEPHONE</strong>
+                    <span style="color:var(--text-secondary);">+63 2 8876 5432 / +63 917 892 4567</span>
+                  </div>
+                </div>
+
+                <div style="display:flex; gap:1rem;">
+                  <i data-lucide="clock" style="width:20px;height:20px; color:var(--color-black); flex-shrink:0;"></i>
+                  <div>
+                    <strong style="display:block;">OPERATING HOURS</strong>
+                    <span style="color:var(--text-secondary);">Monday – Saturday: 10:00 AM – 8:00 PM PHT</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Flagship Store -->
+            <div style="background:var(--color-white); border:1px solid var(--border-color); padding:2rem;">
+              <span class="eyebrow">FLAGSHIP BOUTIQUE</span>
+              <h3 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 0.75rem;">MANILA PAVILION</h3>
+              <p style="font-size: 0.875rem; color: var(--text-secondary); line-height: 1.6; margin-bottom: 1.5rem;">
+                Unit 102, The Minimalist Pavilion<br>
+                Bonifacio High Street, BGC, Taguig<br>
+                Metro Manila 1634, Philippines
+              </p>
+              <div style="aspect-ratio: 16 / 9; overflow: hidden; background: #000;">
+                <img src="https://images.unsplash.com/photo-1544441893-675973e31985?q=80&w=800&auto=format&fit=crop" alt="BRI APPARELL Flagship Store" style="width:100%; height:100%; object-fit:cover;">
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+        <!-- FAQ Accordion Section -->
+        <div style="margin-top: 5rem; border-top: 1px solid var(--border-color); padding-top: 4rem;">
+          <div style="text-align: center; max-width: 600px; margin: 0 auto 3rem;">
+            <span class="eyebrow">HELP & GUIDANCE</span>
+            <h2 class="editorial-title" style="font-size: 2.25rem;">FREQUENTLY ASKED QUESTIONS</h2>
+          </div>
+
+          <div class="container-narrow pdp-accordions">
+            
+            <div class="accordion-item open">
+              <button class="accordion-header">
+                <span>WHAT IS YOUR SHIPPING TIMELINE & COURIER COVERAGE?</span>
+                <i data-lucide="chevron-down" class="accordion-icon" style="width:18px;height:18px;"></i>
+              </button>
+              <div class="accordion-body">
+                We deliver nationwide across the Philippines. Orders within Metro Manila typically arrive in 2–3 business days. Provincial orders take 4–6 business days. We offer complimentary insured shipping on all orders over ₱2,500.
+              </div>
+            </div>
+
+            <div class="accordion-item">
+              <button class="accordion-header">
+                <span>HOW DOES YOUR 30-DAY COMPLIMENTARY RETURN POLICY WORK?</span>
+                <i data-lucide="chevron-down" class="accordion-icon" style="width:18px;height:18px;"></i>
+              </button>
+              <div class="accordion-body">
+                We accept returns on all unworn, unwashed garments with original tags attached within 30 days of receipt. Simply submit a return request through our concierge, and we will dispatch a courier to collect your parcel free of charge.
+              </div>
+            </div>
+
+            <div class="accordion-item">
+              <button class="accordion-header">
+                <span>HOW SHOULD I CHOOSE MY SIZE FOR OVERSIZED SILHOUETTES?</span>
+                <i data-lucide="chevron-down" class="accordion-icon" style="width:18px;height:18px;"></i>
+              </button>
+              <div class="accordion-body">
+                Our Essential Tees and French Terry Hoodies are intentionally cut with relaxed, boxy proportions. We recommend ordering your true standard size for the intended contemporary fit, or sizing down one full size if you prefer a classic tailored look.
+              </div>
+            </div>
+
+            <div class="accordion-item">
+              <button class="accordion-header">
+                <span>HOW DO I CARE FOR 280 GSM HEAVYWEIGHT ORGANIC COTTON?</span>
+                <i data-lucide="chevron-down" class="accordion-icon" style="width:18px;height:18px;"></i>
+              </button>
+              <div class="accordion-body">
+                We recommend washing cold (30°C) inside out with mild detergent. To preserve structural drape and avoid shrinkage, lay flat to dry in the shade. Do not tumble dry or bleach.
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </section>
+  </main>
+
+  <!-- Site Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-top-grid">
+        <div>
+          <h3 class="footer-brand-title">BRI APPARELL</h3>
+          <p class="footer-brand-desc">
+            Modern, minimalist clothing crafted with architectural precision and high-grade organic textiles.
+          </p>
+          <div class="footer-social-links">
+            <a href="https://instagram.com" target="_blank" rel="noopener" class="footer-social-btn" aria-label="Instagram">
+              <i data-lucide="instagram" style="width:16px;height:16px;"></i>
+            </a>
+            <a href="https://facebook.com" target="_blank" rel="noopener" class="footer-social-btn" aria-label="Facebook">
+              <i data-lucide="facebook" style="width:16px;height:16px;"></i>
+            </a>
+            <a href="https://tiktok.com" target="_blank" rel="noopener" class="footer-social-btn" aria-label="TikTok">
+              <i data-lucide="video" style="width:16px;height:16px;"></i>
+            </a>
+          </div>
+        </div>
+
+        <div>
+          <h4 class="footer-column-title">SHOP</h4>
+          <ul class="footer-links">
+            <li><a href="shop.html?filter=new" class="footer-link">New Arrivals</a></li>
+            <li><a href="shop.html?category=Tops" class="footer-link">Tops & Tees</a></li>
+            <li><a href="shop.html?category=Bottoms" class="footer-link">Trousers & Shorts</a></li>
+            <li><a href="shop.html?category=Outerwear" class="footer-link">Jackets & Coats</a></li>
+            <li><a href="collections.html" class="footer-link">Collections</a></li>
+            <li><a href="promotions.html" class="footer-link">Promotions</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="footer-column-title">CUSTOMER CARE</h4>
+          <ul class="footer-links">
+            <li><a href="contact.html" class="footer-link">Contact Concierge</a></li>
+            <li><a href="contact.html#shipping" class="footer-link">Shipping & Delivery</a></li>
+            <li><a href="contact.html#returns" class="footer-link">Returns & Exchanges</a></li>
+            <li><a href="contact.html#faqs" class="footer-link">FAQs</a></li>
+            <li><a href="about.html#sustainability" class="footer-link">Sustainability</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="footer-column-title">ACCOUNT</h4>
+          <ul class="footer-links">
+            <li><a href="account.html" class="footer-link">My Account</a></li>
+            <li><a href="account.html?tab=orders" class="footer-link">Track Orders</a></li>
+            <li><a href="wishlist.html" class="footer-link">Saved Wishlist</a></li>
+            <li><a href="cart.html" class="footer-link">Shopping Bag</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="footer-column-title">MANILA FLAGSHIP</h4>
+          <p style="font-size: 0.8125rem; color: var(--color-gray-light); line-height: 1.6; margin-bottom: 0.75rem;">
+            Unit 102, The Minimalist Pavilion<br>
+            Bonifacio High Street, BGC, Taguig<br>
+            Open Daily: 10AM – 8PM
+          </p>
+          <a href="contact.html" class="btn-text" style="color: #fff; border-color: #fff; font-size: 0.75rem;">VISIT STORE &rarr;</a>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>&copy; 2026 BRI APPARELL. All rights reserved.</p>
+        <div class="footer-bottom-links">
+          <a href="about.html">Privacy Policy</a>
+          <a href="about.html">Terms & Conditions</a>
+          <a href="about.html">Accessibility</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="products.js"></script>
+  <script src="script.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Contact Form Submit
+      const form = document.getElementById('contact-form');
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const name = document.getElementById('contact-name').value;
+        BRI.toast.show(`Thank you, ${name}. Your message has been received by our concierge team.`, 'check');
+        form.reset();
+      });
+
+      // Accordion toggle
+      document.querySelectorAll('.accordion-header').forEach(header => {
+        header.addEventListener('click', () => {
+          header.parentElement.classList.toggle('open');
+        });
+      });
+    });
+  </script>
+</body>
+</html>
