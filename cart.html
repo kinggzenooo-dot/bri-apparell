@@ -167,7 +167,7 @@
                 <span id="cart-grand-total-val">₱0</span>
               </div>
 
-              <a href="checkout.html" class="btn btn-primary btn-block btn-lg" style="margin-top: 1rem;">
+              <a href="checkout.html" class="btn btn-primary btn-block btn-lg" id="proceed-checkout-btn" style="margin-top: 1rem;">
                 PROCEED TO CHECKOUT &rarr;
               </a>
 
@@ -444,6 +444,20 @@
         BRI.toast.show('Promo code removed.');
         renderCart();
       });
+
+      // Guest Checkout Restriction: Ensure user is authenticated before proceeding to checkout
+      const proceedBtn = document.getElementById('proceed-checkout-btn');
+      if (proceedBtn) {
+        proceedBtn.addEventListener('click', (e) => {
+          if (!BRI.auth.isLoggedIn()) {
+            e.preventDefault();
+            BRI.toast.show('Authentication required: Please sign in or create an account to proceed to checkout.', 'alert');
+            setTimeout(() => {
+              window.location.href = 'account.html?redirect=checkout.html&reason=checkout';
+            }, 500);
+          }
+        });
+      }
 
       // Initial Cart Render
       renderCart();

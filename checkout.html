@@ -291,10 +291,31 @@
   <script>
     // Checkout Controller
     document.addEventListener('DOMContentLoaded', () => {
+      // 1. Enforce Customer Authentication Before Checkout
+      if (!BRI.auth.isLoggedIn()) {
+        sessionStorage.setItem('bri_checkout_pending', 'true');
+        window.location.href = 'account.html?redirect=checkout.html&reason=checkout';
+        return;
+      }
+
       const items = BRI.cart.getItems();
       if (items.length === 0) {
         window.location.href = 'cart.html';
         return;
+      }
+
+      // Pre-fill form from verified authenticated account
+      const authUser = BRI.auth.getUser();
+      if (authUser) {
+        if (document.getElementById('cust-email')) document.getElementById('cust-email').value = authUser.email || '';
+        const nameParts = (authUser.full_name || authUser.name || '').split(' ');
+        if (document.getElementById('ship-first-name') && nameParts[0]) document.getElementById('ship-first-name').value = nameParts[0];
+        if (document.getElementById('ship-last-name') && nameParts.length > 1) document.getElementById('ship-last-name').value = nameParts.slice(1).join(' ');
+        if (document.getElementById('ship-phone') && authUser.phone) document.getElementById('ship-phone').value = authUser.phone;
+        if (document.getElementById('ship-address') && authUser.street) document.getElementById('ship-address').value = authUser.street;
+        if (document.getElementById('ship-city') && authUser.city) document.getElementById('ship-city').value = authUser.city;
+        if (document.getElementById('ship-province') && authUser.province) document.getElementById('ship-province').value = authUser.province;
+        if (document.getElementById('ship-zip') && authUser.postal_code) document.getElementById('ship-zip').value = authUser.postal_code;
       }
 
       let deliveryOption = 'standard';
@@ -388,6 +409,14 @@
       checkoutForm.addEventListener('submit', async (e) => {
         e.preventDefault();
 
+        if (!BRI.auth.isLoggedIn()) {
+          BRI.toast.show('Authentication required: Please sign in to complete your checkout.', 'alert');
+          setTimeout(() => {
+            window.location.href = 'account.html?redirect=checkout.html&reason=checkout';
+          }, 500);
+          return;
+        }
+
         const btn = document.getElementById('place-order-btn');
         btn.disabled = true;
         btn.innerHTML = 'PROCESSING ENCRYPTED ORDER...';
@@ -442,7 +471,14 @@
         } catch (err) {
           btn.disabled = false;
           btn.innerHTML = '<i data-lucide="shield-check" style="width:18px;height:18px;"></i> COMPLETE & PLACE ORDER';
-          BRI.toast.show(err.message || 'Failed to place order. Please try again.', 'alert');
+          if (err.message && err.message.toLowerCase().includes('authentication')) {
+            BRI.toast.show('Session expired. Redirecting to sign in...', 'alert');
+            setTimeout(() => {
+              window.location.href = 'account.html?redirect=checkout.html&reason=checkout';
+            }, 600);
+          } else {
+            BRI.toast.show(err.message || 'Failed to place order. Please try again.', 'alert');
+          }
         }
       });
     });

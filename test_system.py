@@ -69,6 +69,87 @@ class BriApparelSystemTests(unittest.TestCase):
         self.assertEqual(cust_data["user"]["role"], "customer")
         self.assertEqual(cust_data["user"]["full_name"], "Test Shopper")
 
+        # Test duplicate registration rejection (Phase 13 requirement)
+        dup_res = self.client.post('/api/auth/register', json={
+            "email": unique_email,
+            "password": "password123",
+            "full_name": "Duplicate Shopper"
+        })
+        self.assertEqual(dup_res.status_code, 409)
+
+    def test_03b_guest_checkout_restrictions(self):
+        """
+        Phase 13 Critical Security Requirement:
+        Guests must NOT be allowed to complete purchases or list customer orders without authentication.
+        """
+        anon_client = app.test_client()
+
+        # 1. Anonymous POST /api/orders must return 401 Unauthorized
+        guest_order_res = anon_client.post('/api/orders', json={
+            "customer_name": "Anonymous Guest",
+            "customer_email": "guest@example.com",
+            "customer_phone": "+63 917 000 0000",
+            "shipping_address": "Nowhere St",
+            "city": "Manila",
+            "province": "Metro Manila",
+            "postal_code": "1000",
+            "payment_method": "COD",
+            "items": [{"id": "bri-001", "size": "M", "color": "Pitch Black", "quantity": 1}]
+        })
+        self.assertEqual(guest_order_res.status_code, 401)
+        err_data = guest_order_res.get_json()
+        self.assertIn("error", err_data)
+        self.assertIn("Authentication required", err_data["error"])
+
+        # 2. Anonymous GET /api/orders must return 401 Unauthorized
+        guest_list_res = anon_client.get('/api/orders')
+        self.assertEqual(guest_list_res.status_code, 401)
+
+    def test_03c_inactive_account_blocked(self):
+        """
+        Phase 13 Requirement:
+        Disabled / inactive accounts must be prevented from logging in.
+        """
+        from database import execute_db
+        from werkzeug.security import generate_password_hash
+
+        execute_db("DELETE FROM users WHERE email = 'banned@example.com'")
+        execute_db(
+            "INSERT INTO users (email, password_hash, full_name, role, status) VALUES (?, ?, ?, ?, ?)",
+            ("banned@example.com", generate_password_hash("bannedpass123"), "Banned User", "customer", "Inactive")
+        )
+
+        login_res = self.client.post('/api/auth/login', json={
+            "email": "banned@example.com",
+            "password": "bannedpass123"
+        })
+        self.assertEqual(login_res.status_code, 403)
+        err = login_res.get_json()
+        self.assertIn("error", err)
+        self.assertIn("inactive", err["error"].lower())
+
+    def test_03d_session_persistence_and_profile(self):
+        """
+        Phase 13 Requirement:
+        Authenticated session verification via /api/auth/me and proper logout.
+        """
+        login_res = self.client.post('/api/auth/login', json={
+            "email": "john@email.com",
+            "password": "password123"
+        })
+        token = login_res.get_json()["token"]
+        headers = {"Authorization": f"Bearer {token}"}
+
+        # Check me
+        me_res = self.client.get('/api/auth/me', headers=headers)
+        self.assertEqual(me_res.status_code, 200)
+        user_info = me_res.get_json()["user"]
+        self.assertEqual(user_info["email"], "john@email.com")
+
+        # Logout
+        logout_res = self.client.post('/api/auth/logout', headers=headers)
+        self.assertEqual(logout_res.status_code, 200)
+
     def test_04_role_based_access_control(self):
         """Verify customer cannot access administrator-only endpoints."""
         # Get customer token
@@ -151,11 +232,16 @@ class BriApparelSystemTests(unittest.TestCase):
         admin_token = admin_res.get_json()["token"]
         admin_headers = {"Authorization": f"Bearer {admin_token}"}
 
-        # Customer places order
-        order_res = self.client.post('/api/orders', json={
-            "customer_name": "QA Sync Customer",
-            "customer_email": "qa.sync@example.com",
-            "customer_phone": "+63 917 999 8888",
+        # Customer logs in first (Phase 13 requirement)
+        cust_login_res = self.client.post('/api/auth/login', json={"email": "john@email.com", "password": "password123"})
+        cust_token = cust_login_res.get_json()["token"]
+        cust_headers = {"Authorization": f"Bearer {cust_token}"}
+
+        # Customer places order with authentication
+        order_res = self.client.post('/api/orders', headers=cust_headers, json={
+            "customer_name": "John Doe",
+            "customer_email": "john@email.com",
+            "customer_phone": "+63 917 123 4567",
             "shipping_address": "Penthouse B, One Serendra, BGC",
             "city": "Taguig",
             "province": "Metro Manila",
@@ -170,13 +256,19 @@ class BriApparelSystemTests(unittest.TestCase):
         order_id = order_data["orderId"]
         self.assertTrue(order_id.startswith("BRI-2026-"))
 
+        # Customer fetches orders list -> verifies order is present in customer's list
+        cust_orders_res = self.client.get('/api/orders', headers=cust_headers)
+        self.assertEqual(cust_orders_res.status_code, 200)
+        cust_orders = cust_orders_res.get_json()["orders"]
+        self.assertTrue(any(o["id"] == order_id for o in cust_orders))
+
         # Admin fetches orders list -> verifies new order is present
         admin_orders_res = self.client.get('/api/orders', headers=admin_headers)
         self.assertEqual(admin_orders_res.status_code, 200)
         orders_list = admin_orders_res.get_json()["orders"]
         matching = [o for o in orders_list if o["id"] == order_id]
         self.assertEqual(len(matching), 1)
-        self.assertEqual(matching[0]["customer_name"], "QA Sync Customer")
+        self.assertEqual(matching[0]["customer_name"], "John Doe")
 
         # Admin updates status to 'In Transit'
         status_res = self.client.put(f'/api/orders/{order_id}/status', headers=admin_headers, json={
@@ -188,7 +280,7 @@ class BriApparelSystemTests(unittest.TestCase):
         self.assertEqual(status_res.status_code, 200)
 
         # Customer tracking check
-        cust_order_res = self.client.get(f'/api/orders/{order_id}')
+        cust_order_res = self.client.get(f'/api/orders/{order_id}', headers=cust_headers)
         self.assertEqual(cust_order_res.status_code, 200)
         updated_order = cust_order_res.get_json()
         self.assertEqual(updated_order["status"], "In Transit")
@@ -277,6 +369,7 @@ class BriApparelSystemTests(unittest.TestCase):
         for page in pages:
             res = self.client.get(page)
             self.assertEqual(res.status_code, 200, f"Failed serving page: {page}")
+            res.close()
 
 if __name__ == '__main__':
     unittest.main()

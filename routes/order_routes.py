@@ -18,25 +18,25 @@ STATUS_STEPS = {
 }
 
 @order_bp.route("", methods=["POST"])
-def create_order():
+@login_required
+def create_order(current_user):
     """
     Places an order into the centralized database.
-    Can be called by authenticated customer or guest checkout.
+    Requires customer authentication (guest purchasing is strictly blocked).
     """
-    user = get_current_user()
     data = request.get_json() or {}
 
     items = data.get("items") or []
     if not items:
         return jsonify({"error": "Cannot place an empty order. Please add items to your bag."}), 400
 
-    customer_name = (data.get("customer_name") or (user["full_name"] if user else "")).strip()
-    customer_email = (data.get("customer_email") or (user["email"] if user else "")).strip().lower()
-    customer_phone = (data.get("customer_phone") or (user.get("phone") if user else "")).strip()
-    shipping_address = (data.get("shipping_address") or "").strip()
-    city = (data.get("city") or (user.get("city") if user else "Taguig")).strip()
-    province = (data.get("province") or (user.get("province") if user else "Metro Manila")).strip()
-    postal_code = (data.get("postal_code") or (user.get("postal_code") if user else "1634")).strip()
+    customer_name = (data.get("customer_name") or current_user["full_name"]).strip()
+    customer_email = current_user["email"].strip().lower()
+    customer_phone = (data.get("customer_phone") or current_user.get("phone") or "").strip()
+    shipping_address = (data.get("shipping_address") or current_user.get("street") or "").strip()
+    city = (data.get("city") or current_user.get("city") or "Taguig").strip()
+    province = (data.get("province") or current_user.get("province") or "Metro Manila").strip()
+    postal_code = (data.get("postal_code") or current_user.get("postal_code") or "1634").strip()
     payment_method = (data.get("payment_method") or "GCASH").strip().upper()
     notes = (data.get("notes") or "").strip()
 
@@ -86,7 +86,7 @@ def create_order():
     while query_db("SELECT id FROM orders WHERE id = ?", (order_id,), one=True):
         order_id = f"BRI-2026-{random.randint(1000, 9999)}"
 
-    user_id = user["id"] if user else None
+    user_id = current_user["id"]
 
     # Insert Order
     execute_db(
@@ -150,32 +150,25 @@ def create_order():
     }), 201
 
 @order_bp.route("", methods=["GET"])
-def get_orders():
+@login_required
+def get_orders(current_user):
     """
     Returns orders.
     Admin and Staff see all orders.
     Customers see only their own orders.
     """
-    user = get_current_user()
+    is_staff = current_user.get("role") in ["admin", "staff"]
     email_query = request.args.get("email")
     status_filter = request.args.get("status")
     search_query = request.args.get("search")
-
-    is_staff = user and user.get("role") in ["admin", "staff"]
 
     where_clauses = []
     params = []
 
     if not is_staff:
-        # Restricted to current user
-        if user:
-            where_clauses.append("(user_id = ? OR LOWER(customer_email) = LOWER(?))")
-            params.extend([user["id"], user["email"]])
-        elif email_query:
-            where_clauses.append("LOWER(customer_email) = LOWER(?)")
-            params.append(email_query.strip().lower())
-        else:
-            return jsonify({"orders": [], "count": 0})
+        # Restricted strictly to authenticated current user
+        where_clauses.append("(user_id = ? OR LOWER(customer_email) = LOWER(?))")
+        params.extend([current_user["id"], current_user["email"]])
     else:
         # Staff/Admin filters
         if email_query:
@@ -203,18 +196,18 @@ def get_orders():
     return jsonify({"orders": orders, "count": len(orders)})
 
 @order_bp.route("/<order_id>", methods=["GET"])
-def get_order_details(order_id):
+@login_required
+def get_order_details(current_user, order_id):
     order = query_db("SELECT * FROM orders WHERE id = ?", (order_id,), one=True)
     if not order:
         return jsonify({"error": "Order not found."}), 404
 
-    user = get_current_user()
-    is_staff = user and user.get("role") in ["admin", "staff"]
+    is_staff = current_user.get("role") in ["admin", "staff"]
 
-    # Customer privacy check
-    if not is_staff and user:
-        if order.get("user_id") != user["id"] and order.get("customer_email").lower() != user["email"].lower():
-            return jsonify({"error": "Unauthorized to view this order."}), 403
+    # Customer privacy check: ensure customers can only view their own order
+    if not is_staff:
+        if order.get("user_id") != current_user["id"] and order.get("customer_email", "").lower() != current_user["email"].lower():
+            return jsonify({"error": "Access forbidden: you can only view your own orders."}), 403
 
     items = query_db("SELECT * FROM order_items WHERE order_id = ?", (order_id,))
     history = query_db("SELECT * FROM order_history WHERE order_id = ? ORDER BY created_at ASC", (order_id,))

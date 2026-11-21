@@ -89,6 +89,9 @@
         <!-- UNAUTHENTICATED STATE: LOGIN & REGISTER -->
         <div id="account-auth-view" style="max-width: 480px; margin: 0 auto; padding: 2rem 0;">
           
+          <!-- Contextual Notice Banner (e.g. Checkout Redirection) -->
+          <div id="auth-notice-banner" style="display: none; margin-bottom: 1.5rem;"></div>
+
           <div style="display:flex; border-bottom: 2px solid var(--border-color); margin-bottom: 2rem;">
             <button class="btn-text active" id="tab-login-btn" style="flex:1; text-align:center; padding:1rem; font-weight:700; border-bottom: 2px solid var(--color-black); margin-bottom:-2px;">SIGN IN</button>
             <button class="btn-text" id="tab-register-btn" style="flex:1; text-align:center; padding:1rem; font-weight:700; border-bottom: 2px solid transparent; color:var(--text-muted); margin-bottom:-2px;">CREATE ACCOUNT</button>
@@ -98,6 +101,8 @@
           <form id="login-form">
             <span class="eyebrow">CUSTOMER PORTAL</span>
             <h2 class="editorial-title" style="font-size: 1.75rem; margin-bottom: 1.5rem;">ACCESS YOUR ACCOUNT</h2>
+
+            <div id="login-error-msg" style="display:none; background:#fee2e2; border:1px solid #fecaca; color:#991b1b; padding:0.75rem 1rem; border-radius:4px; font-size:0.8125rem; margin-bottom:1rem;"></div>
 
             <div class="form-group">
               <label class="form-label" for="login-email">EMAIL ADDRESS</label>
@@ -116,10 +121,10 @@
               <a href="#" id="forgot-pass-link" class="btn-text" style="font-size: 0.75rem;">Forgot password?</a>
             </div>
 
-            <button type="submit" class="btn btn-primary btn-block btn-lg">SIGN IN</button>
+            <button type="submit" class="btn btn-primary btn-block btn-lg" id="login-submit-btn">SIGN IN</button>
             
             <div style="margin-top: 1.5rem; padding: 1rem; background: var(--color-bg-subtle); border: 1px solid var(--border-color); font-size: 0.75rem; color: var(--text-secondary);">
-              <strong>DEMO NOTE:</strong> Click "SIGN IN" to instantly access the simulated customer portal with past order tracking.
+              <strong>TEST CREDENTIALS:</strong> <code>alexander.vance@example.com</code> / <code>password123</code> or <code>john@email.com</code> / <code>password123</code>
             </div>
           </form>
 
@@ -127,6 +132,8 @@
           <form id="register-form" style="display: none;">
             <span class="eyebrow">BECOME A MEMBER</span>
             <h2 class="editorial-title" style="font-size: 1.75rem; margin-bottom: 1.5rem;">CREATE ACCOUNT</h2>
+
+            <div id="register-error-msg" style="display:none; background:#fee2e2; border:1px solid #fecaca; color:#991b1b; padding:0.75rem 1rem; border-radius:4px; font-size:0.8125rem; margin-bottom:1rem;"></div>
 
             <div class="form-group">
               <label class="form-label">FULL NAME</label>
@@ -139,11 +146,16 @@
             </div>
 
             <div class="form-group">
-              <label class="form-label">CREATE PASSWORD</label>
-              <input type="password" id="reg-pass" class="form-input" placeholder="Minimum 8 characters" required>
+              <label class="form-label">PHONE NUMBER (OPTIONAL)</label>
+              <input type="text" id="reg-phone" class="form-input" placeholder="+63 917 892 4567">
             </div>
 
-            <button type="submit" class="btn btn-primary btn-block btn-lg" style="margin-top: 1rem;">CREATE ACCOUNT</button>
+            <div class="form-group">
+              <label class="form-label">CREATE PASSWORD</label>
+              <input type="password" id="reg-pass" class="form-input" placeholder="Minimum 6 characters" required minlength="6">
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-block btn-lg" id="register-submit-btn" style="margin-top: 1rem;">CREATE ACCOUNT</button>
           </form>
 
         </div>
@@ -461,16 +473,69 @@
         registerForm.style.display = 'block';
       });
 
+      const urlParams = new URLSearchParams(window.location.search);
+      const redirectTarget = urlParams.get('redirect');
+      const redirectReason = urlParams.get('reason');
+
+      // If user is already authenticated and came with a redirect target, proceed immediately
+      if (BRI.auth.isLoggedIn() && redirectTarget) {
+        window.location.href = redirectTarget;
+        return;
+      }
+
+      // Display Notice Banner if redirected from protected checkout
+      if (redirectReason === 'checkout') {
+        const banner = document.getElementById('auth-notice-banner');
+        if (banner) {
+          banner.style.display = 'block';
+          banner.innerHTML = `
+            <div style="background:#fef3c7; border:1px solid #fde68a; color:#92400e; padding:1.25rem; border-radius:4px; font-size:0.875rem; display:flex; align-items:flex-start; gap:0.75rem;">
+              <i data-lucide="lock" style="width:20px;height:20px;flex-shrink:0;margin-top:2px;"></i>
+              <div>
+                <strong style="display:block;margin-bottom:0.25rem;letter-spacing:0.05em;text-transform:uppercase;">Sign In Required To Complete Purchase</strong>
+                <span>Please sign in or create an account to proceed to checkout. Your shopping bag items have been safely preserved.</span>
+              </div>
+            </div>
+          `;
+          if (window.lucide) window.lucide.createIcons();
+        }
+      }
+
       // Login Submit
       loginForm.addEventListener('submit', async (e) => {
         e.preventDefault();
         const email = document.getElementById('login-email').value.trim();
         const pass = document.getElementById('login-pass').value;
+        const errBox = document.getElementById('login-error-msg');
+        const submitBtn = document.getElementById('login-submit-btn');
+
+        if (errBox) errBox.style.display = 'none';
+        if (submitBtn) {
+          submitBtn.disabled = true;
+          submitBtn.textContent = 'AUTHENTICATING...';
+        }
+
         try {
           await BRI.auth.login(email, pass);
-          checkSession();
+          if (redirectTarget) {
+            BRI.toast.show('Authentication verified! Returning to checkout...', 'check');
+            setTimeout(() => {
+              window.location.href = redirectTarget;
+            }, 500);
+          } else {
+            await checkSession();
+          }
         } catch (err) {
+          if (errBox) {
+            errBox.textContent = err.message || 'Invalid email or password.';
+            errBox.style.display = 'block';
+          }
           BRI.toast.show(err.message || 'Login failed.', 'alert');
+        } finally {
+          if (submitBtn) {
+            submitBtn.disabled = false;
+            submitBtn.textContent = 'SIGN IN';
+          }
         }
       });
 
@@ -479,12 +544,38 @@
         e.preventDefault();
         const name = document.getElementById('reg-name').value.trim();
         const email = document.getElementById('reg-email').value.trim();
+        const phone = document.getElementById('reg-phone') ? document.getElementById('reg-phone').value.trim() : '';
         const pass = document.getElementById('reg-pass').value;
+        const errBox = document.getElementById('register-error-msg');
+        const submitBtn = document.getElementById('register-submit-btn');
+
+        if (errBox) errBox.style.display = 'none';
+        if (submitBtn) {
+          submitBtn.disabled = true;
+          submitBtn.textContent = 'CREATING ACCOUNT...';
+        }
+
         try {
-          await BRI.auth.register(name, email, pass);
-          checkSession();
+          await BRI.auth.register(name, email, pass, phone);
+          if (redirectTarget) {
+            BRI.toast.show('Account created! Returning to checkout...', 'check');
+            setTimeout(() => {
+              window.location.href = redirectTarget;
+            }, 500);
+          } else {
+            await checkSession();
+          }
         } catch (err) {
+          if (errBox) {
+            errBox.textContent = err.message || 'Registration failed.';
+            errBox.style.display = 'block';
+          }
           BRI.toast.show(err.message || 'Registration failed.', 'alert');
+        } finally {
+          if (submitBtn) {
+            submitBtn.disabled = false;
+            submitBtn.textContent = 'CREATE ACCOUNT';
+          }
         }
       });
 
