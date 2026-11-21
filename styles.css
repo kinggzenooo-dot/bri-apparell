@@ -2158,6 +2158,92 @@ h1, h2, h3, h4, h5, h6 {
   }
 }
 
+@media (max-width: 480px) {
+  html, body {
+    overflow-x: hidden;
+  }
+
+  .site-header {
+    height: 60px;
+  }
+
+  .utility-nav {
+    gap: 0.5rem;
+  }
+
+  .brand-logo {
+    font-size: 1.05rem;
+    letter-spacing: 0.12em;
+  }
+
+  .icon-btn {
+    width: 34px;
+    height: 34px;
+  }
+
+  .hero-title {
+    font-size: 2.15rem;
+    line-height: 1.12;
+  }
+
+  .hero-desc {
+    font-size: 0.875rem;
+  }
+
+  .product-grid,
+  .product-grid.grid-3,
+  .product-grid.grid-2 {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem 0.65rem;
+  }
+
+  .product-meta .product-title {
+    font-size: 0.8125rem;
+  }
+
+  .account-layout,
+  .cart-layout,
+  .checkout-layout {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .checkout-steps {
+    display: none;
+  }
+
+  .order-tracking-timeline {
+    padding: 1rem 0.5rem;
+  }
+
+  .order-tracking-timeline .tracking-step span {
+    font-size: 0.5625rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .utility-nav {
+    gap: 0.35rem;
+  }
+
+  .brand-logo {
+    font-size: 0.95rem;
+    letter-spacing: 0.08em;
+  }
+
+  .container,
+  .container-narrow {
+    padding-left: 0.85rem;
+    padding-right: 0.85rem;
+  }
+
+  .product-grid,
+  .product-grid.grid-3,
+  .product-grid.grid-2 {
+    grid-template-columns: 1fr;
+  }
+}
+
 
 /* ==========================================================================
    BRI APPARELL — ENHANCED INTERACTIVE ANIMATIONS & MODERN TRANSITIONS

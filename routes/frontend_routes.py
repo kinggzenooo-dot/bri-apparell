@@ -12,9 +12,22 @@ ROOT_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 def index():
     """
     Main website entry point.
-    Always presents the centralized Login & Sign-Up interface first as the primary gateway.
+    If unauthenticated, displays the centralized Login & Sign-Up interface first.
+    If authenticated:
+      - Customer -> Customer Home Dashboard (index.html)
+      - Staff -> Staff Dashboard (/staff/dashboard.html)
+      - Administrator -> Admin Dashboard (/admin/index.html)
     """
-    return redirect("/authorization/login.html")
+    user = get_current_user()
+    if not user:
+        return redirect("/authorization/login.html")
+
+    if user.get("role") == "admin":
+        return redirect("/admin/index.html")
+    elif user.get("role") == "staff":
+        return redirect("/staff/dashboard.html")
+    else:
+        return send_from_directory(ROOT_DIR, "index.html")
 
 # -----------------------------------------------------------------------------
 # 2. CENTRALIZED AUTHORIZATION PORTAL (/authorization)
@@ -143,11 +156,11 @@ def customer_files(filename):
         if os.path.exists(admin_js):
             return send_from_directory(os.path.join(ROOT_DIR, "admin", "js"), "admin.js")
 
-    # Protected Customer Pages: account.html and checkout.html require authentication
-    if filename in ["account.html", "checkout.html"]:
+    # Protected Customer Pages: account.html, checkout.html, and direct index.html access
+    if filename in ["account.html", "checkout.html", "index.html"]:
         user = get_current_user()
         if not user:
-            reason = "checkout" if filename == "checkout.html" else "account_required"
+            reason = "checkout" if filename == "checkout.html" else "login_required"
             return redirect(f"/authorization/login.html?redirect={filename}&reason={reason}")
 
     # Storefront HTML files

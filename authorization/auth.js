@@ -67,12 +67,12 @@ const AuthPortal = {
       const data = await res.json();
 
       if (data.authenticated && data.user) {
-        let dest = '/account.html';
+        let dest = '/index.html';
         if (data.user.role === 'admin') dest = '/admin/index.html';
         else if (data.user.role === 'staff') dest = '/staff/dashboard.html';
 
         this.showBanner(
-          `Signed in as <strong>${data.user.full_name}</strong> (${data.user.role.toUpperCase()}). <a href="${dest}" style="color:inherit;font-weight:700;text-decoration:underline;">Click to go to your Dashboard</a> or sign in below with another account.`,
+          `Signed in as <strong>${data.user.full_name}</strong> (${data.user.role.toUpperCase()}). <a href="${dest}" style="color:inherit;font-weight:700;text-decoration:underline;">Click to go to your Home Dashboard</a> or sign in below with another account.`,
           'info'
         );
       }
@@ -91,11 +91,11 @@ const AuthPortal = {
     } else if (user.role === 'staff') {
       window.location.href = (redirectUrl && redirectUrl.includes('/staff')) ? redirectUrl : '/staff/dashboard.html';
     } else {
-      // Customer
-      if (redirectUrl && !redirectUrl.includes('/admin') && !redirectUrl.includes('/staff')) {
+      // Customer -> Customer Home Dashboard (Main Homepage)
+      if (redirectUrl && !redirectUrl.includes('/admin') && !redirectUrl.includes('/staff') && !redirectUrl.includes('account.html')) {
         window.location.href = redirectUrl;
       } else {
-        window.location.href = '/account.html';
+        window.location.href = '/index.html';
       }
     }
   },

@@ -441,5 +441,54 @@ class BriApparelSystemTests(unittest.TestCase):
         admin_users_res = admin_client.get('/api/users', headers={"Authorization": f"Bearer {admin_token}"})
         self.assertEqual(admin_users_res.status_code, 200)
 
+    def test_11_phase15_customer_login_redirection_and_homepage_access(self):
+        """
+        Phase 15 Requirement:
+        - Customer login redirects to Customer Home Dashboard (index.html), NOT Account Dashboard.
+        - Account Dashboard remains accessible on demand via navigation.
+        - Staff and Admin redirection continues functioning properly.
+        - Unauthenticated direct URL visits redirect to login.
+        """
+        # 1. Unauthenticated direct URL visits to protected customer pages -> 302 to login
+        anon = app.test_client()
+        r_root = anon.get('/')
+        self.assertEqual(r_root.status_code, 302)
+        self.assertIn('/authorization/login.html', r_root.headers.get('Location', ''))
+        r_root.close()
+
+        r_index = anon.get('/index.html')
+        self.assertEqual(r_index.status_code, 302)
+        self.assertIn('/authorization/login.html', r_index.headers.get('Location', ''))
+        r_index.close()
+
+        r_account = anon.get('/account.html')
+        self.assertEqual(r_account.status_code, 302)
+        self.assertIn('/authorization/login.html', r_account.headers.get('Location', ''))
+        r_account.close()
+
+        # 2. Customer Authentication
+        cust_client = app.test_client()
+        login_res = cust_client.post('/api/auth/login', json={
+            "email": "john@email.com",
+            "password": "password123"
+        })
+        self.assertEqual(login_res.status_code, 200)
+        user_data = login_res.get_json()["user"]
+        self.assertEqual(user_data["role"], "customer")
+
+        # 3. Authenticated customer accessing root / or index.html lands on Customer Home Dashboard
+        home_res = cust_client.get('/')
+        self.assertEqual(home_res.status_code, 200)
+        home_res.close()
+
+        index_res = cust_client.get('/index.html')
+        self.assertEqual(index_res.status_code, 200)
+        index_res.close()
+
+        # 4. Customer can access Account / Profile whenever desired
+        acc_res = cust_client.get('/account.html')
+        self.assertEqual(acc_res.status_code, 200)
+        acc_res.close()
+
 if __name__ == '__main__':
     unittest.main()

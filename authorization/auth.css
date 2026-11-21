@@ -521,10 +521,43 @@ html, body {
 }
 
 @media (max-width: 480px) {
+  html, body {
+    overflow-x: hidden;
+  }
+  .auth-form-pane {
+    padding: 1.75rem 1rem !important;
+  }
   .form-group.row-2 {
     grid-template-columns: 1fr;
   }
   .auth-title {
-    font-size: 1.5rem;
+    font-size: 1.4rem;
+  }
+  .auth-subtitle {
+    font-size: 0.8125rem;
+  }
+  .auth-submit-btn {
+    height: 44px;
+    font-size: 0.75rem;
+  }
+  .demo-account-badge {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.2rem;
+    font-size: 0.6875rem;
+    word-break: break-all;
+  }
+}
+
+@media (max-width: 340px) {
+  .auth-form-pane {
+    padding: 1.25rem 0.75rem !important;
+  }
+  .auth-title {
+    font-size: 1.25rem;
+  }
+  .form-input {
+    height: 40px;
+    font-size: 0.8125rem;
   }
 }
