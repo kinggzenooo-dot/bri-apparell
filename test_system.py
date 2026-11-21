@@ -353,12 +353,15 @@ class BriApparelSystemTests(unittest.TestCase):
         self.assertEqual(res_root_followed.status_code, 200)
         res_root_followed.close()
 
-        # 3. Direct authorization portal pages
+        # 3. Direct authorization portal and layout asset files
         auth_pages = [
             '/authorization/login.html',
             '/authorization/signup.html',
             '/authorization/auth.css',
-            '/authorization/auth.js'
+            '/authorization/auth.js',
+            '/admin/css/admin.css',
+            '/admin/js/admin.js',
+            '/css/staff.css'
         ]
         for p in auth_pages:
             res = self.client.get(p)

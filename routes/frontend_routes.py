@@ -12,20 +12,9 @@ ROOT_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 def index():
     """
     Main website entry point.
-    If unauthenticated, displays the centralized Login & Sign-Up interface first.
-    If authenticated, redirects to the appropriate role dashboard.
+    Always presents the centralized Login & Sign-Up interface first as the primary gateway.
     """
-    user = get_current_user()
-    if not user:
-        return redirect("/authorization/login.html")
-    
-    if user["role"] == "admin":
-        return redirect("/admin/index.html")
-    elif user["role"] == "staff":
-        return redirect("/staff/dashboard.html")
-    else:
-        # Customer with active session
-        return send_from_directory(ROOT_DIR, "index.html")
+    return redirect("/authorization/login.html")
 
 # -----------------------------------------------------------------------------
 # 2. CENTRALIZED AUTHORIZATION PORTAL (/authorization)
@@ -48,6 +37,9 @@ def auth_files(filename):
 # 3. EXECUTIVE ADMIN PORTAL (/admin)
 # -----------------------------------------------------------------------------
 @frontend_bp.route("/admin", methods=["GET"])
+def admin_redirect():
+    return redirect("/admin/")
+
 @frontend_bp.route("/admin/", methods=["GET"])
 def admin_root():
     user = get_current_user()
@@ -85,6 +77,9 @@ def admin_files(filename):
 # 4. STAFF OPERATIONS PORTAL (/staff)
 # -----------------------------------------------------------------------------
 @frontend_bp.route("/staff", methods=["GET"])
+def staff_redirect():
+    return redirect("/staff/")
+
 @frontend_bp.route("/staff/", methods=["GET"])
 def staff_root():
     user = get_current_user()
@@ -133,10 +128,20 @@ def js_files(filename):
 
 @frontend_bp.route("/<path:filename>", methods=["GET"])
 def customer_files(filename):
-    # Customer core assets
+    # Customer core assets and admin fallback resolution
     if filename in ["styles.css", "script.js", "products.js", "favicon.ico"]:
         if os.path.exists(os.path.join(ROOT_DIR, filename)):
             return send_from_directory(ROOT_DIR, filename)
+
+    if filename in ["css/admin.css", "admin.css"]:
+        admin_css = os.path.join(ROOT_DIR, "admin", "css", "admin.css")
+        if os.path.exists(admin_css):
+            return send_from_directory(os.path.join(ROOT_DIR, "admin", "css"), "admin.css")
+
+    if filename in ["js/admin.js", "admin.js"]:
+        admin_js = os.path.join(ROOT_DIR, "admin", "js", "admin.js")
+        if os.path.exists(admin_js):
+            return send_from_directory(os.path.join(ROOT_DIR, "admin", "js"), "admin.js")
 
     # Protected Customer Pages: account.html and checkout.html require authentication
     if filename in ["account.html", "checkout.html"]:

@@ -51,6 +51,8 @@ const Admin = {
   clearAuth() {
     localStorage.removeItem('bri_admin_token');
     localStorage.removeItem('bri_admin_user');
+    localStorage.removeItem('bri_token');
+    localStorage.removeItem('bri_user');
   },
 
   // Unified Fetch Wrapper with Auth Bearer
@@ -73,9 +75,7 @@ const Admin = {
       if (res.status === 401) {
         // Expired or unauthorized
         this.clearAuth();
-        if (!window.location.pathname.includes('login.html')) {
-          window.location.href = 'login.html';
-        }
+        window.location.href = '/authorization/login.html?redirect=' + encodeURIComponent(window.location.pathname) + '&reason=session_expired';
         throw new Error(data.error || 'Authentication expired. Please sign in again.');
       }
 
@@ -132,7 +132,7 @@ const Admin = {
     const token = this.getToken();
 
     if (!user || !token || user.role !== 'admin') {
-      window.location.href = 'login.html';
+      window.location.href = '/authorization/login.html?redirect=' + encodeURIComponent(window.location.pathname) + '&reason=admin_required';
       return;
     }
 
@@ -141,7 +141,7 @@ const Admin = {
       const res = await this.api('/auth/me');
       if (!res.authenticated || res.user.role !== 'admin') {
         this.clearAuth();
-        window.location.href = 'login.html';
+        window.location.href = '/authorization/login.html?redirect=' + encodeURIComponent(window.location.pathname) + '&reason=admin_required';
       }
     } catch (e) {
       // If server unreachable, proceed with cached credentials
@@ -191,7 +191,7 @@ const Admin = {
           await this.api('/auth/logout', { method: 'POST' });
         } catch (e) {}
         this.clearAuth();
-        window.location.href = 'login.html';
+        window.location.href = '/authorization/login.html';
       });
     });
 

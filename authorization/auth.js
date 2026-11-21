@@ -55,7 +55,7 @@ const AuthPortal = {
     });
   },
 
-  // Check if session is already active and redirect appropriately
+  // Check if session is already active and provide option without forced bounce
   async checkExistingSession() {
     const token = localStorage.getItem('bri_token') || localStorage.getItem('bri_admin_token');
     if (!token) return;
@@ -67,7 +67,14 @@ const AuthPortal = {
       const data = await res.json();
 
       if (data.authenticated && data.user) {
-        this.redirectByRole(data.user);
+        let dest = '/account.html';
+        if (data.user.role === 'admin') dest = '/admin/index.html';
+        else if (data.user.role === 'staff') dest = '/staff/dashboard.html';
+
+        this.showBanner(
+          `Signed in as <strong>${data.user.full_name}</strong> (${data.user.role.toUpperCase()}). <a href="${dest}" style="color:inherit;font-weight:700;text-decoration:underline;">Click to go to your Dashboard</a> or sign in below with another account.`,
+          'info'
+        );
       }
     } catch (e) {
       // Offline / server reboot fallback
