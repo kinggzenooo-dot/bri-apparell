@@ -340,36 +340,103 @@ class BriApparelSystemTests(unittest.TestCase):
         self.assertEqual(upd_set.status_code, 200)
 
     def test_09_frontend_page_serving(self):
-        """Verify all customer, admin, and staff portals are served cleanly."""
-        pages = [
-            '/',
+        """Verify centralized authorization portal and customer public pages are served cleanly."""
+        # 1. Main entry point redirects unauthenticated visitors to login
+        anon_client = app.test_client()
+        res_root = anon_client.get('/')
+        self.assertEqual(res_root.status_code, 302)
+        self.assertIn('/authorization/login.html', res_root.headers.get('Location', ''))
+        res_root.close()
+
+        # 2. Main entry point with follow_redirects reaches login successfully
+        res_root_followed = anon_client.get('/', follow_redirects=True)
+        self.assertEqual(res_root_followed.status_code, 200)
+        res_root_followed.close()
+
+        # 3. Direct authorization portal pages
+        auth_pages = [
+            '/authorization/login.html',
+            '/authorization/signup.html',
+            '/authorization/auth.css',
+            '/authorization/auth.js'
+        ]
+        for p in auth_pages:
+            res = self.client.get(p)
+            self.assertEqual(res.status_code, 200, f"Failed serving auth asset: {p}")
+            res.close()
+
+        # 4. Public storefront catalog pages
+        public_pages = [
             '/shop.html',
             '/collections.html',
-            '/cart.html',
-            '/checkout.html',
-            '/account.html',
+            '/promotions.html',
             '/about.html',
             '/contact.html',
-            '/admin/',
-            '/admin/login.html',
-            '/admin/index.html',
-            '/admin/users.html',
-            '/admin/customers.html',
-            '/admin/products.html',
-            '/admin/categories.html',
-            '/admin/orders.html',
-            '/admin/inventory.html',
-            '/admin/payments.html',
-            '/admin/reports.html',
-            '/admin/notifications.html',
-            '/admin/settings.html',
-            '/admin/profile.html',
-            '/staff/dashboard.html'
+            '/cart.html',
+            '/wishlist.html'
         ]
-        for page in pages:
+        for page in public_pages:
             res = self.client.get(page)
             self.assertEqual(res.status_code, 200, f"Failed serving page: {page}")
             res.close()
+
+    def test_10_phase14_staff_and_admin_role_access(self):
+        """
+        Phase 14 Requirement:
+        Verify Staff and Admin interfaces, authentication, permissions, and session protection.
+        """
+        # 1. Unauthenticated client attempting /admin/index.html -> 302 Redirect to Login
+        anon = app.test_client()
+        res_admin_anon = anon.get('/admin/index.html')
+        self.assertEqual(res_admin_anon.status_code, 302)
+        self.assertIn('/authorization/login.html', res_admin_anon.headers.get('Location', ''))
+        res_admin_anon.close()
+
+        # 2. Unauthenticated client attempting /staff/dashboard.html -> 302 Redirect to Login
+        res_staff_anon = anon.get('/staff/dashboard.html')
+        self.assertEqual(res_staff_anon.status_code, 302)
+        self.assertIn('/authorization/login.html', res_staff_anon.headers.get('Location', ''))
+        res_staff_anon.close()
+
+        # 3. Staff Login and Access
+        staff_client = app.test_client()
+        staff_login = staff_client.post('/api/auth/login', json={
+            "email": "alexander.vance@briapparell.com",
+            "password": "staff123"
+        })
+        self.assertEqual(staff_login.status_code, 200)
+        staff_data = staff_login.get_json()
+        self.assertEqual(staff_data["user"]["role"], "staff")
+        staff_token = staff_data["token"]
+
+        # Staff can access staff dashboard
+        staff_dash_res = staff_client.get('/staff/dashboard.html')
+        self.assertEqual(staff_dash_res.status_code, 200)
+        staff_dash_res.close()
+
+        # Staff CANNOT access admin-only endpoints (/api/users) -> 403 Forbidden
+        staff_forbidden = staff_client.get('/api/users', headers={"Authorization": f"Bearer {staff_token}"})
+        self.assertEqual(staff_forbidden.status_code, 403)
+
+        # 4. Admin Login and Access
+        admin_client = app.test_client()
+        admin_login = admin_client.post('/api/auth/login', json={
+            "email": "admin@briapparell.com",
+            "password": "admin123"
+        })
+        self.assertEqual(admin_login.status_code, 200)
+        admin_data = admin_login.get_json()
+        self.assertEqual(admin_data["user"]["role"], "admin")
+        admin_token = admin_data["token"]
+
+        # Admin can access admin dashboard
+        admin_dash_res = admin_client.get('/admin/index.html')
+        self.assertEqual(admin_dash_res.status_code, 200)
+        admin_dash_res.close()
+
+        # Admin can access admin-only endpoints (/api/users) -> 200 OK
+        admin_users_res = admin_client.get('/api/users', headers={"Authorization": f"Bearer {admin_token}"})
+        self.assertEqual(admin_users_res.status_code, 200)
 
 if __name__ == '__main__':
     unittest.main()

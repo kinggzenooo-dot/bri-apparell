@@ -9,6 +9,50 @@ const STAFF = {
     return `₱${Number(amount).toLocaleString('en-PH', { minimumFractionDigits: 0, maximumFractionDigits: 0 })}`;
   },
 
+  // Auth Helpers
+  getToken() {
+    return localStorage.getItem('bri_token') || localStorage.getItem('bri_staff_token') || localStorage.getItem('bri_admin_token');
+  },
+
+  getUser() {
+    try {
+      return JSON.parse(localStorage.getItem('bri_user')) || JSON.parse(localStorage.getItem('bri_staff_user'));
+    } catch (e) {
+      return null;
+    }
+  },
+
+  clearAuth() {
+    localStorage.removeItem('bri_token');
+    localStorage.removeItem('bri_user');
+    localStorage.removeItem('bri_staff_token');
+    localStorage.removeItem('bri_staff_user');
+  },
+
+  // Role & Session Guard
+  async guardAuth() {
+    const user = this.getUser();
+    const token = this.getToken();
+
+    if (!user || !token || (user.role !== 'staff' && user.role !== 'admin')) {
+      window.location.href = `/authorization/login.html?redirect=${encodeURIComponent(window.location.pathname)}&reason=staff_required`;
+      return false;
+    }
+
+    try {
+      const res = await fetch('/api/auth/me', {
+        headers: { 'Authorization': `Bearer ${token}` }
+      });
+      const data = await res.json();
+      if (!data.authenticated || (data.user.role !== 'staff' && data.user.role !== 'admin')) {
+        this.clearAuth();
+        window.location.href = `/authorization/login.html?redirect=${encodeURIComponent(window.location.pathname)}&reason=staff_required`;
+        return false;
+      }
+    } catch (e) {}
+    return true;
+  },
+
   // Format Date & Time
   formatDateTime(isoStr) {
     if (!isoStr) return '—';
@@ -55,7 +99,10 @@ const STAFF = {
 
       // Synchronize with Centralized Python Backend & Database
       if (typeof window !== 'undefined') {
-        fetch('/api/orders')
+        const token = STAFF.getToken();
+        const headers = token ? { 'Authorization': `Bearer ${token}` } : {};
+
+        fetch('/api/orders', { headers })
           .then(res => res.json())
           .then(data => {
             if (data && data.orders && data.orders.length > 0) {
@@ -65,7 +112,7 @@ const STAFF = {
           })
           .catch(() => {});
 
-        fetch('/api/inventory')
+        fetch('/api/inventory', { headers })
           .then(res => res.json())
           .then(data => {
             if (data && data.inventory && data.inventory.length > 0) {
@@ -347,6 +394,7 @@ const STAFF = {
   // --- UI CONTROLLER ---
   ui: {
     init(activeNav = '') {
+      STAFF.guardAuth();
       STAFF.store.init();
       this.renderNavigation(activeNav);
       this.updateBadges();
@@ -381,6 +429,17 @@ const STAFF = {
     },
 
     setupHeaderEvents() {
+      // Populate user info from session
+      const user = STAFF.getUser();
+      if (user) {
+        const nameEl = document.querySelector('.user-name');
+        if (nameEl) nameEl.textContent = user.full_name;
+        const avatarEl = document.querySelector('.user-avatar-circle');
+        if (avatarEl) avatarEl.textContent = user.avatar_initials || 'ST';
+        const roleEl = document.querySelector('.user-role-label');
+        if (roleEl) roleEl.textContent = `${user.department || 'Retail Operations'} • Staff`;
+      }
+
       // User Profile Menu Toggle
       const userChip = document.getElementById('staff-user-chip');
       const userDropdown = document.getElementById('staff-user-dropdown');
@@ -392,6 +451,19 @@ const STAFF = {
 
         document.addEventListener('click', () => {
           userDropdown.classList.remove('show');
+        });
+
+        // Logout handler inside dropdown
+        const logoutLinks = userDropdown.querySelectorAll('a[href*="index.html"], .staff-logout-btn');
+        logoutLinks.forEach(link => {
+          link.addEventListener('click', async (e) => {
+            e.preventDefault();
+            try {
+              await fetch('/api/auth/logout', { method: 'POST' });
+            } catch (err) {}
+            STAFF.clearAuth();
+            window.location.href = '/authorization/login.html';
+          });
         });
       }
 

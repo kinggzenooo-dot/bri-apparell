@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Create Customer Account | BRI APPARELL</title>
+  <meta name="description" content="Register a new customer account with BRI APPARELL for streamlined checkout, live order tracking, and private collection previews.">
+  <link rel="stylesheet" href="auth.css">
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+
+  <div class="auth-wrapper">
+    <!-- Left Editorial Brand Pane -->
+    <div class="auth-editorial-pane">
+      <img src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?q=80&w=1600&auto=format&fit=crop" alt="BRI APPARELL Fashion" class="auth-editorial-bg">
+      <div class="auth-editorial-overlay"></div>
+      
+      <div class="auth-editorial-content">
+        <div>
+          <a href="../shop.html" class="editorial-brand-logo">BRI APPARELL</a>
+        </div>
+
+        <div class="editorial-quote-box">
+          <span class="editorial-season-tag">CLIENT REGISTRATION &bull; 2026</span>
+          <h1 class="editorial-headline">Curated Wardrobe. Effortless Living.</h1>
+          <p class="editorial-subtext">
+            Join the BRI APPARELL private client circle. Experience priority fulfillment, saved delivery destinations, and personalized concierge support.
+          </p>
+        </div>
+
+        <div class="editorial-footer-info">
+          <span>&copy; 2026 BRI APPARELL PHILIPPINES</span>
+          <span>SECURE ENCRYPTED REGISTRATION</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right Form Pane -->
+    <div class="auth-form-pane">
+      <div class="auth-form-container">
+        
+        <div class="auth-header">
+          <div class="auth-header-top">
+            <a href="../shop.html" class="auth-mobile-logo">BRI APPARELL</a>
+            <span class="auth-role-pill">NEW CLIENT</span>
+          </div>
+          <h2 class="auth-title">Create Account</h2>
+          <p class="auth-subtitle">Register your details to begin your bespoke shopping journey.</p>
+        </div>
+
+        <!-- Tab Switcher -->
+        <div class="auth-tabs">
+          <a href="login.html" class="auth-tab-link">SIGN IN</a>
+          <a href="signup.html" class="auth-tab-link active">CREATE ACCOUNT</a>
+        </div>
+
+        <!-- Context Alert Banner -->
+        <div id="auth-banner" class="auth-banner" style="display: none;"></div>
+
+        <!-- Sign-Up Form -->
+        <form id="signup-form" novalidate>
+          <div class="form-group">
+            <label class="form-label" for="reg-name">Full Legal Name *</label>
+            <div class="form-control-wrap">
+              <input type="text" id="reg-name" class="form-input" placeholder="e.g. Maria Clara Santos" required autofocus>
+            </div>
+          </div>
+
+          <div class="form-group row-2">
+            <div>
+              <label class="form-label" for="reg-email">Email Address *</label>
+              <div class="form-control-wrap">
+                <input type="email" id="reg-email" class="form-input" placeholder="name@domain.com" required autocomplete="email">
+              </div>
+            </div>
+            <div>
+              <label class="form-label" for="reg-phone">Mobile Number</label>
+              <div class="form-control-wrap">
+                <input type="tel" id="reg-phone" class="form-input" placeholder="+63 917 000 0000" autocomplete="tel">
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group row-2">
+            <div>
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.45rem;">
+                <label class="form-label" for="reg-password" style="margin-bottom:0;">Password *</label>
+                <span style="font-size:0.7rem; color:var(--color-gray-500);">Min. 6</span>
+              </div>
+              <div class="form-control-wrap">
+                <input type="password" id="reg-password" class="form-input" placeholder="••••••••••••" required autocomplete="new-password">
+                <button type="button" class="password-toggle-btn" data-target="reg-password" aria-label="Toggle password">
+                  <i data-lucide="eye" style="width:18px;height:18px;"></i>
+                </button>
+              </div>
+            </div>
+            <div>
+              <label class="form-label" for="reg-confirm-password">Confirm Password *</label>
+              <div class="form-control-wrap">
+                <input type="password" id="reg-confirm-password" class="form-input" placeholder="••••••••••••" required autocomplete="new-password">
+                <button type="button" class="password-toggle-btn" data-target="reg-confirm-password" aria-label="Toggle password">
+                  <i data-lucide="eye" style="width:18px;height:18px;"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="reg-street">Default Shipping Address (Optional)</label>
+            <div class="form-control-wrap">
+              <input type="text" id="reg-street" class="form-input" placeholder="Unit / House No., Building, Street Name">
+            </div>
+          </div>
+
+          <div class="form-group row-2">
+            <div>
+              <label class="form-label" for="reg-city">City / Municipality</label>
+              <div class="form-control-wrap">
+                <input type="text" id="reg-city" class="form-input" placeholder="Taguig / Makati / Manila">
+              </div>
+            </div>
+            <div>
+              <label class="form-label" for="reg-postal">Postal Code</label>
+              <div class="form-control-wrap">
+                <input type="text" id="reg-postal" class="form-input" placeholder="1634">
+              </div>
+            </div>
+          </div>
+
+          <button type="submit" id="signup-submit-btn" class="auth-submit-btn">
+            <span class="btn-spinner"></span>
+            <span class="btn-text">CREATE ACCOUNT</span>
+            <i data-lucide="arrow-right" style="width:16px;height:16px;"></i>
+          </button>
+        </form>
+
+        <div class="auth-footer-prompt">
+          Already registered with BRI APPARELL? 
+          <a href="login.html" class="auth-link">Sign In to Your Account</a>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <script src="auth.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      AuthPortal.initSignup();
+    });
+  </script>
+</body>
+</html>

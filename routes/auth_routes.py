@@ -50,11 +50,13 @@ def register():
     token = generate_token(user["id"], user["email"], user["role"])
     session["user_id"] = user["id"]
 
-    return jsonify({
+    resp = jsonify({
         "message": "Account created successfully.",
         "token": token,
         "user": user
-    }), 201
+    })
+    resp.set_cookie("bri_token", token, max_age=7*24*3600, samesite="Lax")
+    return resp, 201
 
 @auth_bp.route("/login", methods=["POST"])
 def login():
@@ -80,11 +82,13 @@ def login():
     token = generate_token(safe_user["id"], safe_user["email"], safe_user["role"])
     session["user_id"] = safe_user["id"]
 
-    return jsonify({
+    resp = jsonify({
         "message": f"Welcome back, {safe_user['full_name']}.",
         "token": token,
         "user": safe_user
     })
+    resp.set_cookie("bri_token", token, max_age=7*24*3600, samesite="Lax")
+    return resp
 
 @auth_bp.route("/me", methods=["GET"])
 def me():
@@ -96,7 +100,9 @@ def me():
 @auth_bp.route("/logout", methods=["POST"])
 def logout():
     session.pop("user_id", None)
-    return jsonify({"message": "Successfully logged out."})
+    resp = jsonify({"message": "Successfully logged out."})
+    resp.delete_cookie("bri_token")
+    return resp
 
 @auth_bp.route("/profile", methods=["PUT"])
 @login_required

@@ -59,6 +59,13 @@ def get_current_user():
         user_id = session["user_id"]
 
     if not user_id:
+        cookie_token = request.cookies.get("bri_token")
+        if cookie_token:
+            payload = verify_token(cookie_token)
+            if payload:
+                user_id = payload.get("uid")
+
+    if not user_id:
         return None
 
     user = query_db(

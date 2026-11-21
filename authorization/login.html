@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Centralized Sign In | BRI APPARELL</title>
+  <meta name="description" content="Centralized authentication gateway for BRI APPARELL Customers, Staff Operations, and Executive Administrators.">
+  <link rel="stylesheet" href="auth.css">
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+
+  <div class="auth-wrapper">
+    <!-- Left Editorial Brand Pane -->
+    <div class="auth-editorial-pane">
+      <img src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?q=80&w=1600&auto=format&fit=crop" alt="BRI APPARELL Editorial Campaign" class="auth-editorial-bg">
+      <div class="auth-editorial-overlay"></div>
+      
+      <div class="auth-editorial-content">
+        <div>
+          <a href="../shop.html" class="editorial-brand-logo">BRI APPARELL</a>
+        </div>
+
+        <div class="editorial-quote-box">
+          <span class="editorial-season-tag">ESSENTIALS, REDEFINED &bull; 2026</span>
+          <h1 class="editorial-headline">Architectural Precision. Modern Quiet Luxury.</h1>
+          <p class="editorial-subtext">
+            A single unified platform connecting bespoke customer experiences, live retail operations, and executive supply chain intelligence.
+          </p>
+        </div>
+
+        <div class="editorial-footer-info">
+          <span>&copy; 2026 BRI APPARELL PHILIPPINES</span>
+          <span>ENTERPRISE PLATFORM V2.4</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right Form Pane -->
+    <div class="auth-form-pane">
+      <div class="auth-form-container">
+        
+        <div class="auth-header">
+          <div class="auth-header-top">
+            <a href="../shop.html" class="auth-mobile-logo">BRI APPARELL</a>
+            <span class="auth-role-pill">SECURE PORTAL</span>
+          </div>
+          <h2 class="auth-title">Sign In</h2>
+          <p class="auth-subtitle">Enter your credentials to access your personalized role dashboard.</p>
+        </div>
+
+        <!-- Tab Switcher -->
+        <div class="auth-tabs">
+          <a href="login.html" class="auth-tab-link active">SIGN IN</a>
+          <a href="signup.html" class="auth-tab-link">CREATE ACCOUNT</a>
+        </div>
+
+        <!-- Context Alert Banner -->
+        <div id="auth-banner" class="auth-banner" style="display: none;"></div>
+
+        <!-- Login Form -->
+        <form id="login-form" novalidate>
+          <div class="form-group">
+            <label class="form-label" for="login-email">Email Address or Username</label>
+            <div class="form-control-wrap">
+              <input type="email" id="login-email" class="form-input" placeholder="name@domain.com" required autocomplete="email" autofocus>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.45rem;">
+              <label class="form-label" for="login-password" style="margin-bottom:0;">Password</label>
+              <span style="font-size:0.75rem; color:var(--color-gray-500);">Min. 6 chars</span>
+            </div>
+            <div class="form-control-wrap">
+              <input type="password" id="login-password" class="form-input" placeholder="••••••••••••" required autocomplete="current-password">
+              <button type="button" class="password-toggle-btn" data-target="login-password" aria-label="Toggle password visibility">
+                <i data-lucide="eye" style="width:18px;height:18px;"></i>
+              </button>
+            </div>
+          </div>
+
+          <button type="submit" id="login-submit-btn" class="auth-submit-btn">
+            <span class="btn-spinner"></span>
+            <span class="btn-text">SIGN IN</span>
+            <i data-lucide="arrow-right" style="width:16px;height:16px;"></i>
+          </button>
+        </form>
+
+        <div class="auth-footer-prompt">
+          Don't have an account yet? 
+          <a href="signup.html" class="auth-link">Create an Account</a>
+        </div>
+
+        <!-- Role Testing Preset Credentials Card -->
+        <div class="auth-demo-credentials">
+          <div class="auth-demo-title">
+            <i data-lucide="key" style="width:14px;height:14px;"></i>
+            <span>Verified System Roles (Click to Fill)</span>
+          </div>
+          <div class="auth-demo-grid">
+            <div class="demo-account-badge" data-email="admin@briapparell.com" data-pass="admin123">
+              <span><strong>Admin:</strong> admin@briapparell.com</span>
+              <span style="color:var(--color-gray-400);">admin123 &rarr;</span>
+            </div>
+            <div class="demo-account-badge" data-email="alexander.vance@briapparell.com" data-pass="staff123">
+              <span><strong>Staff:</strong> alexander.vance@briapparell.com</span>
+              <span style="color:var(--color-gray-400);">staff123 &rarr;</span>
+            </div>
+            <div class="demo-account-badge" data-email="john@email.com" data-pass="password123">
+              <span><strong>Customer:</strong> john@email.com</span>
+              <span style="color:var(--color-gray-400);">password123 &rarr;</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <script src="auth.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      AuthPortal.initLogin();
+    });
+  </script>
+</body>
+</html>

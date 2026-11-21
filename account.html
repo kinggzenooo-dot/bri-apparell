@@ -387,8 +387,8 @@
           if (document.getElementById('prof-email')) document.getElementById('prof-email').value = user.email || '';
           await renderOrders();
         } else {
-          authView.style.display = 'block';
-          dashView.style.display = 'none';
+          // Phase 14 Requirement: Protected Customer Dashboard redirects unauthenticated visitors to login
+          window.location.href = '/authorization/login.html?redirect=account.html';
         }
       }
 
@@ -582,7 +582,7 @@
       // Logout
       document.getElementById('logout-btn').addEventListener('click', async () => {
         await BRI.auth.logout();
-        checkSession();
+        window.location.href = '/authorization/login.html';
       });
 
       // Forgot Password simulation

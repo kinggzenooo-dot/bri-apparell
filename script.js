@@ -221,6 +221,10 @@ const BRI = {
       } catch (e) {}
       localStorage.removeItem('bri_token');
       localStorage.removeItem('bri_user');
+      localStorage.removeItem('bri_admin_token');
+      localStorage.removeItem('bri_admin_user');
+      localStorage.removeItem('bri_staff_token');
+      localStorage.removeItem('bri_staff_user');
       BRI.toast.show('You have been signed out.');
     },
     isLoggedIn() {
@@ -316,11 +320,61 @@ const BRI = {
     init() {
       this.renderHeaderAndFooter();
       this.updateHeaderCounts();
+      this.updateAuthNavigation();
       this.setupSearchOverlay();
       this.setupQuickViewModal();
       this.setupMobileMenu();
       this.setupHeaderScroll();
       if (window.lucide) window.lucide.createIcons();
+    },
+
+    updateAuthNavigation() {
+      const user = BRI.auth.getUser();
+      const utilityNavs = document.querySelectorAll('.utility-nav');
+      const mobileFooters = document.querySelectorAll('.mobile-drawer-footer');
+
+      if (user) {
+        document.querySelectorAll('a[href="account.html"], a[href="/account.html"]').forEach(link => {
+          link.title = `Signed in as ${user.full_name || user.email}`;
+        });
+
+        utilityNavs.forEach(nav => {
+          if (!nav.querySelector('.nav-logout-btn')) {
+            const logoutLink = document.createElement('a');
+            logoutLink.href = '#';
+            logoutLink.className = 'icon-btn nav-logout-btn';
+            logoutLink.title = 'Sign Out';
+            logoutLink.setAttribute('aria-label', 'Sign Out');
+            logoutLink.innerHTML = '<i data-lucide="log-out"></i>';
+            logoutLink.addEventListener('click', async (e) => {
+              e.preventDefault();
+              await BRI.auth.logout();
+              window.location.href = '/authorization/login.html';
+            });
+            nav.appendChild(logoutLink);
+          }
+        });
+
+        mobileFooters.forEach(footer => {
+          if (!footer.querySelector('.mobile-logout-link')) {
+            const mobileLogout = document.createElement('a');
+            mobileLogout.href = '#';
+            mobileLogout.className = 'mobile-utility-link mobile-logout-link';
+            mobileLogout.innerHTML = '<i data-lucide="log-out" style="width:18px;height:18px;"></i> Sign Out';
+            mobileLogout.addEventListener('click', async (e) => {
+              e.preventDefault();
+              await BRI.auth.logout();
+              window.location.href = '/authorization/login.html';
+            });
+            footer.appendChild(mobileLogout);
+          }
+        });
+      } else {
+        document.querySelectorAll('.nav-logout-btn, .mobile-logout-link').forEach(el => el.remove());
+        document.querySelectorAll('a[href="account.html"]').forEach(link => {
+          link.href = '/authorization/login.html?redirect=account.html';
+        });
+      }
     },
 
     updateHeaderCounts() {
